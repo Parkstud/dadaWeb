@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>我的消息</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="达达问答">
+    <meta name="description" content="达达达数据结构专业问答">
+    <link rel="stylesheet" href="../../res/layui/css/layui.css">
+    <link rel="stylesheet" href="../../res/css/global.css">
+    <link rel="stylesheet" href="../../res/css/layim.css">
+    <style type="text/css">
+        .item_cont {
+            height: 82px;
+            line-height: 82px;
+            overflow: hidden;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .item_cont .header {
+            float: left;
+            width: 50px;
+            height: 50px;
+            margin-right: 16px;
+            border-radius: 50%;
+            margin-top: 16px;
+        }
+
+        .item_cont .nick {
+            float: left;
+            font-size: 16px;
+            color: #4d4d4d;
+        }
+
+        .item_cont .layui-btn {
+            float: right;
+            border-radius: 4px;
+            font-size: 14px;
+            width: 90px;
+            height: 32px;
+            margin-top: 25px;
+            text-align: center;
+            line-height: 32px;
+        }
+
+        .layui-layer-setwin > .read_msg {
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="fly-header layui-bg-black">
+    <div class="layui-container">
+        <a class="fly-logo" href="../index.html">
+            <img width="180" src="../../res/images/fao.png" alt="达达问答">
+        </a>
+
+        <ul class="layui-nav fly-nav-user">
+            <!-- 登入后的状态 -->
+            <li class="layui-nav-item">
+                <a class="fly-nav-avatar" href="javascript:;">
+                    <cite class="layui-hide-xs"></cite>
+                    <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="../user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
+                    <dd><a href="../user/message.html"><i class="iconfont icon-tongzhi"
+                                                          style="top: 4px;"></i>我的消息</a></dd>
+                    <dd><a href="../user/home.html"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
+                    </dd>
+                    <hr style="margin: 5px 0;">
+                    <dd><a href="" style="text-align: center;">退出</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="layui-container fly-marginTop fly-user-main">
+    <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
+        <li class="layui-nav-item">
+            <a href="home.html">
+                <i class="layui-icon">&#xe609;</i>
+                我的主页
+            </a>
+        </li>
+        <li class="layui-nav-item ">
+            <a href="index.html">
+                <i class="layui-icon">&#xe612;</i>
+                用户中心
+            </a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="set.html">
+                <i class="layui-icon">&#xe620;</i>
+                基本设置
+            </a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="message.html">
+                <i class="layui-icon">&#xe667;</i>
+                我的通知
+            </a>
+        </li>
+        <li class="layui-nav-item layui-this">
+            <a href="care.html">
+                <i class="layui-icon">&#xe611;</i>
+                我的关注
+            </a>
+        </li>
+    </ul>
+
+    <div class="site-tree-mobile layui-hide">
+        <i class="layui-icon">&#xe602;</i>
+    </div>
+    <div class="site-mobile-shade"></div>
+
+    <div class="site-tree-mobile layui-hide">
+        <i class="layui-icon">&#xe602;</i>
+    </div>
+    <div class="site-mobile-shade"></div>
+
+
+    <div class="fly-panel fly-panel-user" pad20>
+        <!--
+        <div class="fly-msg" style="margin-top: 15px;">
+          您的邮箱尚未验证，这比较影响您的帐号安全，<a href="activate.html">立即去激活？</a>
+        </div>
+        -->
+        <div class="layui-tab layui-tab-brief" lay-filter="user">
+            <ul class="layui-tab-title" id="LAY_mine">
+                <li data-type="mine-jie" lay-id="index" class="layui-this">我的关注
+                </li>
+                <li data-type="collection" data-url="/collection/find/" lay-id="collection">
+                    私信
+                </li>
+            </ul>
+            <div class="layui-tab-content" style="padding: 20px 0;">
+                <div class="layui-tab-item layui-show">
+                    <ul class="mine-view">
+
+
+                        <li class="item_cont">
+                            <a
+                                    href="//me.csdn.net/qq_43918783"
+                                    target="_blank"
+                            ><img
+                                    src="https://avatar.csdn.net/9/5/6/3_qq_43918783.jpg" alt=""
+                                    class="header"></a>
+                            <a
+                                    href="//me.csdn.net/qq_43918783"
+                                    title="qq_43918783"
+                                    target="_blank" class="nick">笑，为谁含羞</a>
+                            <a class="layui-btn layui-btn-normal">取消关注</a>
+                        </li>
+
+                        <li class="item_cont">
+
+
+                            <a href="#" target="_blank">
+                                <img class="header"
+                                     src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
+                            </a>
+                            <a
+                                    href="//me.csdn.net/qq_43918783"
+                                    title="qq_43918783"
+                                    target="_blank" class="nick">
+                                陈苗
+                            </a>
+
+
+                            <a class="layui-btn layui-btn-normal">取消关注</a>
+                        </li>
+                        <li class="item_cont">
+
+
+                            <a href="#" target="_blank">
+                                <img class="header"
+                                     src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
+                            </a>
+                            <a
+                                    href="//me.csdn.net/qq_43918783"
+                                    title="qq_43918783"
+                                    target="_blank" class="nick">
+                                陈苗
+                            </a>
+
+
+                            <a class="layui-btn layui-btn-normal">取消关注</a>
+                        </li>
+                        <li class="item_cont">
+
+
+                            <a href="#" target="_blank">
+                                <img class="header"
+                                     src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
+                            </a>
+                            <a
+                                    href="//me.csdn.net/qq_43918783"
+                                    title="qq_43918783"
+                                    target="_blank" class="nick">
+                                陈苗
+                            </a>
+
+
+                            <a class="layui-btn layui-btn-normal">取消关注</a>
+                        </li>
+                    </ul>
+                    <div id="LAY_page"></div>
+                </div>
+                <div class="layui-tab-item">
+                    <div class=" layui-layer-page layui-box layui-layim-chat1"
+                         type="page"
+                         style="z-index: 19891015; width: 790px; top: 129px; left: 65px; min-width: 500px; min-height: 420px; background-image: none; display: block; height: 510px;">
+                        <div class="layui-layer-title" style="cursor: move;">​</div>
+                        <div id="layui-layim-chat" class="layui-layer-content"
+                             style="height: 430px;">
+                            <ul class="layui-unselect layim-chat-list"
+                                style="height: 510px; display: block;">
+                                <li class="layim-kefu1111111 layim-chatlist-kefu1111111 layim-this"
+                                ><img
+                                        src="//tp1.sinaimg.cn/5619439268/180/40030060651/1"><span>在线客服一</span>
+                                </li>
+                                <li class="layim-kefu2222222 layim-chatlist-kefu2222222"
+                                ><img
+                                        src="//tp1.sinaimg.cn/5619439268/180/40030060651/1"><span>在线客服二</span>
+                                </li>
+                            </ul>
+                            <div class="layim-chat-box" style="margin-left: 200px;">
+                                <div class="layim-chat layim-chat-kefu layui-show">
+                                    <div class="layui-unselect layim-chat-title">
+                                        <div class="layim-chat-other"><img class="layim-kefu1111111"
+                                                                           src="//tp1.sinaimg.cn/5619439268/180/40030060651/1"><span
+                                                class="layim-chat-username"
+                                        >在线客服一  </span>
+                                            <p class="layim-chat-status"></p></div>
+                                    </div>
+                                    <div class="layim-chat-main" style="height: 252px;">
+                                        <ul>
+                                            <li class="layim-chat-mine">
+                                                <div class="layim-chat-user"><img
+                                                        src="//res.layui.com/images/fly/avatar/00.jpg"><cite><i>2019-04-27
+                                                    14:18:11</i>访客</cite></div>
+                                                <div class="layim-chat-text">奥术大师多</div>
+                                            </li>
+                                            <li class="layim-chat-mine">
+                                                <div class="layim-chat-user"><img
+                                                        src="//res.layui.com/images/fly/avatar/00.jpg"><cite><i>2019-04-27
+                                                    14:31:24</i>访客</cite></div>
+                                                <div class="layim-chat-text">da<br></div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="layim-chat-footer">
+                                        <div class="layedit-tool-face">
+                                            <textarea id="face" style="display: none;"></textarea>
+                                        </div>
+                                        <!--<div class="layui-unselect layim-chat-tool"-->
+                                             <!--data-json="%7B%22name%22%3A%22%E5%9C%A8%E7%BA%BF%E5%AE%A2%E6%9C%8D%E4%B8%80%22%2C%22type%22%3A%22kefu%22%2C%22avatar%22%3A%22%2F%2Ftp1.sinaimg.cn%2F5619439268%2F180%2F40030060651%2F1%22%2C%22id%22%3A1111111%7D">-->
+                                            <!--&lt;!&ndash;<span class="layui-icon layim-tool-face" title="选择表情"&ndash;&gt;-->
+                                            <!--&lt;!&ndash;&gt;</span>&ndash;&gt;-->
+                                        <!--</div>-->
+                                        <!-- class="layim-chat-textarea"-->
+
+                                        <div class="layim-chat-bottom">
+                                            <div class="layim-chat-send"><span
+                                                    class="layim-send-btn"
+                                            >发送</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layim-chat layim-chat-kefu">
+                                    <div class="layui-unselect layim-chat-title">
+                                        <div class="layim-chat-other"><img class="layim-kefu2222222"
+                                                                           src="//tp1.sinaimg.cn/5619439268/180/40030060651/1"><span
+                                                class="layim-chat-username"
+                                        >在线客服二  </span>
+                                            <p class="layim-chat-status"></p></div>
+                                    </div>
+                                    <div class="layim-chat-main" style="height: 252px;">
+                                        <ul></ul>
+                                    </div>
+                                    <div class="layim-chat-footer">
+                                        <div class="layui-unselect layim-chat-tool"
+                                             data-json="%7B%22name%22%3A%22%E5%9C%A8%E7%BA%BF%E5%AE%A2%E6%9C%8D%E4%BA%8C%22%2C%22type%22%3A%22kefu%22%2C%22avatar%22%3A%22%2F%2Ftp1.sinaimg.cn%2F5619439268%2F180%2F40030060651%2F1%22%2C%22id%22%3A2222222%7D">
+                                            <span class="layui-icon layim-tool-face" title="选择表情"
+                                            ></span></div>
+                                        <div class="layim-chat-textarea"><textarea></textarea></div>
+                                        <div class="layim-chat-bottom">
+                                            <div class="layim-chat-send"><span
+                                                    class="layim-send-btn"
+                                            >发送</span><span
+                                                    class="layim-send-set"
+                                                    lay-type="show"><em
+                                                    class="layui-edge"></em></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="layui-layer-setwin">
+                            <a class="read_msg"
+                               href="javascript:;">
+                                <cite>全部标记为已读</cite></a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="fly-footer">
+    <p><a href="#" target="_blank">达达问答</a> 2019 &copy; <a
+            href="#" target="_blank">dada.com 出品</a></p>
+</div>
+<script src="../../res/layui/layui.all.js"></script>
+<script>
+    layui.cache.page = 'user';
+    layui.cache.user = {
+        username: '游客'
+        , uid: -1
+        , avatar: '../../res/images/avatar/00.jpg'
+        , experience: 83
+        , sex: '男'
+    };
+    layui.config({
+        version: "3.0.0"
+        , base: '../../res/mods/'
+    }).extend({
+        fly: 'index'
+    }).use('fly', function () {
+        let layedit = layui.layedit;
+        layedit.build('face', {
+            tool: ['face'],
+            height: 80 //设置编辑器高度
+        }); //建立编辑器
+
+        let $ = layui.jquery;
+        $('.layui-layedit').removeClass('layui-layedit');
+        $('.layui-layer-page').css('z-index',null);
+        $('.layui-layer-page').css('top',null);
+        $('.layui-layer-page').css('width','100%');
+    });
+</script>
+
+</body>
+</html>

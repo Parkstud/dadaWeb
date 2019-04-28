@@ -1,9 +1,9 @@
 /**
- 
+
  @Name: Fly社区
  @Author: 贤心
  @Site: fly.layui.com
- 
+
  */
 
 
@@ -31,6 +31,7 @@ i{font-style: normal;}
   -webkit-text-stroke-width: 0.2px;
   -moz-osx-font-smoothing: grayscale;
 }
+
 
 .icon-zan:before{content:"\e612"}
 .icon-jiazaizhong:before{content:"\e60e"}
@@ -326,7 +327,7 @@ body .layui-edit-face  .layui-layer-content{padding:0; background-color:#fff; co
 .fly-detail-info .fly-list-nums{top: -3px; font-size: 16px;}
 .fly-detail-info .fly-list-nums i{padding: 0 3px 0 15px; font-size: 22px; color: #999;}
 
-.detail-about{position: relative; line-height: 20px; padding: 15px 15px 15px 75px; font-size: 13px; background-color: #f8f8f8; color: #999;}
+.detail-about{position: relative; line-height: 20px; padding: 15px 15px 15px 75px;height: 40px; font-size: 13px; background-color: #f8f8f8; color: #999;}
 .detail-about .jie-status, .detail-about .jie-status-ok{color:#fff;}
 .detail-about .fly-jing{padding:0 6px; background-color:#c00; color:#fff;}
 .detail-about .detail-hits{position: relative; top: 5px; line-height: 20px;}
@@ -344,7 +345,7 @@ body .layui-edit-face  .layui-layer-content{padding:0; background-color:#fff; co
 .detail-body img{max-width: 100%; cursor: crosshair;}
 .detail-body table{margin: 10px 0 15px;}
 .detail-body table thead{background-color:#f2f2f2;}
-.detail-body table th, 
+.detail-body table th,
 .detail-body table td{padding: 10px 20px; line-height: 22px; border: 1px solid #DFDFDF; font-size: 14px; font-weight: 400;}
 .detail .page-title{ border: none; background-color: #f2f2f2;}
 
@@ -465,7 +466,7 @@ body .fly-user-main{position: relative; min-height: 600px;}
 .fly-case-tab .tab-this{background-color: #009688; color: #fff;}
 
 .fly-case-list{margin-top: 15px; font-size: 0;}
-.fly-case-list li, 
+.fly-case-list li,
 .layer-ext-ul li{display: inline-block; vertical-align: middle; *display: inline; *zoom:1; font-size: 14px; background-color: #fff;}
 .fly-case-list{width: 110%;}
 .fly-case-list li{width: 239px; margin: 0 15px 15px 0; padding: 10px;}

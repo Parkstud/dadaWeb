@@ -14,24 +14,22 @@
 
 <div class="fly-header layui-bg-black">
   <div class="layui-container">
-    <a class="fly-logo" href="/">
-        <img width="180" src="../../res/images/fao.png" alt="达达问答">
-    </a>
+      <a class="fly-logo" href="../index.html">
+          <img width="180" src="../../res/images/fao.png" alt="达达问答">
+      </a>
 
-
-    <ul class="layui-nav fly-nav-user">
-      <!-- 未登入的状态 -->
-      <li class="layui-nav-item">
-        <a class="iconfont icon-touxiang layui-hide-xs" href="user/login.html"></a>
-      </li>
-      <li class="layui-nav-item">
-        <a href="login.html">登入</a>
-      </li>
-      <li class="layui-nav-item">
-        <a href="reg.html">注册</a>
-      </li>
-
-    </ul>
+      <ul class="layui-nav fly-nav-user">
+          <!-- 未登入的状态 -->
+          <li class="layui-nav-item">
+              <a class="iconfont icon-touxiang layui-hide-xs" href="login.html"></a>
+          </li>
+          <li class="layui-nav-item">
+              <a href="login.html">登入</a>
+          </li>
+          <li class="layui-nav-item">
+              <a href="reg.html">注册</a>
+          </li>
+      </ul>
   </div>
 </div>
 
@@ -61,16 +59,7 @@
                 </div>
               </div>
               <div class="layui-form-item">
-                <label for="L_vercode" class="layui-form-label">人类验证</label>
-                <div class="layui-input-inline">
-                  <input type="text" id="L_vercode" name="vercode" required lay-verify="required" placeholder="请回答后面的问题" autocomplete="off" class="layui-input">
-                </div>
-                <div class="layui-form-mid">
-                  <span style="color: #c00;">zhxy</span>
-                </div>
-              </div>
-              <div class="layui-form-item">
-                <button class="layui-btn" lay-filter="*" lay-submit>立即登录</button>
+                <button class="layui-btn" lay-filter="login" lay-submit>立即登录</button>
                 <span style="padding-left:20px;">
                   <a href="forget.html">忘记密码？</a>
                 </span>

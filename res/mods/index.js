@@ -5,7 +5,7 @@
  */
 
 
-layui.define(['layer', 'laytpl','layDate', 'form', 'element', 'upload', 'util'], function (exports) {
+layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'upload', 'util'], function (exports) {
 
     let baseUrl = 'http://localhost:8080';
     let imgUrl = 'http://148.70.8.85/';
@@ -25,6 +25,7 @@ layui.define(['layer', 'laytpl','layDate', 'form', 'element', 'upload', 'util'],
         , upload = layui.upload
         , util = layui.util
         , laydate = layui.laydate
+        , layedit = lay.layedit
         , device = layui.device()
 
         , DISABLED = 'layui-btn-disabled';
@@ -83,7 +84,7 @@ layui.define(['layer', 'laytpl','layDate', 'form', 'element', 'upload', 'util'],
                 dataType: options.dataType || 'json',
                 data: data,
                 url: baseUrl + url,
-                beforeSend: function(request) {
+                beforeSend: function (request) {
                     request.setRequestHeader("Authorization", localStorage.getItem('token'));
                 },
                 success: function (res) {
@@ -115,11 +116,11 @@ layui.define(['layer', 'laytpl','layDate', 'form', 'element', 'upload', 'util'],
         , layEditor: function (options) {
             var html = ['<div class="layui-unselect fly-edit">'
                 , '<span type="face" title="插入表情"><i class="iconfont icon-yxj-expression" style="top: 1px;"></i></span>'
-                , '<span type="picture" title="插入图片：img[src]"><i class="iconfont icon-tupian"></i></span>'
+                // , '<span type="picture" title="插入图片：img[src]"><i class="iconfont icon-tupian"></i></span>'
                 , '<span type="href" title="超链接格式：a(href)[text]"><i class="iconfont icon-lianjie"></i></span>'
                 , '<span type="code" title="插入代码或引用"><i class="iconfont icon-emwdaima" style="top: 1px;"></i></span>'
                 , '<span type="hr" title="插入水平线">hr</span>'
-                , '<span type="yulan" title="预览"><i class="iconfont icon-yulan1"></i></span>'
+                // , '<span type="yulan" title="预览"><i class="iconfont icon-yulan1"></i></span>'
                 , '</div>'].join('');
 
             var log = {}, mod = {
@@ -574,6 +575,15 @@ layui.define(['layer', 'laytpl','layDate', 'form', 'element', 'upload', 'util'],
     // 注册
     form.on('submit(reg)', function (data) {
         var action = $(data.form).attr('action'), button = $(data.elem);
+        fly.json(action, data.field, function (res) {
+            localStorage.setItem('token', JSON.stringify(res.body.data));
+            location.href = 'set.html';
+        });
+        return false;
+    });
+    // 注册
+    form.on('submit(login)', function (data) {
+        let action = $(data.form).attr('action');
         fly.json(action, data.field, function (res) {
             localStorage.setItem('token', JSON.stringify(res.body.data));
             location.href = 'set.html';
