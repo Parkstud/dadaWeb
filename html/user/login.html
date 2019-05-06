@@ -43,11 +43,11 @@
       <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
         <div class="layui-tab-item layui-show">
           <div class="layui-form layui-form-pane">
-            <form method="post">
+            <form method="post" action="/userAccount/login">
                 <div class="layui-form-item">
                     <label for="L_phone" class="layui-form-label">手机</label>
                     <div class="layui-input-inline">
-                        <input type="text" id="L_phone" name="telephone" required
+                        <input type="text" id="L_phone" name="username" required
                                lay-verify="phone" autocomplete="off"
                                class="layui-input">
                     </div>
@@ -55,7 +55,7 @@
               <div class="layui-form-item">
                 <label for="L_pass" class="layui-form-label">密码</label>
                 <div class="layui-input-inline">
-                  <input type="password" id="L_pass" name="pass" required lay-verify="required" autocomplete="off" class="layui-input">
+                  <input type="password" id="L_pass" name="password" required lay-verify="required" autocomplete="off" class="layui-input">
                 </div>
               </div>
               <div class="layui-form-item">
@@ -77,7 +77,7 @@
             href="#" target="_blank">dada.com 出品</a></p>
 </div>
 
-<script src="../../res/layui/layui.js"></script>
+<script src="../../res/layui/layui.all.js"></script>
 <script>
 layui.cache.page = 'user';
 layui.cache.user = {

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Fly Template v3.0，基于 layui 的极简社区页面模版</title>
+    <title>达达问答</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="keywords" content="达达问答">
     <meta name="description" content="达达达数据结构专业问答">
@@ -12,6 +12,110 @@
         .my-search-btn {
             margin-left: -4px;
         }
+
+        .reply-tool {
+            text-align: right;
+            padding-right: 6px;
+        }
+
+        .reply-tool > span {
+            padding-left: 20px;
+            color: #999;
+            cursor: pointer;
+        }
+
+        .name {
+            color: #999;
+        }
+
+        .jieda-reply > .jieda-down:hover {
+            color: #c00;
+        }
+
+        .jieda-reply > .red-color {
+            color: #c00;
+        }
+
+
+        .txt-row-box {
+            display: flex;
+            margin-bottom: 16px;
+            line-height: 32px;
+        }
+
+        .txt-row-box .title {
+            margin-right: 8px;
+            color: #999;
+            line-height: 32px;
+            white-space: nowrap;
+        }
+
+        .rpt-title {
+            width: 420px;
+        }
+
+        .text-truncate {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .rdo-box {
+            width: 420px;
+            line-height: 22px;
+            margin-top: -2px;
+        }
+
+        .rdo-box label {
+            margin-top: 8px;
+            display: inline-block;
+            margin-right: 24px;
+        }
+
+        .rdo-box label .rdo-chk {
+            margin-right: 4px;
+            width: 16px;
+            height: 16px;
+        }
+
+        .txt-row-box:last-child {
+            margin-bottom: 0;
+        }
+
+        .report-box .pos-box .ipt {
+            width: 420px;
+            resize: none;
+        }
+
+        .ipt.ipt-textarea {
+            padding: 8px;
+            height: auto;
+            font-size: 14px;
+            color: #4d4d4d;
+            line-height: 22px;
+        }
+
+        .ipt {
+            padding: 0 8px;
+            height: 32px;
+            width: 300px;
+            line-height: 32px;
+            background: #fff;
+            border: 1px solid #c1c1c1;
+            border-radius: 4px;
+            -webkit-transition: border-color .1s ease-in-out;
+            transition: border-color .1s ease-in-out;
+            margin: 0;
+            overflow: auto;
+        }
+
+        .txt-row-box .txt-box .remark {
+            font-size: 12px;
+            color: #c1c1c1;
+            line-height: 18px;
+        }
+
+
     </style>
 </head>
 <body>
@@ -22,47 +126,37 @@
             <img width="180" src="../../res/images/fao.png" alt="达达问答">
         </a>
 
-        <ul class="layui-nav fly-nav-user">
+        <ul class="layui-nav fly-nav-user" id="index_head_info">
 
-            <li class="layui-nav-item">
-                <a class="iconfont icon-touxiang layui-hide-xs" href="../user/login.html"></a>
-            </li>
-            <li class="layui-nav-item">
-                <a href="../user/login.html">登入</a>
-            </li>
-            <li class="layui-nav-item">
-                <a href="../user/reg.html">注册</a>
-            </li>
             <!-- 未登入的状态 -->
-            <!--
-
-            <li class="layui-nav-item layui-hide-xs">
-              <a href="/app/qq/" onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})" title="QQ登入" class="iconfont icon-qq"></a>
-            </li>
-            <li class="layui-nav-item layui-hide-xs">
-              <a href="/app/weibo/" onclick="layer.msg('正在通过微博登入', {icon:16, shade: 0.1, time:0})" title="微博登入" class="iconfont icon-weibo"></a>
-            </li>
-             -->
-
+            <!--            <li class="layui-nav-item">-->
+            <!--                <a class="iconfont icon-touxiang layui-hide-xs" href="user/login.html"></a>-->
+            <!--            </li>-->
+            <!--            <li class="layui-nav-item">-->
+            <!--                <a href="user/login.html">登入</a>-->
+            <!--            </li>-->
+            <!--            <li class="layui-nav-item">-->
+            <!--                <a href="user/reg.html">注册</a>-->
+            <!--            </li>-->
             <!-- 登入后的状态 -->
-            <!--<li class="layui-nav-item">-->
-                <!--<a class="fly-nav-avatar" href="javascript:;">-->
-                    <!--<cite class="layui-hide-xs">贤心</cite>-->
-                    <!--<i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>-->
-                    <!--<i class="layui-badge fly-badge-vip layui-hide-xs">VIP3</i>-->
-                    <!--<img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">-->
-                <!--</a>-->
-                <!--<dl class="layui-nav-child">-->
-                    <!--<dd><a href="../user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>-->
-                    <!--<dd><a href="../user/message.html"><i class="iconfont icon-tongzhi"-->
-                                                          <!--style="top: 4px;"></i>我的消息</a></dd>-->
-                    <!--<dd><a href="../user/home.html"><i class="layui-icon"-->
-                                                       <!--style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>-->
-                    <!--</dd>-->
-                    <!--<hr style="margin: 5px 0;">-->
-                    <!--<dd><a href="" style="text-align: center;">退出</a></dd>-->
-                <!--</dl>-->
-            <!--</li>-->
+            <li class="layui-nav-item">
+                <a class="fly-nav-avatar" id="user_info" href="javascript:;">
+                    <cite class="layui-hide-xs">贤心</cite>
+                    <!--                <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>-->
+                    <!--                <i class="layui-badge fly-badge-vip layui-hide-xs">VIP3</i>-->
+                    <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
+                    <dd><a href="user/message.html"><i class="iconfont icon-tongzhi"
+                                                       style="top: 4px;"></i>我的消息</a></dd>
+                    <dd><a href="user/home.html"><i class="layui-icon"
+                                                    style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
+                    </dd>
+                    <hr style="margin: 5px 0;">
+                    <dd><a href="user/login.html" style="text-align: center;">退出</a></dd>
+                </dl>
+            </li>
         </ul>
     </div>
 </div>
@@ -79,13 +173,14 @@
                 <!--<li><a href="">公告</a></li>-->
                 <!--<li><a href="">动态</a></li>-->
                 <!--<li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span-->
-                        <!--class="fly-mid"></span></li>-->
+                <!--class="fly-mid"></span></li>-->
 
                 <!-- 用户登入后显示 -->
                 <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
                         href="../user/index.html">我发表的问题</a></li>
                 <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
                         href="../user/index.html#collection">我收藏的问题</a></li>
+
             </ul>
 
             <div class="fly-column-right layui-hide-xs">
@@ -104,21 +199,23 @@
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md8 content detail">
             <div class="fly-panel detail-box">
-                <h1>Fly Template v3.0，基于 layui 的极简社区页面模版</h1>
+                <h1>问题</h1>
                 <div class="fly-detail-info">
+
                     <!-- <span class="layui-badge">审核中</span> -->
-                    <span class="layui-badge layui-bg-green fly-detail-column">栈和队列</span>
+                    <span class="layui-badge layui-bg-green fly-detail-column" id="categoryName">栈和队列</span>
 
                     <!--<span class="layui-badge" style="background-color: #999;">未结</span>-->
                     <!-- <span class="layui-badge" style="background-color: #5FB878;">已结</span> -->
 
-                    <span class="layui-badge layui-bg-blue">开放</span>
+                    <span class="layui-badge" id="problemOpen">开放</span>
                     <!--<span class="layui-badge layui-bg-red">精帖</span>-->
 
 
                     <div class="fly-admin-box" data-id="123">
-                        <span class="layui-btn layui-btn-xs jie-admin  layui-btn-warm">举报</span>
-                        <span class="layui-btn layui-btn-xs jie-admin  layui-btn-danger" type="del">删除</span>
+                        <span class="layui-btn layui-btn-xs jie-admin  layui-btn-warm" id="problem-report">举报</span>
+                        <span class="layui-btn layui-btn-xs jie-admin  layui-btn-danger"
+                              id="deleteProblem" type="del">删除</span>
 
                         <!--<span class="layui-btn layui-btn-xs jie-admin" type="set" field="stick" rank="1">置顶</span>-->
                         <!-- <span class="layui-btn layui-btn-xs jie-admin" type="set" field="stick" rank="0" style="background-color:#ccc;">取消置顶</span> -->
@@ -127,11 +224,14 @@
                         <!-- <span class="layui-btn layui-btn-xs jie-admin" type="set" field="status" rank="0" style="background-color:#ccc;">取消加精</span> -->
                     </div>
                     <span class="fly-list-nums">
-            <a href="#comment"><i class="iconfont" title="回答">&#xe60c;</i> 66</a>
-            <i class="iconfont" title="人气">&#xe60b;</i> 99999
+            <a href="#comment"><i class="iconfont" title="回答">&#xe60c;</i>
+                <span id="answerCount"></span>
+
+            </a>
+            <i class="iconfont" title="人气">&#xe60b;</i><span id="browseCount"></span>
           </span>
                 </div>
-                <div class="detail-about">
+                <div class="detail-about " id="problemUser">
                     <a class="fly-avatar" href="../user/home.html">
                         <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
                              alt="贤心">
@@ -151,33 +251,7 @@
                         <!--href="add.html">编辑此贴</a></span>-->
                     </div>
                 </div>
-                <div class="detail-body photos">
-                    <p>
-                        该模版由 layui官方社区（<a href="http://fly.layui.com/"
-                                          target="_blank">fly.layui.com</a>）倾情提供，只为表明我们对 layui
-                        执着的信念、以及对未来持续加强的承诺。该模版基于 layui 搭建而成，可作为极简通用型社区的页面支撑。
-                    </p>
-                    <p>更新日志：</p>
-                    <pre>
-# v3.0 2017-11-30
-* 采用 layui 2.2.3 作为 UI 支撑
-* 全面同步最新的 Fly 社区风格，各种细节得到大幅优化
-* 更友好的响应式适配能力
-</pre>
-
-                    下载
-                    <hr>
-                    <p>
-                        官网：<a href="http://www.layui.com/template/fly/" target="_blank">http://www.layui.com/template/fly/</a><br>
-                        码云：<a href="https://gitee.com/sentsin/fly/" target="_blank">https://gitee.com/sentsin/fly/</a><br>
-                        GitHub：<a href="https://github.com/layui/fly" target="_blank">https://github.com/layui/fly</a>
-                    </p>
-                    封面
-                    <hr>
-                    <p>
-                        <img src="../../res/images/fly.jpg" alt="Fly社区">
-                    </p>
-                </div>
+                <h1 id="problem_title"></h1>
             </div>
 
             <div class="fly-panel detail-box" id="flyReply">
@@ -186,98 +260,19 @@
                 </fieldset>
 
                 <ul class="jieda" id="jieda">
-                    <li data-id="111" class="jieda-daan">
-                        <a name="item-1111111111"></a>
-                        <div class="detail-about detail-about-reply">
-                            <a class="fly-avatar" href="">
-                                <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
-                                     alt=" ">
-                            </a>
-                            <div class="fly-detail-user">
-                                <a href="" class="fly-link">
-                                    <cite>贤心</cite>
-                                    <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                    <i class="layui-badge fly-badge-vip">VIP3</i>
-                                </a>
-
-                                <span>(楼主)</span>
-                                <!--
-                                <span style="color:#5FB878">(管理员)</span>
-                                <span style="color:#FF9E3F">（社区之光）</span>
-                                <span style="color:#999">（该号已被封）</span>
-                                -->
-                            </div>
-
-                            <div class="detail-hits">
-                                <span>2017-11-30</span>
-                            </div>
-
-                            <i class="iconfont icon-caina" title="最佳答案"></i>
-                        </div>
-                        <div class="detail-body jieda-body photos">
-                            <p>香菇那个蓝瘦，这是一条被采纳的回帖</p>
-                        </div>
-                        <div class="jieda-reply">
-              <span class="jieda-zan zanok" type="zan">
-                <i class="layui-icon" style="font-size: 20px; line-height: 15px">&#xe6c6;</i>
-                <em>66</em>
-                  <i class="layui-icon" style="font-size: 20px; margin-left: 30px">&#xe6c5;</i>
-                <em>66</em>
-              </span>
-                            <span type="reply">
-                <i class="iconfont icon-svgmoban53"></i>
-                回复
-              </span>
-                            <div class="jieda-admin">
-                                <span type="edit">编辑</span>
-                                <span type="del">删除</span>
-                                <!-- <span class="jieda-accept" type="accept">采纳</span> -->
-                            </div>
-                        </div>
-                    </li>
-
-                    <li data-id="111">
-                        <a name="item-1111111111"></a>
-                        <div class="detail-about detail-about-reply">
-                            <a class="fly-avatar" href="">
-                                <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
-                                     alt=" ">
-                            </a>
-                            <div class="fly-detail-user">
-                                <a href="" class="fly-link">
-                                    <cite>贤心</cite>
-                                </a>
-                            </div>
-                            <div class="detail-hits">
-                                <span>2017-11-30</span>
-                            </div>
-                        </div>
-                        <div class="detail-body jieda-body photos">
-                            <p>蓝瘦那个香菇，这是一条没被采纳的回帖</p>
-                        </div>
-                        <div class="jieda-reply">
-              <span class="jieda-zan" type="zan">
-                <i class="iconfont icon-zan"></i>
-                <em>0</em>
-              </span>
-                            <span type="reply">
-                <i class="iconfont icon-svgmoban53"></i>
-                回复
-              </span>
-                            <div class="jieda-admin">
-                                <span type="edit">编辑</span>
-                                <span type="del">删除</span>
-                                <span class="jieda-accept" type="accept">采纳</span>
-                            </div>
-                        </div>
-                    </li>
-
                     <!-- 无数据时 -->
                     <!-- <li class="fly-none">消灭零回复</li> -->
                 </ul>
+                <div style="text-align: center">
+                    <div id="comment_page">
+                    </div>
+                </div>
 
-                <div class="layui-form layui-form-pane">
-                    <form action="/jie/reply/" method="post">
+
+                <div>
+
+                    <div class="layui-form layui-form-pane">
+
                         <div class="layui-form-item layui-form-text">
                             <a name="comment"></a>
                             <div class="layui-input-block">
@@ -288,10 +283,10 @@
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <input type="hidden" name="jid" value="123">
-                            <button class="layui-btn" lay-filter="*" lay-submit>提交回复</button>
+                            <button class="layui-btn" id="put_comment">提交回复</button>
                         </div>
-                    </form>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -356,7 +351,8 @@
                     这里可作为广告区域
                 </div>
                 <div class="fly-panel-main">
-                    <a href="http://layim.layui.com/?from=fly" target="_blank" class="fly-zanzhu"
+                    <a href="http://layim.layui.com/?from=fly" target="_blank"
+                       class="fly-zanzhu"
                        time-limit="2017.09.25-2099.01.01" style="background-color: #5FB878;">LayIM
                         3.0 - layui 旗舰之作</a>
                 </div>
@@ -377,6 +373,42 @@
 </div>
 <script src="../../res/layui/layui.all.js"></script>
 <script>
+    layui.cache.token = JSON.parse(localStorage.getItem('token'));
+    console.log(layui.cache.token);
+
+    // 获取url参数
+    function getQueryString(key) {
+        let reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+        let result = window.location.search.substr(1).match(reg);
+        return result ? decodeURIComponent(result[2]) : null;
+    }
+    // 时间处理函数
+    Date.prototype.Format = function (fmt) {
+        var o = {
+            "y+": this.getFullYear(),
+            "M+": this.getMonth() + 1,                 //月份
+            "d+": this.getDate(),                    //日
+            "h+": this.getHours(),                   //小时
+            "m+": this.getMinutes(),                 //分
+            "s+": this.getSeconds(),                 //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S+": this.getMilliseconds()             //毫秒
+        };
+        for (var k in o) {
+            if (new RegExp("(" + k + ")").test(fmt)) {
+                if (k == "y+") {
+                    fmt = fmt.replace(RegExp.$1, ("" + o[k]).substr(4 - RegExp.$1.length));
+                } else if (k == "S+") {
+                    var lens = RegExp.$1.length;
+                    lens = lens == 1 ? 3 : lens;
+                    fmt = fmt.replace(RegExp.$1, ("00" + o[k]).substr(("" + o[k]).length - 1, lens));
+                } else {
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                }
+            }
+        }
+        return fmt;
+    };
     layui.cache.page = 'jie';
     layui.cache.user = {
         username: '游客'
@@ -390,16 +422,609 @@
         , base: '../../res/mods/'
     }).extend({
         fly: 'index'
-    }).use(['fly'], function () {
-        var $ = layui.$
-            , fly = layui.fly;
-        //如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
-        /*
-        $('.detail-body').each(function(){
-          var othis = $(this), html = othis.html();
-          othis.html(fly.content(html));
+    }).use(['fly', 'laypage', 'layedit'], function () {
+        let fly = layui.fly;
+        let layedit = layui.layedit;
+        let $ = layui.jquery;
+        let laypage = layui.laypage;
+        let indexEdit = layedit.build('L_content', {
+            height: 180,
+            tool: ['left', 'center', 'right', '|', 'face']
         });
-        */
+        let problemId = getQueryString('problemId');
+
+        if (layui.cache.token) {
+            // 登入
+            $('cite.layui-hide-xs').text(layui.cache.token.username);
+            // 设置nickname
+            $('.fly-nav-avatar img').attr('src', layui.imgUrl() + layui.cache.token.avatar);
+        } else {
+            let liDoms = $(' <li class="layui-nav-item">' +
+                '<a class="iconfont icon-touxiang layui-hide-xs" href="user/login.html"></a>' +
+                '</li>' +
+                '<li class="layui-nav-item">' +
+                '<a href="user/login.html">登入</a>' +
+                '</li>' +
+                '<li class="layui-nav-item">' +
+                '<a href="user/reg.html">注册</a>' +
+                '</li>');
+            $('#index_head_info').append(liDoms);
+        }
+        let problemType = [];
+
+        let currentTemp = 1;
+
+        // 查看点赞信息
+        function getCommetLikeInfo() {
+            $('.jieda-reply').each(function (index, val) {
+                let commentId = $(val).attr('commentid');
+                fly.json('/Interaction/awesome', {commentId: commentId}, function (res) {
+                    let result = res.body.data;
+                    if (result === 1) {
+                        $(val).find('.jieda-zan').addClass('red-color');
+                    }
+                    if (result === 2) {
+                        $(val).find('.jieda-down').addClass('red-color');
+                    }
+                }, {type: 'get'});
+            })
+        }
+
+        // 同步获取category值
+        function getProblemType() {
+            let problemType = [];
+            $.ajax({
+                    url: layui.baseUrl() + '/problemManager/problemType',
+                    type: 'get',
+                    async: false,
+                    success(res) {
+                        problemType = res.body.data;
+                    },
+                    error(err) {
+                        console.log(err)
+                    }
+                }
+            );
+            return problemType;
+        }
+
+        // 请求问题信息
+        getProblemInfo();
+
+        function getProblemInfo() {
+            $.ajax({
+                url: layui.baseUrl() + "/problemInfo/webProblemVO",
+                type: 'get',
+                data: {problemId: problemId},
+                dataType: 'json',
+                success(res) {
+                    console.log(res);
+                    setProblemInfo(res.body.data);
+
+                },
+                error(err) {
+                    console.log(err);
+                }
+            });
+        }
+
+        // 设置问题信息
+        function setProblemInfo(data) {
+            console.log(data);
+            $('#categoryName').text(setCategory(data.category))
+            $('#problem_title').text(data.title);
+            if (data.open === 1) {
+                $('#problemOpen').addClass('layui-bg-blue')
+            } else {
+                $('#problemOpen').addClass('layui-bg-black')
+            }
+
+            if (layui.cache.token.type === 0) {
+                $('#deleteProblem').hide();
+            }
+
+            $('#answerCount').text(data.answerCount);
+            $('#browseCount').text(data.browseCount);
+
+            $('#problemUser>a').attr('href', '../user/home.html?userId=' + data.userId);
+            $('#problemUser>a>img').attr('src', layui.imgUrl() + data.avatar);
+            $('#problemUser>.fly-detail-user>a').attr('href', '../user/home.html?userId=' + data.userId).html(' <cite>' + data.username + '</cite>');
+            $('#problemUser>.fly-detail-user>span').text(new Date(data.time).Format("yyyy年MM月dd日 hh:mm:ss"));
+            $('#problemContent').text(data.title);
+
+            $('#problem-report').parent().attr('problemId',problemId);
+            $('#problem-report').parent().attr('userId',data.userId);
+        }
+
+        // 设置题目类型
+        function setCategory(category) {
+            if (!category) {
+                return '数据结构';
+            }
+            return problemType[category].categoryName;
+        }
+
+        // 设置回答区域
+        getCommentInfoPage(1, 10);
+
+        function getCommentInfoPage(current, size) {
+            currentTemp = current;
+            $.ajax({
+                url: layui.baseUrl() + '/commentInfo/web/page',
+                data: {
+                    current: current,
+                    size: size,
+                    problemId: problemId
+                },
+                type: 'get',
+                dataType: 'json',
+                success(res) {
+                    setProblemDetailList(res);
+                    // 请求是否点赞
+                    getCommetLikeInfo();
+
+                    // 设置分页
+                    laypage.render({
+                        elem: 'comment_page'
+                        , count: res.body.data.total //数据总数
+                        , limit: res.body.data.size //每页显示的条数
+                        , curr: res.body.data.current // 当前页
+                        , jump: function (obj, first) {
+                            if (!first) {
+                                currentTemp = obj.curr;
+                                getCommentInfoPage(obj.curr, obj.limit);
+                            }
+                        }
+                    });
+                },
+                error(err) {
+
+                }
+            });
+        }
+
+        // 填充评论列表
+        function setProblemDetailList(res) {
+            let ulDom = $('#jieda');
+            ulDom.empty();
+            $.each(res.body.data.records, function (index, val) {
+                let liDom = $('<li class="jieda-daan"></li>');
+                let div1Dom = $('<div class="detail-about detail-about-reply"></div>');
+                let a1Dom = $('<a class="fly-avatar"></a>');
+                let img1Dom = $('<img>').attr('src', layui.imgUrl() + val.avatar).attr('alt', val.username);
+                a1Dom.append(img1Dom);
+                div1Dom.append(a1Dom);
+                let div2Dom = $('<div class="fly-detail-user"></div>');
+                let a2Dom = $('<a class="fly-link"></a>').attr('href', '../user/home.html?userId=' + val.userId);
+                a2Dom.append($('<cite></cite>').text(val.username));
+
+                if (val.userType === 1) {
+                    a2Dom.append($(' <i class="layui-badge fly-badge-vip"></i>').text('教师'));
+                }
+                if (val.userType === 2) {
+                    a2Dom.append($(' <i class="layui-badge fly-badge-vip"></i>').text('智能系统'));
+                }
+                div2Dom.append(a2Dom);
+                div1Dom.append(div2Dom);
+                let div3Dom = $('<div class="detail-hits"></div>');
+                div3Dom.append($('<span></span>').text(val.commentTime));
+                div1Dom.append(div3Dom);
+                liDom.append(div1Dom);
+
+                div1Dom = $('<div class="detail-body jieda-body photos"></div>');
+                div1Dom.append($('<p></p>').html(val.comments));
+                liDom.append(div1Dom);
+
+                div1Dom = $('<div class="jieda-reply"></div>')
+                    .attr('commentId', val.commentId)
+                    .attr('username', val.username)
+                    .attr('userId', val.userId);
+
+                let span1Dom = $('<span class="jieda-zan"></span>')
+                let i1Dom = $('<i class="layui-icon" style="font-size: 20px; line-height: 15px">&#xe6c6;</i>')
+                let em1Dom = $('<em></em>').text(val.awesome);
+                span1Dom.append(i1Dom);
+                span1Dom.append(em1Dom);
+                div1Dom.append(span1Dom);
+                span1Dom = $('<span class="jieda-down"></span>')
+                i1Dom = $('<i class="layui-icon" style="font-size: 20px; line-height: 15px">&#xe6c5;</i>');
+                em1Dom = $('<em></em>').text(val.badReview);
+                span1Dom.append(i1Dom);
+                span1Dom.append(em1Dom);
+                div1Dom.append(span1Dom);
+
+                span1Dom = $('<span type="reply"><i class="iconfont icon-svgmoban53"></i>回复</span>')
+                    .attr('username', val.username)
+                    .attr('userId', val.userId);
+                div1Dom.append(span1Dom);
+
+                div2Dom = $('<div class="jieda-admin"></div>');
+                span1Dom = $('<span class="comment-report">举报</span>');
+                let span2Dom = $('<span class="delete-comment">删除</span>');
+                div2Dom.append(span1Dom);
+                div2Dom.append(span2Dom);
+                div1Dom.append(div2Dom);
+                liDom.append(div1Dom);
+
+                if (val.replyList) {
+                    div1Dom = $('<div class="replys"></div>');
+                    let blockquote = $('<blockquote style="margin-top: 10px" class="layui-elem-quote layui-quote-nm"></blockquote>');
+                    $.each(val.replyList, function (innerIndex, innerVal) {
+                        div2Dom = $('<div style="margin-bottom: 10px"></div>');
+                        div3Dom = $('<div style="display: flex;"></div>');
+                        a1Dom = $('<a style="margin-right: 10px"></a>').attr('href', '../user/home.html?userId=' + innerVal.replyUserId);
+                        img1Dom = $('<img width="36" height="36">').attr('src', layui.imgUrl() + innerVal.avatar);
+                        a1Dom.append(img1Dom);
+                        div3Dom.append(a1Dom);
+
+                        span1Dom = $('<span></span>');
+                        if (innerVal.repliedUserId) {
+                            span1Dom.html(innerVal.replyUsername + '<span class="name"> 回复 ' + innerVal.repliedUsername + ':</span>' + innerVal.content);
+                        } else {
+                            span1Dom.html(innerVal.replyUsername + '<span class="name"> 回复 :</span>' + innerVal.content);
+                        }
+                        div3Dom.append(span1Dom);
+                        div2Dom.append(div3Dom);
+
+                        div3Dom = $('<div class="reply-tool"></div>').attr('replyId', innerVal.id)
+                            .attr('replyUserId', innerVal.replyUserId)
+                            .attr('replyUsername', innerVal.replyUsername);
+                        span1Dom = $('<span class="reply-report">举报</span>');
+                        span2Dom = $('<span class="reply-delete">删除</span>');
+                        div3Dom.append(span1Dom);
+                        div3Dom.append(span2Dom);
+
+                        div2Dom.append(div3Dom);
+                        blockquote.append(div2Dom);
+                    });
+                    div1Dom.append(blockquote);
+                    liDom.append(div1Dom);
+                }
+
+                ulDom.append(liDom);
+            });
+        }
+
+        let type = 0;
+        let params = {};
+        // 回复
+        $('#jieda').on('click', 'span[type=reply]', function () {
+            let commentId = $(this).parent().attr('commentid');
+            location.href = "#comment";
+            $(window.frames["LAY_layedit_1"].document).find('body').text('@' + $(this).attr('username') + '：');
+            let startUser = layedit.getContent(indexEdit);
+            type = 1;
+            params.startUser = startUser;
+            params.commentId = commentId;
+            params.repliedUsername = $(this).attr('username');
+            params.repliedUserId = $(this).attr('userId');
+
+        });
+
+        // 点反对
+        $('#jieda').on('click', '.jieda-reply .jieda-down', function () {
+            if (!layui.cache.token.id) {
+                layer.msg('请登录');
+                return;
+            }
+            let result = 0;
+            let commentId = $(this).parent().attr('commentid');
+            let choose = $(this).parent().find('.red-color');
+            if (choose.length > 0) {
+                if (choose.attr('class') === $(this).attr('class')) {
+                    let count = parseInt(choose.find('em').text());
+                    count--;
+                    choose.find('em').text(count);
+                    $(this).removeClass('red-color');
+                } else {
+                    choose.removeClass('red-color');
+                    let count = parseInt(choose.find('em').text());
+                    count--;
+                    choose.find('em').text(count);
+
+                    $(this).addClass('red-color');
+                    count = parseInt($(this).find('em').text());
+                    count++;
+                    $(this).find('em').text(count);
+                    result = 2;
+                }
+            } else {
+                $(this).addClass('red-color');
+                let count = parseInt($(this).find('em').text());
+                count++;
+                $(this).find('em').text(count);
+                result = 2;
+            }
+
+            fly.json('/Interaction/awesome', {
+                commentId: commentId,
+                userId: layui.cache.token.id,
+                result: result
+            }, function (res) {
+                console.log(res);
+            })
+
+        });
+
+        //点赞
+        $('#jieda').on('click', '.jieda-reply .jieda-zan', function () {
+            if (!layui.cache.token.id) {
+                layer.msg('请登录');
+                return;
+            }
+            let result = 0;
+            let commentId = $(this).parent().attr('commentid');
+            let choose = $(this).parent().find('.red-color');
+            if (choose.length > 0) {
+                if (choose.attr('class') === $(this).attr('class')) {
+                    let count = parseInt(choose.find('em').text());
+                    count--;
+                    choose.find('em').text(count);
+                    $(this).removeClass('red-color');
+                } else {
+                    choose.removeClass('red-color');
+                    let count = parseInt(choose.find('em').text());
+                    count--;
+                    choose.find('em').text(count);
+
+                    $(this).addClass('red-color');
+                    count = parseInt($(this).find('em').text());
+                    count++;
+                    $(this).find('em').text(count);
+                    result = 1;
+                }
+            } else {
+                $(this).addClass('red-color');
+                let count = parseInt($(this).find('em').text());
+                count++;
+                $(this).find('em').text(count);
+                result = 1;
+            }
+
+
+            fly.json('/Interaction/awesome', {
+                commentId: commentId,
+                userId: layui.cache.token.id,
+                result: result
+            }, function (res) {
+                console.log(res);
+            })
+
+        });
+        // 回答
+        $('#put_comment').on('click', function () {
+            let comments = layedit.getContent(indexEdit);
+            if (type === 1 && comments.startsWith(params.startUser)) {
+                comments = comments.replace(params.startUser, '');
+                // 回复评论
+                fly.json('/Interaction/reply', {
+                    commentId: params.commentId,
+                    repliedUserId: params.repliedUserId,
+                    repliedUsername: params.repliedUsername,
+                    content: comments
+                }, function (res) {
+                    if (res.body.data) {
+                        getCommentInfoPage(1, 10);
+                        type = 0;
+                        $(window.frames["LAY_layedit_1"].document).find('body').html('');
+                    }
+                });
+                return;
+            }
+            // 回复信息
+
+            fly.json('/control/problem/answer', {
+                questionId: problemId,
+                comments: comments
+            }, function (res) {
+                if (res.body.data) {
+                    $(window.frames["LAY_layedit_1"].document).find('body').html('');
+                    getCommentInfoPage(1, 10);
+                    getProblemInfo();
+
+                }
+            })
+        })
+        // 评论点击删除
+        $('#jieda').on('click', '.delete-comment', function () {
+            let commentId = $(this).parent().parent().attr('commentid');
+            layer.confirm('确认删除？', {
+                btn: ['确认', '取消'] //按钮
+            }, function () {
+                fly.json('/commentInfo/comment/id', {commentId: commentId}, function (res) {
+                    console.log(res);
+                    if (res.body.data) {
+                        layer.msg('删除成功', {icon: 1});
+                        getCommentInfoPage(1, 10);
+                        getProblemInfo();
+                    } else {
+                        layer.msg('删除失败', {icon: 2});
+                    }
+                });
+
+            }, function () {
+
+            });
+        })
+        // 点击回复删除
+        $('#jieda').on('click', '.reply-delete', function () {
+            console.log('删除回复');
+            let replyId = $(this).parent().attr('replyid');
+            layer.confirm('确认删除？', {
+                btn: ['确认', '取消'] //按钮
+            }, function () {
+                fly.json('/Interaction/reply', {replyId: replyId}, function (res) {
+                    console.log(res);
+                    if (res.body.data) {
+                        layer.msg('删除成功', {icon: 1});
+                        getCommentInfoPage(1, 10);
+                    } else {
+                        layer.msg('删除失败', {icon: 2});
+                    }
+                }, {type: 'delete'});
+            }, function () {
+
+            });
+        });
+
+
+
+        // 获取举报
+        let reportReason = [];
+        fly.json('/report/manage/reasons', null, function (res) {
+            reportReason = res.body.data;
+        }, {type: 'get'});
+
+
+        // 举报问题
+        $('#problem-report').on('click',function () {
+            let userId= $(this).parent().attr('userId');
+            let html = '<div class="rdo-box">';
+            $.each(reportReason, function (index, val) {
+                html += '<label><input type="radio" name="jubao" class="rdo-chk report-type" value="' + val.reportReasonSort + '">' + val.reportReasonContent + '</label>'
+            });
+            html += '</div>';
+
+            layer.confirm('确认删除？', {
+                title: '不良信息举报',
+                area: ['500px', '360px'],
+                btn: ['确认', '取消'], //按钮
+                content: '<div class="form-box">' +
+                    '<div class="txt-row-box">' +
+                    '   <label class="title" id="reptTit">你举报的类型：</label> ' +
+                    '                 <p class="rpt-title text-truncate">问题</p>     ' +
+                    '         </div>              <div class="txt-row-box">            ' +
+                    '      <label class="title">举报原因：</label>             ' + html +
+                    '            </div>              <div class="txt-row-box" id="rptOriginalurl" style="display: none;">           ' +
+                    '                   <div class="txt-box">                  ' +
+                    '    <input class="ipt" type="text" id="originalurl" name="originalurl">                  </div>              </div>      ' +
+                    '        <div class="txt-row-box">        <label class="title">原因补充：</label>                  <div class="txt-box">    ' +
+                    '                  <textarea class="ipt ipt-textarea" name="description" id="reason-des" maxlength="30"></textarea>    ' +
+                    '                  <p class="remark">最多只允许输入30个字</p>                  </div>              </div>          </div>'
+            }, function () {
+                let reason = $("input[type='radio']:checked").val();
+                let des = $('#reason-des').val();
+                fly.json('/Interaction/report',{
+                    reportId:problemId,
+                    reportType:1,
+                    toUserId:userId,
+                    reportReasonId:reason,
+                    reportReason:des,
+                    reportStatus:0,
+                },function (res) {
+                    if (res.body.data){
+                        layer.msg('举报成功', {icon: 1});
+                    } else{
+                        console.log(res);
+                        layer.msg('举报失败', {icon: 1});
+                    }
+                });
+
+            }, function () {
+            });
+        });
+
+        // 点击举报评论
+        $('#jieda').on('click', '.comment-report', function () {
+            let parent = $(this).parent().parent();
+            let commentId=parent.attr('commentid');
+            let userId=parent.attr('userId');
+
+            let html = '<div class="rdo-box">';
+            $.each(reportReason, function (index, val) {
+                html += '<label><input type="radio" name="jubao" class="rdo-chk report-type" value="' + val.reportReasonSort + '">' + val.reportReasonContent + '</label>'
+            });
+            html += '</div>';
+
+            layer.confirm('确认删除？', {
+                title: '不良信息举报',
+                area: ['500px', '360px'],
+                btn: ['确认', '取消'], //按钮
+                content: '<div class="form-box">' +
+                    '<div class="txt-row-box">' +
+                    '   <label class="title" id="reptTit">你举报的类型：</label> ' +
+                    '                 <p class="rpt-title text-truncate">评论</p>     ' +
+                    '         </div>              <div class="txt-row-box">            ' +
+                    '      <label class="title">举报原因：</label>             ' + html +
+                    '            </div>              <div class="txt-row-box" id="rptOriginalurl" style="display: none;">           ' +
+                    '                   <div class="txt-box">                  ' +
+                    '    <input class="ipt" type="text" id="originalurl" name="originalurl">                  </div>              </div>      ' +
+                    '        <div class="txt-row-box">        <label class="title">原因补充：</label>                  <div class="txt-box">    ' +
+                    '                  <textarea class="ipt ipt-textarea" name="description" id="reason-des" maxlength="30"></textarea>    ' +
+                    '                  <p class="remark">最多只允许输入30个字</p>                  </div>              </div>          </div>'
+            }, function () {
+                let reason = $("input[type='radio']:checked").val();
+                let des = $('#reason-des').val();
+                fly.json('/Interaction/report',{
+                    reportId:commentId,
+                    reportType:2,
+                    toUserId:userId,
+                    reportReasonId:reason,
+                    reportReason:des,
+                    reportStatus:0,
+                },function (res) {
+                    if (res.body.data){
+                        layer.msg('举报成功', {icon: 1});
+                    } else{
+                        console.log(res);
+                        layer.msg('举报失败', {icon: 1});
+                    }
+                });
+
+            }, function () {
+            });
+
+        });
+        // 举报回复
+        $('#jieda').on('click', '.reply-report', function () {
+            let replyId = $(this).parent().attr('replyid');
+            let replyUserId = $(this).parent().attr('replyUserId');
+            let replyUsername = $(this).parent().attr('replyUsername');
+
+            let html = '<div class="rdo-box">';
+            $.each(reportReason, function (index, val) {
+                html += '<label><input type="radio" name="jubao" class="rdo-chk report-type" value="' + val.reportReasonSort + '">' + val.reportReasonContent + '</label>'
+            });
+            html += '</div>';
+
+            layer.confirm('确认删除？', {
+                title: '不良信息举报',
+                area: ['500px', '360px'],
+                btn: ['确认', '取消'], //按钮
+                content: '<div class="form-box">' +
+                    '<div class="txt-row-box">' +
+                    '   <label class="title" id="reptTit">你举报的类型：</label> ' +
+                    '                 <p class="rpt-title text-truncate">回复</p>     ' +
+                    '         </div>              <div class="txt-row-box">            ' +
+                    '      <label class="title">举报原因：</label>             ' + html +
+                    '            </div>              <div class="txt-row-box" id="rptOriginalurl" style="display: none;">           ' +
+                    '                   <div class="txt-box">                  ' +
+                    '    <input class="ipt" type="text" id="originalurl" name="originalurl">                  </div>              </div>      ' +
+                    '        <div class="txt-row-box">        <label class="title">原因补充：</label>                  <div class="txt-box">    ' +
+                    '                  <textarea class="ipt ipt-textarea" name="description" id="reason-des" maxlength="30"></textarea>    ' +
+                    '                  <p class="remark">最多只允许输入30个字</p>                  </div>              </div>          </div>'
+            }, function () {
+                let reason = $("input[type='radio']:checked").val();
+                let des = $('#reason-des').val();
+                fly.json('/Interaction/report',{
+                    reportId:replyId,
+                    reportType:3,
+                    toUserId:replyUserId,
+                    reportReasonId:reason,
+                    reportReason:des,
+                    reportStatus:0,
+                },function (res) {
+                    if (res.body.data){
+                        layer.msg('举报成功', {icon: 1});
+                    } else{
+                        console.log(res);
+                        layer.msg('举报失败', {icon: 1});
+                    }
+                });
+
+            }, function () {
+            });
+        });
     });
 </script>
 

@@ -79,13 +79,16 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
 
             options = options || {};
 
+
             return $.ajax({
                 type: options.type || 'post',
                 dataType: options.dataType || 'json',
                 data: data,
                 url: baseUrl + url,
                 beforeSend: function (request) {
-                    request.setRequestHeader("Authorization", localStorage.getItem('token'));
+                    if (url !== '/userAccount/login') {
+                        request.setRequestHeader("Authorization", localStorage.getItem('token'));
+                    }
                 },
                 success: function (res) {
                     if (res.head.stateCode === 200) {
@@ -581,7 +584,7 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
         });
         return false;
     });
-    // 注册
+    // 登入
     form.on('submit(login)', function (data) {
         let action = $(data.form).attr('action');
         fly.json(action, data.field, function (res) {
@@ -590,7 +593,51 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
         });
         return false;
     });
+    // 修改密码
+    form.on('submit(changePass)', function (data) {
+        let action = $(data.form).attr('action');
+        fly.json(action, data.field, function (res) {
+            if (res.head.stateCode === 200) {
+                layer.msg('修改成功!', {icon: 1});
+                localStorage.setItem('token', JSON.stringify(res.body.data));
+            } else {
+                layer.msg(res.head.msg, {icon: 2});
+            }
+        });
+        return false;
+    });
+    // 修改个人信息
+    form.on('submit(updateUserInfo)', function (data) {
+        data.field.accountId = JSON.parse(localStorage.getItem('token')).id;
 
+        if (data.field.userInfoId) {
+            data.field.id = data.field.userInfoId;
+        }
+        $.ajax({
+            type: 'post',
+            dataType: 'json',
+            data: JSON.stringify(data.field),
+            url: baseUrl + '/myPage/user/userInformation',
+            beforeSend: function (request) {
+
+                request.setRequestHeader("Authorization", localStorage.getItem('token'));
+                request.setRequestHeader('Content-Type', "application/json;charset=UTF-8");
+            },
+            success: function (res) {
+                console.log(res);
+                if (res.head.stateCode === 200) {
+                    layer.msg('修改成功!', {icon: 1});
+                } else {
+                    layer.msg('修改失败!', {icon: 2});
+                }
+
+            }, error: function (e) {
+                layer.msg('请求异常，请重试', {shift: 6});
+            }
+        });
+
+        return false;
+    });
 
     //表单提交
     form.on('submit(*)', function (data) {
@@ -615,6 +662,7 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
         return false;
     });
 
+
     //加载特定模块
     if (layui.cache.page && layui.cache.page !== 'index') {
         var extend = {};
@@ -629,9 +677,9 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
     }
 
     //加载编辑器
-    fly.layEditor({
-        elem: '.fly-editor'
-    });
+    // fly.layEditor({
+    //     elem: '.fly-editor'
+    // });
 
     //手机设备的简单适配
     var treeMobile = $('.site-tree-mobile')

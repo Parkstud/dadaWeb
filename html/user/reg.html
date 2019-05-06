@@ -143,7 +143,11 @@
 
         // 获取验证码
         $('#FLY-getvercode').on('click', function () {
-            layer.msg("验证码发送成功请注意查收!", {icon: 1})
+            layer.msg("验证码发送成功请注意查收!", {icon: 1}, function (res) {
+                if (res.body.data) {
+                    layer
+                }
+            })
         })
 
 
