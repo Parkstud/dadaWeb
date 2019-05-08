@@ -24,17 +24,6 @@
 
         <ul class="layui-nav fly-nav-user" id="index_head_info">
 
-            <!-- 未登入的状态 -->
-            <!--            <li class="layui-nav-item">-->
-            <!--                <a class="iconfont icon-touxiang layui-hide-xs" href="user/login.html"></a>-->
-            <!--            </li>-->
-            <!--            <li class="layui-nav-item">-->
-            <!--                <a href="user/login.html">登入</a>-->
-            <!--            </li>-->
-            <!--            <li class="layui-nav-item">-->
-            <!--                <a href="user/reg.html">注册</a>-->
-            <!--            </li>-->
-            <!-- 登入后的状态 -->
             <li class="layui-nav-item">
                 <a class="fly-nav-avatar" id="user_info" href="javascript:;">
                     <cite class="layui-hide-xs">贤心</cite>
@@ -50,7 +39,7 @@
                                                     style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
                     </dd>
                     <hr style="margin: 5px 0;">
-                    <dd><a href="user/login.html" style="text-align: center;">退出</a></dd>
+                    <dd><a href="javascript:void(0);" id="tuichu" style="text-align: center;">退出</a></dd>
                 </dl>
             </li>
         </ul>
@@ -109,9 +98,9 @@
             <dl class="fly-panel fly-list-one">
                 <div class="fly-panel-title">
                     <div class="layui-inline">
-                        <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+                        <input class="layui-input" id="search-input" autocomplete="off">
                     </div>
-                    <button type="submit" class="layui-btn my-search-btn">搜索</button>
+                    <button id="search-problem" class="layui-btn my-search-btn">搜索</button>
                 </div>
                 <h3 class="fly-panel-title">回贴周榜</h3>
                 <dd>
@@ -329,6 +318,7 @@
             // 设置nickname
             $('.fly-nav-avatar img').attr('src', layui.imgUrl() + layui.cache.token.avatar);
         } else {
+            $('#index_head_info').empty();
             let liDoms = $(' <li class="layui-nav-item">' +
                 '<a class="iconfont icon-touxiang layui-hide-xs" href="user/login.html"></a>' +
                 '</li>' +
@@ -384,6 +374,9 @@
                             problemType = getProblemType();
                         }
                         setProblemList(res);
+                        if (res.body.data.pages <= 1) {
+                            return;
+                        }
                         // 设置分页
                         laypage.render({
                             elem: 'problem_page'
@@ -491,7 +484,6 @@
             getWebProblePage(1, 10);
 
 
-
         });
         // 点击热门
         $('#hotProblem').on('click', function () {
@@ -501,13 +493,48 @@
             getWebProblePage(1, 10);
 
         });
+        // 点击搜索
+        $('#search-problem').on('click', function () {
+            let title = $('#search-input').val();
+            setSerarchInfo(1, 10, title);
+        });
+
+        function setSerarchInfo(current, size, title) {
+            fly.json('/problemInfo/webProblemVOLikePage', {
+                current: current,
+                size: size,
+                title: title
+            }, function (res) {
+                setProblemList(res);
+                if (res.body.data.pages <= 1) {
+                    return;
+                }
+                // 设置分页
+                laypage.render({
+                    elem: 'problem_page'
+                    , count: res.body.data.total //数据总数
+                    , limit: res.body.data.size //每页显示的条数
+                    , curr: res.body.data.current // 当前页
+                    , jump: function (obj, first) {
+                        if (!first) {
+                            setSerarchInfo(obj.curr, obj.limit, title);
+                        }
+                    }
+                });
+            }, {type: 'get'});
+        }
+
+        // 退出
+        $('#tuichu').on('click',function () {
+            window.localStorage.removeItem('token');
+            location.href='user/login.html'
+        })
 
     });
 </script>
 
 <script type="text/javascript">
     var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-    console.log("asdasd")
     document.write(unescape("%3Cspan id='cnzz_stat_icon_30088308'%3E%3C/span%3E%3Cscript src='" +
         cnzz_protocol + "w.cnzz.com/c.php%3Fid%3D30088308' type='text/javascript'%3E%3C/script%3E"));
 

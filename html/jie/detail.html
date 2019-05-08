@@ -213,7 +213,8 @@
 
 
                     <div class="fly-admin-box" data-id="123">
-                        <span class="layui-btn layui-btn-xs jie-admin  layui-btn-warm" id="problem-report">举报</span>
+                        <span class="layui-btn layui-btn-xs jie-admin  layui-btn-warm"
+                              id="problem-report">举报</span>
                         <span class="layui-btn layui-btn-xs jie-admin  layui-btn-danger"
                               id="deleteProblem" type="del">删除</span>
 
@@ -268,8 +269,7 @@
                     </div>
                 </div>
 
-
-                <div>
+                <div id="edit-wrapper">
 
                     <div class="layui-form layui-form-pane">
 
@@ -292,12 +292,12 @@
         </div>
         <div class="layui-col-md4">
             <dl class="fly-panel fly-list-one">
-                <div class="fly-panel-title">
-                    <div class="layui-inline">
-                        <input class="layui-input" name="id" id="demoReload" autocomplete="off">
-                    </div>
-                    <button type="submit" class="layui-btn my-search-btn">搜索</button>
-                </div>
+<!--                <div class="fly-panel-title">-->
+<!--                    <div class="layui-inline">-->
+<!--                        <input class="layui-input" name="id" id="demoReload" autocomplete="off">-->
+<!--                    </div>-->
+<!--                    <button type="submit" class="layui-btn my-search-btn">搜索</button>-->
+<!--                </div>-->
                 <dt class="fly-panel-title">本周热议</dt>
                 <dd>
                     <a href="">基于 layui 的极简社区页面模版</a>
@@ -382,6 +382,7 @@
         let result = window.location.search.substr(1).match(reg);
         return result ? decodeURIComponent(result[2]) : null;
     }
+
     // 时间处理函数
     Date.prototype.Format = function (fmt) {
         var o = {
@@ -471,6 +472,7 @@
         }
 
         // 同步获取category值
+
         function getProblemType() {
             let problemType = [];
             $.ajax({
@@ -514,9 +516,10 @@
             $('#categoryName').text(setCategory(data.category))
             $('#problem_title').text(data.title);
             if (data.open === 1) {
-                $('#problemOpen').addClass('layui-bg-blue')
+                $('#problemOpen').addClass('layui-bg-blue').text('开放')
             } else {
-                $('#problemOpen').addClass('layui-bg-black')
+                $('#problemOpen').addClass('layui-bg-black').text('关闭');
+                $('#edit-wrapper').hide();
             }
 
             if (layui.cache.token.type === 0) {
@@ -532,8 +535,8 @@
             $('#problemUser>.fly-detail-user>span').text(new Date(data.time).Format("yyyy年MM月dd日 hh:mm:ss"));
             $('#problemContent').text(data.title);
 
-            $('#problem-report').parent().attr('problemId',problemId);
-            $('#problem-report').parent().attr('userId',data.userId);
+            $('#problem-report').parent().attr('problemId', problemId);
+            $('#problem-report').parent().attr('userId', data.userId);
         }
 
         // 设置题目类型
@@ -541,6 +544,10 @@
             if (!category) {
                 return '数据结构';
             }
+            if (problemType.length === 0) {
+                problemType = getProblemType();
+            }
+            console.log(problemType);
             return problemType[category].categoryName;
         }
 
@@ -562,7 +569,9 @@
                     setProblemDetailList(res);
                     // 请求是否点赞
                     getCommetLikeInfo();
-
+                   if (res.body.data.pages<=1){
+                       return;
+                   }
                     // 设置分页
                     laypage.render({
                         elem: 'comment_page'
@@ -633,10 +642,15 @@
                 span1Dom.append(em1Dom);
                 div1Dom.append(span1Dom);
 
-                span1Dom = $('<span type="reply"><i class="iconfont icon-svgmoban53"></i>回复</span>')
-                    .attr('username', val.username)
-                    .attr('userId', val.userId);
-                div1Dom.append(span1Dom);
+                if($('#problemOpen').text()==='关闭'){
+
+                }else{
+                    span1Dom = $('<span type="reply"><i class="iconfont icon-svgmoban53"></i>回复</span>')
+                        .attr('username', val.username)
+                        .attr('userId', val.userId);
+                    div1Dom.append(span1Dom);
+                }
+
 
                 div2Dom = $('<div class="jieda-admin"></div>');
                 span1Dom = $('<span class="comment-report">举报</span>');
@@ -868,7 +882,6 @@
         });
 
 
-
         // 获取举报
         let reportReason = [];
         fly.json('/report/manage/reasons', null, function (res) {
@@ -877,8 +890,8 @@
 
 
         // 举报问题
-        $('#problem-report').on('click',function () {
-            let userId= $(this).parent().attr('userId');
+        $('#problem-report').on('click', function () {
+            let userId = $(this).parent().attr('userId');
             let html = '<div class="rdo-box">';
             $.each(reportReason, function (index, val) {
                 html += '<label><input type="radio" name="jubao" class="rdo-chk report-type" value="' + val.reportReasonSort + '">' + val.reportReasonContent + '</label>'
@@ -904,17 +917,17 @@
             }, function () {
                 let reason = $("input[type='radio']:checked").val();
                 let des = $('#reason-des').val();
-                fly.json('/Interaction/report',{
-                    reportId:problemId,
-                    reportType:1,
-                    toUserId:userId,
-                    reportReasonId:reason,
-                    reportReason:des,
-                    reportStatus:0,
-                },function (res) {
-                    if (res.body.data){
+                fly.json('/Interaction/report', {
+                    reportId: problemId,
+                    reportType: 1,
+                    toUserId: userId,
+                    reportReasonId: reason,
+                    reportReason: des,
+                    reportStatus: 0,
+                }, function (res) {
+                    if (res.body.data) {
                         layer.msg('举报成功', {icon: 1});
-                    } else{
+                    } else {
                         console.log(res);
                         layer.msg('举报失败', {icon: 1});
                     }
@@ -927,8 +940,8 @@
         // 点击举报评论
         $('#jieda').on('click', '.comment-report', function () {
             let parent = $(this).parent().parent();
-            let commentId=parent.attr('commentid');
-            let userId=parent.attr('userId');
+            let commentId = parent.attr('commentid');
+            let userId = parent.attr('userId');
 
             let html = '<div class="rdo-box">';
             $.each(reportReason, function (index, val) {
@@ -955,17 +968,17 @@
             }, function () {
                 let reason = $("input[type='radio']:checked").val();
                 let des = $('#reason-des').val();
-                fly.json('/Interaction/report',{
-                    reportId:commentId,
-                    reportType:2,
-                    toUserId:userId,
-                    reportReasonId:reason,
-                    reportReason:des,
-                    reportStatus:0,
-                },function (res) {
-                    if (res.body.data){
+                fly.json('/Interaction/report', {
+                    reportId: commentId,
+                    reportType: 2,
+                    toUserId: userId,
+                    reportReasonId: reason,
+                    reportReason: des,
+                    reportStatus: 0,
+                }, function (res) {
+                    if (res.body.data) {
                         layer.msg('举报成功', {icon: 1});
-                    } else{
+                    } else {
                         console.log(res);
                         layer.msg('举报失败', {icon: 1});
                     }
@@ -1006,17 +1019,17 @@
             }, function () {
                 let reason = $("input[type='radio']:checked").val();
                 let des = $('#reason-des').val();
-                fly.json('/Interaction/report',{
-                    reportId:replyId,
-                    reportType:3,
-                    toUserId:replyUserId,
-                    reportReasonId:reason,
-                    reportReason:des,
-                    reportStatus:0,
-                },function (res) {
-                    if (res.body.data){
+                fly.json('/Interaction/report', {
+                    reportId: replyId,
+                    reportType: 3,
+                    toUserId: replyUserId,
+                    reportReasonId: reason,
+                    reportReason: des,
+                    reportStatus: 0,
+                }, function (res) {
+                    if (res.body.data) {
                         layer.msg('举报成功', {icon: 1});
-                    } else{
+                    } else {
                         console.log(res);
                         layer.msg('举报失败', {icon: 1});
                     }

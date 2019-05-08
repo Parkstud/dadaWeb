@@ -247,6 +247,9 @@
                 success(res) {
                     // 拼接数据
                     putProblemPageTable(res);
+                    if (res.body.data.pages<=1){
+                        return;
+                    }
                     // 设置分页
                     laypage.render({
                         elem: 'putProblemPage'
@@ -301,6 +304,9 @@
                 success(res) {
                     // 拼接数据
                     collectPageTable(res);
+                    if (res.body.data.pages<=1){
+                        return;
+                    }
                     // 设置分页
                     laypage.render({
                         elem: 'collect_problem_page'

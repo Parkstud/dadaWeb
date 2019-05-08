@@ -40,6 +40,13 @@
             justify-content: space-between;
         }
 
+        .problem-reply span:hover{
+            color: #c00;
+        }
+        .suggest-wrapper>.red-color {
+            color: #c00;
+        }
+
     </style>
 </head>
 <body>
@@ -56,8 +63,8 @@
             <li class="layui-nav-item">
                 <a class="fly-nav-avatar" href="javascript:;">
                     <cite class="layui-hide-xs">贤心</cite>
-                    <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>
-                    <i class="layui-badge fly-badge-vip layui-hide-xs">VIP3</i>
+                    <!--                    <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>-->
+                    <!--                    <i class="layui-badge fly-badge-vip layui-hide-xs">VIP3</i>-->
                     <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
                 </a>
                 <dl class="layui-nav-child">
@@ -89,43 +96,19 @@
                         <legend>题目</legend>
                     </fieldset>
 
-                    <blockquote class="layui-elem-quote">这个貌似不用多介绍，因为你已经在太多的地方都看到</blockquote>
+
+                    <blockquote class="layui-elem-quote" id="problem-title">
+                        这个貌似不用多介绍，因为你已经在太多的地方都看到
+                    </blockquote>
 
                     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
                         <legend>回答</legend>
                     </fieldset>
+                    <div id="answer-wrapper">
 
-                    <fieldset class="layui-elem-field">
-                        <legend>答案一</legend>
-                        <div class="layui-field-box">
-                            <div>
-                                <blockquote class="layui-elem-quote layui-quote-nm">
-                                    猿强，则国强。国强，则猿更强！
-                                    <br>——孟子（好囖。。其实这特喵的是我说的）
-                                </blockquote>
-                            </div>
-                            <div class="match-rate">匹配度
-                                <span class="layui-badge">80%</span>
-                            </div>
+                    </div>
 
-                            <div class="problem-reply">
-                                  <span>
-                                      <span>
-                                           <i class="layui-icon"
-                                              style="font-size: 20px; line-height: 15px"></i>
-                                            <em>赞同</em>
-                                      </span>
-                                        <span>
-                                              <i class="layui-icon"
-                                                 style="font-size: 20px; margin-left: 30px"></i>
-                                             <em>反对</em>
-                                        </span>
 
-                                  </span>
-                            </div>
-
-                        </div>
-                    </fieldset>
                     <fieldset class="layui-elem-field layui-field-title">
                     </fieldset>
                     <div class="question-end">
@@ -145,6 +128,8 @@
 
 <script src="../../res/layui/layui.all.js"></script>
 <script>
+    layui.cache.token = JSON.parse(localStorage.getItem('token'));
+    layui.cache.problem = JSON.parse(localStorage.getItem('answerProblem'));
     layui.cache.page = 'jie';
     layui.cache.user = {
         username: '游客'
@@ -158,7 +143,105 @@
         , base: '../../res/mods/'
     }).extend({
         fly: 'index'
-    }).use('fly');
+    }).use('fly', function () {
+        let fly = layui.fly;
+        let $ = layui.jquery;
+        if (layui.cache.token) {
+            // 登入
+            $('cite.layui-hide-xs').text(layui.cache.token.username);
+            // 设置nickname
+            $('.fly-nav-avatar img').attr('src', layui.imgUrl() + layui.cache.token.avatar);
+        }
+
+        // 获取答案
+        $('#problem-title').text(layui.cache.problem.title);
+        fly.json('/problem/intelligentQuestionAnswering', {
+            questionStr: layui.cache.problem.title
+        }, function (res) {
+            if (res.body.data) {
+                let wrapper = $('#answer-wrapper');
+                let indexArr = ['一', '二', '三'];
+                $.each(res.body.data, function (index, val) {
+                    let fieldsetDom = $('<fieldset class="layui-elem-field"></fieldset>');
+                    let legendDom = $('<legend></legend>').text('答案' + indexArr[index]);
+                    let div1Dom = $('<div class="layui-field-box"></div>');
+                    fieldsetDom.append(legendDom);
+                    let div2Dom = $('<div></div>');
+                    let blockquote = $('<blockquote class="layui-elem-quote layui-quote-nm"></blockquote>')
+                        .text(val.problem.answerContent);
+                    div2Dom.append(blockquote);
+                    div1Dom.append(div2Dom);
+
+                    div2Dom = $('<div class="match-rate">匹配度&nbsp;&nbsp;</div>');
+                    let span1Dom = $('<span class="layui-badge layui-bg-blue"></span>');
+                    span1Dom.append(val.similarityDegree + '%');
+                    div2Dom.append(span1Dom);
+                    div1Dom.append(div2Dom);
+
+                    div2Dom = $('<div class="problem-reply"></div>');
+                    span1Dom = $('<span class="suggest-wrapper"></span>').attr('problemId',val.problem.id);
+                    let span2Dom = $('<span class="comment-zan"></span>');
+                    let i1Dom = $('<i class="layui-icon" style="font-size: 20px; line-height: 15px">&#xe6c6;</i>');
+                    let em1DOm = $('<em>赞同</em>');
+                    span2Dom.append(i1Dom);
+                    span2Dom.append(em1DOm);
+                    span1Dom.append(span2Dom);
+                    span2Dom = $('<span class="comment-down"></span>');
+                    i1Dom = $('<i class="layui-icon" style="font-size: 20px; line-height: 15px">&#xe6c5;</i>');
+                    em1DOm = $('<em>反对</em>');
+                    span2Dom.append(i1Dom);
+                    span2Dom.append(em1DOm);
+                    span1Dom.append(span2Dom);
+                    div2Dom.append(span1Dom);
+                    div1Dom.append(div2Dom);
+                    fieldsetDom.append(div1Dom);
+
+                    wrapper.append(fieldsetDom);
+
+                })
+            } else {
+                // 问题开放
+                fly.json('/control/problem/putPersonAnswer',{
+                    problemId: layui.cache.problem.id
+                },function (res) {
+                    console.log('人工回答');
+                    console.log(res);
+                });
+
+                $('#answer-wrapper').append('<blockquote class="layui-elem-quote layui-quote-nm">暂无答案</blockquote>')
+            }
+            console.log(res);
+        }, {type: 'get'})
+
+        // 点赞
+        $('#answer-wrapper').on('click','.suggest-wrapper .comment-zan',function () {
+            let removeTemp=$('#answer-wrapper').find('.suggest-wrapper .red-color');
+            removeTemp.removeClass('red-color');
+            $(this).addClass('red-color');
+            let problemId=$(this).parent().attr('problemId');
+            fly.json('/control/problem/adoptAnswerProblem',{
+                answerId:problemId,
+                problemId: layui.cache.problem.id,
+                flag:true
+            },function (res) {
+                console.log(res);
+            })
+        });
+        // 反对
+        $('#answer-wrapper').on('click','.suggest-wrapper .comment-down',function () {
+            let removeTemp=$('#answer-wrapper').find('.suggest-wrapper .red-color');
+            removeTemp.removeClass('red-color');
+            $(this).addClass('red-color');
+            let problemId=$(this).parent().attr('problemId');
+            fly.json('/control/problem/adoptAnswerProblem',{
+                answerId:problemId,
+                problemId: layui.cache.problem.id,
+                flag:false
+            },function (res) {
+                console.log(res);
+            })
+        });
+    });
 </script>
 
 </body>

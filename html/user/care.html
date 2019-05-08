@@ -63,11 +63,27 @@
                 <a class="fly-nav-avatar" href="javascript:;">
                     <cite class="layui-hide-xs"></cite>
                     <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
+
                 </a>
+                <div id="tip-header-wrapper">
+                    <span class="layui-badge-dot"></span>
+                </div>
+
                 <dl class="layui-nav-child">
                     <dd><a href="../user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
-                    <dd><a href="../user/message.html"><i class="iconfont icon-tongzhi"
-                                                          style="top: 4px;"></i>我的消息</a></dd>
+                    <dd>
+                        <a href="../user/message.html" id="tip-header-notice">
+                        <i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的通知
+                        <span class="layui-badge-dot"></span>
+                        </a>
+                    </dd>
+
+                    <dd>
+                        <a href="../user/care.html#collection" target="_self" id="tip-header-msg" >
+                        <i class="layui-icon"   style="margin-left: 0; font-size: 22px;">&#xe63a;</i>
+                        我的消息
+                        <span class="layui-badge-dot"></span>
+                    </a></dd>
                     <dd><a href="../user/home.html"><i class="layui-icon"
                                                        style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
                     </dd>
@@ -307,10 +323,10 @@
             $('.mine-view').empty();
             $.each(res.body.data.records, function (index, val) {
                 let liItem = $('<li class="item_cont"> </li>');
-                let a1Item = $("<a></a>").attr('href', 'home.html?id' + val.userId);
+                let a1Item = $("<a></a>").attr('href', 'home.html?userId=' + val.userId);
                 let imgItem = $("<img class='header'>").attr('src', layui.imgUrl() + val.avatar);
                 a1Item.append(imgItem);
-                let a2Item = $('<a class="nick"></a>').attr('href', 'home.html?id' + val.userId).text(val.username);
+                let a2Item = $('<a class="nick"></a>').attr('href', 'home.html?userId=' + val.userId).text(val.username);
                 let a3Item = $('<a class="layui-btn layui-btn-primary"></a>')
                     .text(val.eachCare > 0 ? '相互关注' : '已关注').attr('value', val.userId);
 
@@ -363,6 +379,9 @@
                     // 拼接数据
                     careFullTable(res);
 
+                    if (res.body.data.pages<=1){
+                        return;
+                    }
                     // 设置分页
                     laypage.render({
                         elem: 'care_page'

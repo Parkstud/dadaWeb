@@ -17,6 +17,7 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
         return baseUrl;
     };
 
+
     var $ = layui.jquery
         , layer = layui.layer
         , laytpl = layui.laytpl
@@ -65,8 +66,88 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
         return num < Math.pow(10, length) ? str + (num | 0) : num;
     };
 
-    var fly = {
+    let lockReconnect = false;  //避免ws重复连接
+    let ws = null;          // 判断当前浏览器是否支持WebSocket
+    let wsUrl=null;
+    if (window.localStorage.getItem('token')) {
+        wsUrl = 'ws://192.168.43.106:8080/websocket/' + JSON.parse(window.localStorage.getItem('token')).id;
+    }
 
+    // initWebSocket(wsUrl);   //连接ws
+    // 设置websocket
+    function initWebSocket(url) {
+        try {
+            if ('WebSocket' in window) {
+                ws = new WebSocket(url);
+            } else if ('MozWebSocket' in window) {
+                ws = new MozWebSocket(url);
+            } else {
+                layui.use(['layer'], function () {
+                    layer.alert("您的浏览器不支持websocket协议,建议使用新版谷歌、火狐等浏览器，请勿使用IE10以下浏览器，360浏览器请使用极速模式，不要使用兼容模式！");
+                });
+            }
+            initEventHandle();
+        } catch (e) {
+            reconnect(url);
+            console.log(e);
+        }
+    }
+
+    // 使用websocket
+    function initEventHandle() {
+        ws.onclose = function () {
+            reconnect(wsUrl);
+            console.log("llws连接关闭!" + new Date().toUTCString());
+        };
+        ws.onerror = function () {
+            reconnect(wsUrl);
+            console.log("llws连接错误!");
+        };
+        ws.onopen = function () {
+            heartCheck.reset().start();      //心跳检测重置
+            console.log("llws连接成功!" + new Date().toUTCString());
+        };
+        ws.onmessage = function (event) {    //如果获取到消息，心跳检测重置
+            heartCheck.reset().start();      //拿到任何消息都说明当前连接是正常的
+            console.log("llws收到消息啦:" + event.data);
+        }
+    }
+
+    // 重连
+    function reconnect() {
+        if (lockReconnect) return;
+        lockReconnect = true;
+        setTimeout(function () {     //没连接上会一直重连，设置延迟避免请求过多
+            initWebSocket(wsUrl);
+            lockReconnect = false;
+        }, 2000);
+    }
+
+    //心跳检测
+    let heartCheck = {
+        timeout: 540000,        //9分钟发一次心跳
+        timeoutObj: null,
+        serverTimeoutObj: null,
+        reset: function () {
+            clearTimeout(this.timeoutObj);
+            clearTimeout(this.serverTimeoutObj);
+            return this;
+        },
+        start: function () {
+            var self = this;
+            this.timeoutObj = setTimeout(function () {
+                //这里发送一个心跳，后端收到后，返回一个心跳消息，
+                //onmessage拿到返回的心跳就说明连接正常
+                ws.send("ping");
+                self.serverTimeoutObj = setTimeout(function () {//如果超过一定时间还没重置，说明后端主动断开了
+                    ws.close();     //如果onclose会执行reconnect，我们执行ws.close()就行了.如果直接执行reconnect 会触发onclose导致重连两次
+                }, self.timeout)
+            }, this.timeout)
+        }
+    }
+
+
+    var fly = {
         //Ajax
         json: function (url, data, success, options) {
             var that = this, type = typeof data === 'function';
@@ -91,7 +172,7 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
                     }
                 },
                 success: function (res) {
-                    if (res.head.stateCode === 200) {
+                    if (res.body) {
                         success && success(res);
                     } else {
                         layer.msg(res.head.msg || res.head.stateCode, {shift: 6, icon: 5});
@@ -526,7 +607,7 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
             , shadeClose: true
             , maxWidth: 10000
             , skin: 'fly-layer-search'
-            , content: ['<form action="http://cn.bing.com/search">'
+            , content: ['<form action="http://cn.bing.com/search" target="_blank">'
                 , '<input autocomplete="off" placeholder="搜索内容，回车跳转" type="text" name="q">'
                 , '</form>'].join('')
             , success: function (layero) {
@@ -538,7 +619,7 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
                     if (val.replace(/\s/g, '') === '') {
                         return false;
                     }
-                    input.val('site:layui.com ' + input.val());
+                    input.val(input.val());
                 });
             }
         })
@@ -588,8 +669,20 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
     form.on('submit(login)', function (data) {
         let action = $(data.form).attr('action');
         fly.json(action, data.field, function (res) {
-            localStorage.setItem('token', JSON.stringify(res.body.data));
-            location.href = 'set.html';
+            console.log(res)
+
+            if (res.head.stateCode === 200) {
+                if (res.body.data) {
+                    localStorage.setItem('token', JSON.stringify(res.body.data));
+                    location.href = 'set.html';
+                } else {
+                    layer.msg('登录失败', {icon: 2});
+                }
+            } else {
+                layer.msg(res.head.msg, {icon: 2});
+            }
+
+
         });
         return false;
     });
@@ -639,6 +732,21 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
         return false;
     });
 
+    form.on('submit(problem)', function (data) {
+        let action = $(data.form).attr('action'), button = $(data.elem);
+        fly.json('/control/problem/info', data.field, function (res) {
+            console.log(res);
+            if (res.body.data) {
+                window.localStorage.setItem('answerProblem', JSON.stringify(res.body.data));
+                location.href = 'problem.html';
+            } else {
+                layer.msg(res.head.msg, {icon: 2});
+            }
+
+        });
+        return false;
+    });
+
     //表单提交
     form.on('submit(*)', function (data) {
         var action = $(data.form).attr('action'), button = $(data.elem);
@@ -681,6 +789,7 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
     //     elem: '.fly-editor'
     // });
 
+
     //手机设备的简单适配
     var treeMobile = $('.site-tree-mobile')
         , shadeMobile = $('.site-mobile-shade')
@@ -707,8 +816,8 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
         , bgcolor: '#009688'
         , click: function (type) {
             if (type === 'bar1') {
-                layer.msg('打开 index.js，开启发表新帖的路径');
-                //location.href = 'jie/add.html';
+                // layer.msg('打开 index.js，开启发表新帖的路径');
+                location.href = '/layui-v2.4.5/html/jie/add.html';
             }
         }
     });

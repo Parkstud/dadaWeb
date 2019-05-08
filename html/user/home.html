@@ -259,9 +259,9 @@
         } else {
             layui.cache.chooseUser = layui.cache.token;
         }
-
         // 获取个人信息
         function getUserInfo(userId) {
+
             $.ajax({
                     url: layui.baseUrl() + '/userAccount/user/account',
                     type: 'get',
@@ -269,7 +269,7 @@
                     async: false,
                     success(res) {
                         layui.cache.chooseUser = res.body.data;
-                        console.log();
+                        console.log(res);
                     },
                     error(err) {
                         console.log(err)
@@ -329,25 +329,30 @@
         $('div.fly-sns').on('click', '#user_msg', function () {
             console.log('私信');
         });
+
         setUserInfo();
+        getPutProblemList(1, 10);
 
         // 设置提问信息
         $('#put_problem_title').text(layui.cache.chooseUser.username + ' 最近的提问');
         // 获取提问信息列表
-        getPutProblemList(1, 10);
+
 
         function getPutProblemList(current, size) {
-
+            console.log('cur');
+            let ajaxObj=layui.cache.chooseUser;
+            ajaxObj.username='';
             $.ajax({
                 url: layui.baseUrl() + '/problemInfo/PageProblemInfo',
                 type: 'get',
                 data: {current: current, size: size},
                 dataType: 'json',
                 headers: {
-                    Authorization: JSON.stringify(layui.cache.chooseUser)
+                    Authorization: JSON.stringify(ajaxObj)
                 },
                 success(res) {
-                    let records = res.body.data.records
+                    console.log(res);
+                    let records = res.body.data.records;
                     let putList = $('#put_problem_list');
                     if (records) {
                         console.log(records);
@@ -445,7 +450,7 @@
                     }
                 },
                 error(err) {
-
+                    console.log(err)
                 }
             });
         }
@@ -455,8 +460,6 @@
             getAnswerList(parseInt(cur) + 1, 10);
             $(this).parent().remove();
         });
-
-
     });
 
 </script>
