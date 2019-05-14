@@ -21,13 +21,26 @@
             <!-- 登入后的状态 -->
             <li class="layui-nav-item">
                 <a class="fly-nav-avatar" href="javascript:;">
-                    <cite class="layui-hide-xs"></cite>
+                    <cite class="layui-hide-xs">
+                        <span class="layui-badge-dot"></span>
+                    </cite>
                     <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
+
                 </a>
+                <div id="tip-header-wrapper" style="display:none">
+                    <span class="layui-badge-dot" style="right: -16px"></span>
+                </div>
                 <dl class="layui-nav-child">
                     <dd><a href="../user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
-                    <dd><a href="../user/message.html"><i class="iconfont icon-tongzhi"
-                                                          style="top: 4px;"></i>我的消息</a></dd>
+                    <dd>
+                        <a href="../user/message.html">
+                            <i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的通知
+                            <span class="layui-badge-dot"></span>
+                            <span id="tip-header-notice" style="display:none">
+                                 <span class="layui-badge-dot"></span>
+                            </span>
+                        </a>
+                    </dd>
                     <dd><a href="../user/home.html"><i class="layui-icon"
                                                        style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
                     </dd>
@@ -46,13 +59,11 @@
     <h1>
         贤心
         <i class="iconfont icon-nan"></i>
-        <!-- <i class="iconfont icon-nv"></i>  -->
-        <!--<i class="layui-badge fly-badge-vip">VIP3</i>-->
-        <!--
+        <i class="iconfont icon-nv"></i>
+        <i class="layui-badge fly-badge-vip">VIP3</i>
         <span style="color:#c00;">（管理员）</span>
         <span style="color:#5FB878;">（社区之光）</span>
         <span>（该号已被封）</span>
-        -->
     </h1>
 
     <!--<p style="padding: 10px 0; color: #5FB878;">认证信息：layui 作者</p>-->
@@ -107,28 +118,28 @@
             <div class="fly-panel">
                 <h3 class="fly-panel-title" id="user_answer"></h3>
                 <ul class="home-jieda" id="answer_list">
-<!--                    <li>-->
-<!--                        <p>-->
-<!--                            <span>1分钟前</span>-->
-<!--                            在<a href="" target="_blank">tips能同时渲染多个吗?</a>中回答：-->
-<!--                        </p>-->
-<!--                        <div class="home-dacontent">-->
-<!--                            尝试给layer.photos加上这个属性试试：-->
-<!--                            <pre>-->
-<!--full: true-->
-<!--</pre>-->
-<!--                            文档没有提及-->
-<!--                        </div>-->
-<!--                    </li>-->
-<!--                    <li>-->
-<!--                        <p>-->
-<!--                            <span>5分钟前</span>-->
-<!--                            在<a href="" target="_blank">在Fly社区用的是什么系统啊?</a>中回答：-->
-<!--                        </p>-->
-<!--                        <div class="home-dacontent">-->
-<!--                            Fly社区采用的是NodeJS。分享出来的只是前端模版-->
-<!--                        </div>-->
-<!--                    </li>-->
+                    <!--                    <li>-->
+                    <!--                        <p>-->
+                    <!--                            <span>1分钟前</span>-->
+                    <!--                            在<a href="" target="_blank">tips能同时渲染多个吗?</a>中回答：-->
+                    <!--                        </p>-->
+                    <!--                        <div class="home-dacontent">-->
+                    <!--                            尝试给layer.photos加上这个属性试试：-->
+                    <!--                            <pre>-->
+                    <!--full: true-->
+                    <!--</pre>-->
+                    <!--                            文档没有提及-->
+                    <!--                        </div>-->
+                    <!--                    </li>-->
+                    <!--                    <li>-->
+                    <!--                        <p>-->
+                    <!--                            <span>5分钟前</span>-->
+                    <!--                            在<a href="" target="_blank">在Fly社区用的是什么系统啊?</a>中回答：-->
+                    <!--                        </p>-->
+                    <!--                        <div class="home-dacontent">-->
+                    <!--                            Fly社区采用的是NodeJS。分享出来的只是前端模版-->
+                    <!--                        </div>-->
+                    <!--                    </li>-->
 
                     <!-- <div class="fly-none" style="min-height: 50px; padding:30px 0; height:auto;"><span>没有回答任何问题</span></div> -->
                 </ul>
@@ -259,6 +270,7 @@
         } else {
             layui.cache.chooseUser = layui.cache.token;
         }
+
         // 获取个人信息
         function getUserInfo(userId) {
 
@@ -296,8 +308,8 @@
                         divDom.append(a1Dom);
                     }
 
-                    let a2Dom = $('<a class="layui-btn layui-btn-normal fly-imActive" id="user_msg">私信</a>');
-                    divDom.append(a2Dom);
+                    // let a2Dom = $('<a class="layui-btn layui-btn-normal fly-imActive" id="user_msg">私信</a>');
+                    // divDom.append(a2Dom);
                     $('#personInfo').append(divDom);
                 }, {type: 'get'})
             }
@@ -305,9 +317,11 @@
             $('#personInfo img')
                 .attr('src', layui.imgUrl() + layui.cache.chooseUser.avatar)
                 .attr('alt', layui.cache.chooseUser.username);
-            $('#personInfo h1').text(layui.cache.chooseUser.username);
+            console.log(layui.cache.chooseUser)
+            $('#personInfo h1').html(layui.cache.chooseUser.username);
 
         };
+
 
         // 点击关注
         $('div.fly-sns').on('click', '#user_care', function () {
@@ -325,68 +339,64 @@
                 })
             }
         });
-        // 点击私信
-        $('div.fly-sns').on('click', '#user_msg', function () {
-            console.log('私信');
-        });
+        // // 点击私信
+        // $('div.fly-sns').on('click', '#user_msg', function () {
+        //     console.log('私信');
+        // });
 
         setUserInfo();
         getPutProblemList(1, 10);
 
         // 设置提问信息
         $('#put_problem_title').text(layui.cache.chooseUser.username + ' 最近的提问');
+
         // 获取提问信息列表
 
 
         function getPutProblemList(current, size) {
             console.log('cur');
-            let ajaxObj=layui.cache.chooseUser;
-            ajaxObj.username='';
-            $.ajax({
-                url: layui.baseUrl() + '/problemInfo/PageProblemInfo',
-                type: 'get',
-                data: {current: current, size: size},
-                dataType: 'json',
-                headers: {
-                    Authorization: JSON.stringify(ajaxObj)
-                },
-                success(res) {
-                    console.log(res);
-                    let records = res.body.data.records;
-                    let putList = $('#put_problem_list');
-                    if (records) {
-                        console.log(records);
-                        $.each(records, function (index, val) {
-                            let liDom = $('<li></li>')
-                            let aDom = $('<a class="jie-title"></a>').text(val.problemTitle)
-                                .attr('href', '../jie/detail.html?problemId=' + val.problemId);
-                            let iDom = $('<i></i>').text(timeago(val.time));
-                            let emDom = $("<em class='layui-hide-xs'></em>").text(val.collection + ' 收藏 / ' + val.answersCount + ' 回答');
-                            liDom.append(aDom);
-                            liDom.append(iDom);
-                            liDom.append(emDom);
-                            putList.append(liDom);
-                        });
-                        if (current < res.body.data.pages) {
-                            let moreDivDom = $('<div style="text-align: center"  id="more_put_problem"> ' +
-                                '</div>').attr('value', current);
-                            let moreADom = $('<div class="laypage-main"><a href="javascript:void(0)" class="laypage-next">加载更多</a></div>')
-                                .attr('value', current);
-                            moreDivDom.append(moreADom);
-                            putList.append(moreDivDom);
-                        }
-
-                        if (records.length === 0) {
-                            let noDivDom = $('<div class="fly-none" id="no_put_problem" style="min-height: 50px; padding:30px 0; height:auto">' +
-                                '<i style="font-size:14px;">没有发表任何问题</i></div>');
-                            putList.append(noDivDom);
-                        }
-
+            let ajaxObj = layui.cache.chooseUser;
+            ajaxObj.username = '';
+            fly.json('/problemInfo/PageProblemInfo', {
+                current: current, size: size
+            }, function (res) {
+                console.log(res);
+                let records = res.body.data.records;
+                let putList = $('#put_problem_list');
+                if (records) {
+                    console.log(records);
+                    $('#before-ajax-putlist').remove();
+                    $.each(records, function (index, val) {
+                        let liDom = $('<li></li>')
+                        let aDom = $('<a class="jie-title"></a>').text(val.problemTitle)
+                            .attr('href', '../jie/detail.html?problemId=' + val.problemId);
+                        let iDom = $('<i></i>').text(timeago(val.time));
+                        let emDom = $("<em class='layui-hide-xs'></em>").text(val.collection + ' 收藏 / ' + val.answersCount + ' 回答');
+                        liDom.append(aDom);
+                        liDom.append(iDom);
+                        liDom.append(emDom);
+                        putList.append(liDom);
+                    });
+                    if (current < res.body.data.pages) {
+                        let moreDivDom = $('<div style="text-align: center"  id="more_put_problem"> ' +
+                            '</div>').attr('value', current);
+                        let moreADom = $('<div class="laypage-main"><a href="javascript:void(0)" class="laypage-next">加载更多</a></div>')
+                            .attr('value', current);
+                        moreDivDom.append(moreADom);
+                        putList.append(moreDivDom);
                     }
-                },
-                error(err) {
 
+                    if (records.length === 0) {
+                        let noDivDom = $('<div class="fly-none" id="no_put_problem" style="min-height: 50px; padding:30px 0; height:auto">' +
+                            '<i style="font-size:14px;">没有发表任何问题</i></div>');
+                        putList.append(noDivDom);
+                    }
                 }
+            }, {type: 'get'}, function (request) {
+                request.setRequestHeader("Authorization", JSON.stringify(ajaxObj));
+                $('#put_problem_list').append('<li id="before-ajax-putlist" ' +
+                    'style="height:70px;border-bottom:0;display: flex;justify-content: center;align-items: center"><' +
+                    '<i style="font-size: 48px" class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i></li>')
             });
 
         }
@@ -404,56 +414,53 @@
         getAnswerList(1, 10);
 
         function getAnswerList(current, size) {
-            $.ajax({
-                url: layui.baseUrl() + '/problemInfo/myAnswerInfo',
-                type: 'get',
-                data: {current: current, size: size},
-                dataType: 'json',
-                headers: {
-                    Authorization: JSON.stringify(layui.cache.chooseUser)
-                },
-                success(res) {
-                    let records = res.body.data.records;
-                    let answerList = $('#answer_list');
-                    if (records) {
-                        console.log(records);
-                        $.each(records, function (index, val) {
-                            let liDom = $('<li></li>');
-                            let pDom = $('<p></p>');
-                            let span1Dom = $('<span></span>').text(timeago(val.time) + '在');
-                            let aDom = $('<a target="_blank"></a>').text(val.title).attr('href', '../jie/detail.html?problemId='+val.problemId);
-                            let span2Dom = $('<span></span>').text(' 中回答:');
-                            pDom.append(span1Dom);
-                            pDom.append(aDom);
-                            pDom.append(span2Dom);
-                            let divDom=$('<div class="home-dacontent"></div>').text(val.comments);
+            fly.json('/problemInfo/myAnswerInfo',{
+                current: current, size: size
+            },function (res) {
+                $('#before-ajax-answerlist').remove();
+                let records = res.body.data.records;
+                let answerList = $('#answer_list');
+                if (records) {
+                    console.log(records);
+                    $.each(records, function (index, val) {
+                        let liDom = $('<li></li>');
+                        let pDom = $('<p></p>');
+                        let span1Dom = $('<span></span>').text(timeago(val.time) + '在');
+                        let aDom = $('<a target="_blank"></a>').text(val.title).attr('href', '../jie/detail.html?problemId=' + val.problemId);
+                        let span2Dom = $('<span></span>').text(' 中回答:');
+                        pDom.append(span1Dom);
+                        pDom.append(aDom);
+                        pDom.append(span2Dom);
+                        let divDom = $('<div class="home-dacontent"></div>').html(val.comments);
 
-                            liDom.append(pDom);
-                            liDom.append(divDom);
-                            answerList.append(liDom);
-                        });
-                        if (current < res.body.data.pages) {
-                            let moreDivDom = $('<div style="text-align: center"  id="more_put_problem"> ' +
-                                '</div>').attr('value', current);
-                            let moreADom = $('<div class="laypage-main"><a href="javascript:void(0)" class="laypage-next">加载更多</a></div>')
-                                .attr('value', current);
-                            moreDivDom.append(moreADom);
-                            answerList.append(moreDivDom);
-                        }
-
-                        if (records.length === 0) {
-                            let noDivDom = $('<div class="fly-none" id="no_put_problem" style="min-height: 50px; padding:30px 0; height:auto">' +
-                                '<i style="font-size:14px;">没有回答任何问题</i></div>');
-                            answerList.append(noDivDom);
-                        }
-
+                        liDom.append(pDom);
+                        liDom.append(divDom);
+                        answerList.append(liDom);
+                    });
+                    if (current < res.body.data.pages) {
+                        let moreDivDom = $('<div style="text-align: center"  id="more_put_problem"> ' +
+                            '</div>').attr('value', current);
+                        let moreADom = $('<div class="laypage-main"><a href="javascript:void(0)" class="laypage-next">加载更多</a></div>')
+                            .attr('value', current);
+                        moreDivDom.append(moreADom);
+                        answerList.append(moreDivDom);
                     }
-                },
-                error(err) {
-                    console.log(err)
+
+                    if (records.length === 0) {
+                        let noDivDom = $('<div class="fly-none" id="no_put_problem" style="min-height: 50px; padding:30px 0; height:auto">' +
+                            '<i style="font-size:14px;">没有回答任何问题</i></div>');
+                        answerList.append(noDivDom);
+                    }
                 }
+            },{type:'get'},function (request) {
+                request.setRequestHeader("Authorization", JSON.stringify(layui.cache.chooseUser));
+                $('#answer_list').append('<li id="before-ajax-answerlist"' +
+                    ' style="height:70px;border-bottom:0;display: flex;justify-content: center;align-items: center">' +
+                    '<i style="font-size: 48px;color: #999;" ' +
+                    'class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i></li>')
             });
         }
+
         // 更多回答信息
         $('#answer_list').on('click', '.laypage-main', function () {
             let cur = $(this).attr('value');

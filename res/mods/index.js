@@ -68,7 +68,7 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
 
     let lockReconnect = false;  //避免ws重复连接
     let ws = null;          // 判断当前浏览器是否支持WebSocket
-    let wsUrl=null;
+    let wsUrl = null;
     if (window.localStorage.getItem('token')) {
         wsUrl = 'ws://192.168.43.106:8080/websocket/' + JSON.parse(window.localStorage.getItem('token')).id;
     }
@@ -149,7 +149,7 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
 
     var fly = {
         //Ajax
-        json: function (url, data, success, options) {
+        json: function (url, data, success, options, beforeAjax) {
             var that = this, type = typeof data === 'function';
 
             if (type) {
@@ -170,6 +170,7 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
                     if (url !== '/userAccount/login') {
                         request.setRequestHeader("Authorization", localStorage.getItem('token'));
                     }
+                    beforeAjax && beforeAjax(request);
                 },
                 success: function (res) {
                     if (res.body) {
@@ -385,7 +386,45 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
         }
 
         //新消息通知
-        , newmsg: function () {
+        , newnotice: function () {
+            let tip1 = $('#tip-header-wrapper');
+            let tip2 = $('#tip-header-notice');
+            let dot = $('<span class="layui-badge"></span>');
+            let tip3 = $('#tip-left-notice');
+
+            let user = window.localStorage.getItem('token');
+            let noticeCount = window.localStorage.getItem('noticeCount');
+            if (noticeCount) {
+                if(parseInt(noticeCount)>0){
+                    tip1.show();
+                    tip2.show();
+                    dot.text(parseInt(noticeCount));
+                    tip3.append(dot);
+                }
+            }
+            if (user) {
+
+
+                fly.json('/message/notices/count', null, function (res) {
+                    console.log(res);
+                    if (res.body.data > 0) {
+                        window.localStorage.setItem('noticeCount', res.body.data);
+                        // 设置头导航
+                        tip1.show();
+                        // 设置头下导航
+
+                        tip2.show();
+                        // 左导航
+                        let span = $('#not-read-span');
+                        span.text('你有 ' + res.body.data + ' 条未读消息!');
+                        tip3.empty();
+                        dot.text(res.body.data);
+                        tip3.append(dot);
+                    }
+                }, {type: 'get'});
+
+            }
+
             var elemUser = $('.fly-nav-user');
             if (layui.cache.user.uid !== -1 && elemUser[0]) {
                 fly.json('/message/nums/', {
@@ -626,7 +665,7 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
     });
 
     //新消息通知
-    fly.newmsg();
+    fly.newnotice();
 
     //发送激活邮件
     fly.activate = function (email) {

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="keywords" content="达达问答">
     <meta name="description" content="达达达数据结构专业问答">
-    <link rel="stylesheet" href="../../res/layui/css/layui.css">
+    <link rel="stylesheet" href="../../layui/css/layui.css">
     <link rel="stylesheet" href="../../res/css/global.css">
     <style type="text/css">
         .my-search-btn {
@@ -140,21 +140,32 @@
             <!--            </li>-->
             <!-- 登入后的状态 -->
             <li class="layui-nav-item">
-                <a class="fly-nav-avatar" id="user_info" href="javascript:;">
-                    <cite class="layui-hide-xs">贤心</cite>
-                    <!--                <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>-->
-                    <!--                <i class="layui-badge fly-badge-vip layui-hide-xs">VIP3</i>-->
+                <a class="fly-nav-avatar" href="javascript:;">
+                    <cite class="layui-hide-xs">
+                        <span class="layui-badge-dot"></span>
+                    </cite>
                     <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
+
                 </a>
+                <div id="tip-header-wrapper" style="display:none">
+                    <span class="layui-badge-dot" style="right: -16px"></span>
+                </div>
                 <dl class="layui-nav-child">
-                    <dd><a href="user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
-                    <dd><a href="user/message.html"><i class="iconfont icon-tongzhi"
-                                                       style="top: 4px;"></i>我的消息</a></dd>
-                    <dd><a href="user/home.html"><i class="layui-icon"
-                                                    style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
+                    <dd><a href="../user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
+                    <dd>
+                        <a href="../user/message.html">
+                            <i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的通知
+                            <span class="layui-badge-dot"></span>
+                            <span id="tip-header-notice"  style="display:none">
+                                 <span class="layui-badge-dot"></span>
+                            </span>
+                        </a>
+                    </dd>
+                    <dd><a href="../user/home.html"><i class="layui-icon"
+                                                       style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
                     </dd>
                     <hr style="margin: 5px 0;">
-                    <dd><a href="user/login.html" style="text-align: center;">退出</a></dd>
+                    <dd><a href="" style="text-align: center;">退出</a></dd>
                 </dl>
             </li>
         </ul>
@@ -285,7 +296,6 @@
                         <div class="layui-form-item">
                             <button class="layui-btn" id="put_comment">提交回复</button>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -298,47 +308,49 @@
 <!--                    </div>-->
 <!--                    <button type="submit" class="layui-btn my-search-btn">搜索</button>-->
 <!--                </div>-->
-                <dt class="fly-panel-title">本周热议</dt>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
+                <dt  class="fly-panel-title">本周热议</dt>
+                <div id="detail-hot-week"></div>
+<!--                <dd>-->
+<!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
+<!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+<!--                </dd>-->
+<!--                <dd>-->
+<!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
+<!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+<!--                </dd>-->
+<!--                <dd>-->
+<!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
+<!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+<!--                </dd>-->
+<!--                <dd>-->
+<!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
+<!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+<!--                </dd>-->
+<!--                <dd>-->
+<!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
+<!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+<!--                </dd>-->
+<!--                <dd>-->
+<!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
+<!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+<!--                </dd>-->
+<!--                <dd>-->
+<!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
+<!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+<!--                </dd>-->
+<!--                <dd>-->
+<!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
+<!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+<!--                </dd>-->
+<!--                <dd>-->
+<!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
+<!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+<!--                </dd>-->
+<!--                <dd>-->
+<!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
+<!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+<!--                </dd>-->
+<!--                <i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>-->
 
                 <!-- 无数据时 -->
                 <!--
@@ -346,22 +358,8 @@
                 -->
             </dl>
 
-            <div class="fly-panel">
-                <div class="fly-panel-title">
-                    这里可作为广告区域
-                </div>
-                <div class="fly-panel-main">
-                    <a href="http://layim.layui.com/?from=fly" target="_blank"
-                       class="fly-zanzhu"
-                       time-limit="2017.09.25-2099.01.01" style="background-color: #5FB878;">LayIM
-                        3.0 - layui 旗舰之作</a>
-                </div>
-            </div>
 
-            <div class="fly-panel" style="padding: 20px 0; text-align: center;">
-                <img src="../../res/images/weixin.jpg" style="max-width: 100%;" alt="layui">
-                <p style="position: relative; color: #666;">微信扫码关注 layui 公众号</p>
-            </div>
+
 
         </div>
     </div>
@@ -988,6 +986,27 @@
             });
 
         });
+
+        // 本周热议
+        hotWeek();
+        function hotWeek() {
+            let divDom=$('#detail-hot-week');
+            divDom.empty();
+            fly.json('/problemInfo/hotWeek',null,function (res) {
+                $.each(res.body.data,function (index, val) {
+                    let ddDom=$('<dd></dd>');
+                    let aDOm=$('<a></a>')
+                        .attr('href','detail.html?problemId='+val.problemId)
+                        .text(val.title);
+                    let spanDom=$('<span></span>').html('<i class="iconfont icon-pinglun1"></i> '+val.answerCount);
+                    ddDom.append(aDOm);
+                    ddDom.append(spanDom);
+                    divDom.append(ddDom);
+                })
+            },{type:'get'});
+
+        }
+
         // 举报回复
         $('#jieda').on('click', '.reply-report', function () {
             let replyId = $(this).parent().attr('replyid');

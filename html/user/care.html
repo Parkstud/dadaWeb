@@ -61,34 +61,31 @@
             <!-- 登入后的状态 -->
             <li class="layui-nav-item">
                 <a class="fly-nav-avatar" href="javascript:;">
-                    <cite class="layui-hide-xs"></cite>
+                    <cite class="layui-hide-xs">
+                        <span class="layui-badge-dot"></span>
+                    </cite>
                     <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
 
                 </a>
-                <div id="tip-header-wrapper">
-                    <span class="layui-badge-dot"></span>
+                <div id="tip-header-wrapper" style="display:none">
+                    <span class="layui-badge-dot" style="right: -16px"></span>
                 </div>
-
                 <dl class="layui-nav-child">
                     <dd><a href="../user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
                     <dd>
-                        <a href="../user/message.html" id="tip-header-notice">
-                        <i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的通知
-                        <span class="layui-badge-dot"></span>
+                        <a href="../user/message.html">
+                            <i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的通知
+                            <span class="layui-badge-dot"></span>
+                            <span id="tip-header-notice"  style="display:none">
+                                 <span class="layui-badge-dot"></span>
+                            </span>
                         </a>
                     </dd>
-
-                    <dd>
-                        <a href="../user/care.html#collection" target="_self" id="tip-header-msg" >
-                        <i class="layui-icon"   style="margin-left: 0; font-size: 22px;">&#xe63a;</i>
-                        我的消息
-                        <span class="layui-badge-dot"></span>
-                    </a></dd>
                     <dd><a href="../user/home.html"><i class="layui-icon"
                                                        style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
                     </dd>
                     <hr style="margin: 5px 0;">
-                    <dd><a href="login.html" style="text-align: center;">退出</a></dd>
+                    <dd><a href="" style="text-align: center;">退出</a></dd>
                 </dl>
             </li>
         </ul>
@@ -119,11 +116,13 @@
             <a href="message.html">
                 <i class="layui-icon">&#xe667;</i>
                 我的通知
+                <span id="tip-left-notice">
+                </span>
             </a>
         </li>
         <li class="layui-nav-item layui-this">
             <a href="care.html">
-                <i class="layui-icon">&#xe611;</i>
+                <i class="layui-icon">&#xe770;</i>
                 我的关注
             </a>
         </li>
@@ -151,7 +150,7 @@
                 <li data-type="mine-jie" lay-id="index" class="layui-this">我的关注
                 </li>
                 <li data-type="collection" data-url="/collection/find/" lay-id="collection">
-                    私信
+                    我的粉丝
                 </li>
             </ul>
             <div class="layui-tab-content" style="padding: 20px 0;">
@@ -159,122 +158,122 @@
                     <ul class="mine-view">
 
 
-                        <!--<li class="item_cont">-->
-                            <!--<a-->
-                                    <!--href="//me.csdn.net/qq_43918783"-->
-                                    <!--target="_blank"-->
-                            <!--&gt;<img-->
-                                    <!--src="https://avatar.csdn.net/9/5/6/3_qq_43918783.jpg" alt=""-->
-                                    <!--class="header"></a>-->
-                            <!--<a-->
-                                    <!--href="//me.csdn.net/qq_43918783"-->
-                                    <!--title="qq_43918783"-->
-                                    <!--target="_blank" class="nick">奥术&lt;!&ndash;笑，为谁含羞&ndash;&gt;</a>-->
-                            <!--<a class="layui-btn layui-btn-normal">取消关注</a>-->
-                        <!--</li>-->
-
                     </ul>
                     <div id="care_page"></div>
                 </div>
                 <div class="layui-tab-item">
-                    <div class=" layui-layer-page layui-box layui-layim-chat1"
-                         type="page"
-                         style="z-index: 19891015; width: 790px; top: 129px; left: 65px; min-width: 500px; min-height: 420px; background-image: none; display: block; height: 510px;">
-                        <div class="layui-layer-title" style="cursor: move;">​</div>
-                        <div id="layui-layim-chat" class="layui-layer-content"
-                             style="height: 430px;">
-                            <ul class="layui-unselect layim-chat-list"
-                                style="height: 510px; display: block;">
-                                <li class="layim-kefu1111111 layim-chatlist-kefu1111111 layim-this"
-                                ><img
-                                        src="//tp1.sinaimg.cn/5619439268/180/40030060651/1"><span>在线客服一</span>
-                                </li>
-                                <li class="layim-kefu2222222 layim-chatlist-kefu2222222"
-                                ><img
-                                        src="//tp1.sinaimg.cn/5619439268/180/40030060651/1"><span>在线客服二</span>
-                                </li>
-                            </ul>
-                            <div class="layim-chat-box" style="margin-left: 200px;">
-                                <div class="layim-chat layim-chat-kefu layui-show">
-                                    <div class="layui-unselect layim-chat-title">
-                                        <div class="layim-chat-other"><img class="layim-kefu1111111"
-                                                                           src="//tp1.sinaimg.cn/5619439268/180/40030060651/1"><span
-                                                class="layim-chat-username"
-                                        >在线客服一  </span>
-                                            <p class="layim-chat-status"></p></div>
-                                    </div>
-                                    <div class="layim-chat-main" style="height: 252px;">
-                                        <ul>
-                                            <li class="layim-chat-mine">
-                                                <div class="layim-chat-user"><img
-                                                        src="//res.layui.com/images/fly/avatar/00.jpg"><cite><i>2019-04-27
-                                                    14:18:11</i>访客</cite></div>
-                                                <div class="layim-chat-text">奥术大师多</div>
-                                            </li>
-                                            <li class="layim-chat-mine">
-                                                <div class="layim-chat-user"><img
-                                                        src="//res.layui.com/images/fly/avatar/00.jpg"><cite><i>2019-04-27
-                                                    14:31:24</i>访客</cite></div>
-                                                <div class="layim-chat-text">da<br></div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="layim-chat-footer">
-                                        <div class="layedit-tool-face">
-                                            <textarea id="face" style="display: none;"></textarea>
-                                        </div>
-                                        <!--<div class="layui-unselect layim-chat-tool"-->
-                                        <!--data-json="%7B%22name%22%3A%22%E5%9C%A8%E7%BA%BF%E5%AE%A2%E6%9C%8D%E4%B8%80%22%2C%22type%22%3A%22kefu%22%2C%22avatar%22%3A%22%2F%2Ftp1.sinaimg.cn%2F5619439268%2F180%2F40030060651%2F1%22%2C%22id%22%3A1111111%7D">-->
-                                        <!--&lt;!&ndash;<span class="layui-icon layim-tool-face" title="选择表情"&ndash;&gt;-->
-                                        <!--&lt;!&ndash;&gt;</span>&ndash;&gt;-->
-                                        <!--</div>-->
-                                        <!-- class="layim-chat-textarea"-->
-
-                                        <div class="layim-chat-bottom">
-                                            <div class="layim-chat-send"><span
-                                                    class="layim-send-btn"
-                                            >发送</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="layim-chat layim-chat-kefu">
-                                    <div class="layui-unselect layim-chat-title">
-                                        <div class="layim-chat-other"><img class="layim-kefu2222222"
-                                                                           src="//tp1.sinaimg.cn/5619439268/180/40030060651/1"><span
-                                                class="layim-chat-username"
-                                        >在线客服二  </span>
-                                            <p class="layim-chat-status"></p></div>
-                                    </div>
-                                    <div class="layim-chat-main" style="height: 252px;">
-                                        <ul></ul>
-                                    </div>
-                                    <div class="layim-chat-footer">
-                                        <div class="layui-unselect layim-chat-tool"
-                                             data-json="%7B%22name%22%3A%22%E5%9C%A8%E7%BA%BF%E5%AE%A2%E6%9C%8D%E4%BA%8C%22%2C%22type%22%3A%22kefu%22%2C%22avatar%22%3A%22%2F%2Ftp1.sinaimg.cn%2F5619439268%2F180%2F40030060651%2F1%22%2C%22id%22%3A2222222%7D">
-                                            <span class="layui-icon layim-tool-face" title="选择表情"
-                                            ></span></div>
-                                        <div class="layim-chat-textarea"><textarea></textarea></div>
-                                        <div class="layim-chat-bottom">
-                                            <div class="layim-chat-send"><span
-                                                    class="layim-send-btn"
-                                            >发送</span><span
-                                                    class="layim-send-set"
-                                                    lay-type="show"><em
-                                                    class="layui-edge"></em></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <span class="layui-layer-setwin">
-                            <a class="read_msg"
-                               href="javascript:;">
-                                <cite>全部标记为已读</cite></a>
-                        </span>
-                    </div>
+                    <ul class="fans-view">
+                        收水电费水电费
+                    </ul>
+                    <div id="fans_page"></div>
                 </div>
+                <!--                <div class="layui-tab-item">-->
+                <!--                    <div class=" layui-layer-page layui-box layui-layim-chat1"-->
+                <!--                         type="page"-->
+                <!--                         style="z-index: 19891015; width: 790px; top: 129px; left: 65px; min-width: 500px; min-height: 420px; background-image: none; display: block; height: 510px;">-->
+                <!--                        <div class="layui-layer-title" style="cursor: move;">​</div>-->
+                <!--                        <div id="layui-layim-chat" class="layui-layer-content"-->
+                <!--                             style="height: 430px;">-->
+                <!--                            <ul class="layui-unselect layim-chat-list" id="chat-list"-->
+                <!--                                style="height: 510px; display: block;">-->
+                <!--                                <li class="layim-kefu1111111 layim-chatlist-kefu1111111 layim-this"-->
+                <!--                                ><img-->
+                <!--                                        src="//tp1.sinaimg.cn/5619439268/180/40030060651/1"><span>在线客服一</span>-->
+                <!--                                </li>-->
+                <!--                                <li class="layim-kefu2222222 layim-chatlist-kefu2222222"-->
+                <!--                                ><img-->
+                <!--                                        src="//tp1.sinaimg.cn/5619439268/180/40030060651/1"><span>在线客服二</span>-->
+                <!--                                </li>-->
+                <!--                                <li class="layim-kefu2222222 layim-chatlist-kefu2222222"-->
+                <!--                                ><img-->
+                <!--                                        src="//tp1.sinaimg.cn/5619439268/180/40030060651/1"><span>在线客服二</span>-->
+                <!--                                </li>-->
+                <!--                                <li class="layim-kefu2222222 layim-chatlist-kefu2222222"-->
+                <!--                                ><img-->
+                <!--                                        src="//tp1.sinaimg.cn/5619439268/180/40030060651/1"><span>在线客服二</span>-->
+                <!--                                </li>-->
+                <!--                            </ul>-->
+                <!--                            <div class="layim-chat-box" style="margin-left: 200px; ">-->
+                <!--                                <div class="layim-chat layim-chat-kefu layui-show">-->
+                <!--                                    <div class="layui-unselect layim-chat-title">-->
+                <!--                                        <div class="layim-chat-other"><img class="layim-kefu1111111"-->
+                <!--                                                                           src="//tp1.sinaimg.cn/5619439268/180/40030060651/1"><span-->
+                <!--                                                class="layim-chat-username"-->
+                <!--                                        >在线客服一  </span>-->
+                <!--                                            <p class="layim-chat-status"></p></div>-->
+                <!--                                    </div>-->
+                <!--                                    <div class="layim-chat-main" style="height: 252px;">-->
+                <!--                                        <ul>-->
+                <!--                                            <li class="layim-chat-mine">-->
+                <!--                                                <div class="layim-chat-user"><img-->
+                <!--                                                        src="//res.layui.com/images/fly/avatar/00.jpg"><cite><i>2019-04-27-->
+                <!--                                                    14:18:11</i>访客</cite></div>-->
+                <!--                                                <div class="layim-chat-text">奥术大师多</div>-->
+                <!--                                            </li>-->
+                <!--                                            <li class="layim-chat-mine">-->
+                <!--                                                <div class="layim-chat-user"><img-->
+                <!--                                                        src="//res.layui.com/images/fly/avatar/00.jpg"><cite><i>2019-04-27-->
+                <!--                                                    14:31:24</i>访客</cite></div>-->
+                <!--                                                <div class="layim-chat-text">da<br></div>-->
+                <!--                                            </li>-->
+                <!--                                        </ul>-->
+                <!--                                    </div>-->
+                <!--                                    <div class="layim-chat-footer">-->
+                <!--                                        <div class="layedit-tool-face">-->
+                <!--                                            <textarea id="face" style="display: none;"></textarea>-->
+                <!--                                        </div>-->
+                <!--                                        &lt;!&ndash;<div class="layui-unselect layim-chat-tool"&ndash;&gt;-->
+                <!--                                        &lt;!&ndash;data-json="%7B%22name%22%3A%22%E5%9C%A8%E7%BA%BF%E5%AE%A2%E6%9C%8D%E4%B8%80%22%2C%22type%22%3A%22kefu%22%2C%22avatar%22%3A%22%2F%2Ftp1.sinaimg.cn%2F5619439268%2F180%2F40030060651%2F1%22%2C%22id%22%3A1111111%7D">&ndash;&gt;-->
+                <!--                                        &lt;!&ndash;&lt;!&ndash;<span class="layui-icon layim-tool-face" title="选择表情"&ndash;&gt;&ndash;&gt;-->
+                <!--                                        &lt;!&ndash;&lt;!&ndash;&gt;</span>&ndash;&gt;&ndash;&gt;-->
+                <!--                                        &lt;!&ndash;</div>&ndash;&gt;-->
+                <!--                                        &lt;!&ndash; class="layim-chat-textarea"&ndash;&gt;-->
+
+                <!--                                        <div class="layim-chat-bottom">-->
+                <!--                                            <div class="layim-chat-send"><span-->
+                <!--                                                    class="layim-send-btn"-->
+                <!--                                            >发送</span>-->
+                <!--                                            </div>-->
+                <!--                                        </div>-->
+                <!--                                    </div>-->
+                <!--                                </div>-->
+                <!--                                <div class="layim-chat layim-chat-kefu">-->
+                <!--                                    <div class="layui-unselect layim-chat-title">-->
+                <!--                                        <div class="layim-chat-other"><img class="layim-kefu2222222"-->
+                <!--                                                                           src="//tp1.sinaimg.cn/5619439268/180/40030060651/1"><span-->
+                <!--                                                class="layim-chat-username"-->
+                <!--                                        >在线客服二  </span>-->
+                <!--                                            <p class="layim-chat-status"></p></div>-->
+                <!--                                    </div>-->
+                <!--                                    <div class="layim-chat-main" style="height: 252px;">-->
+                <!--                                        <ul></ul>-->
+                <!--                                    </div>-->
+                <!--                                    <div class="layim-chat-footer">-->
+                <!--                                        <div class="layui-unselect layim-chat-tool"-->
+                <!--                                             data-json="%7B%22name%22%3A%22%E5%9C%A8%E7%BA%BF%E5%AE%A2%E6%9C%8D%E4%BA%8C%22%2C%22type%22%3A%22kefu%22%2C%22avatar%22%3A%22%2F%2Ftp1.sinaimg.cn%2F5619439268%2F180%2F40030060651%2F1%22%2C%22id%22%3A2222222%7D">-->
+                <!--                                            <span class="layui-icon layim-tool-face" title="选择表情"-->
+                <!--                                            ></span></div>-->
+                <!--                                        <div class="layim-chat-textarea"><textarea></textarea></div>-->
+                <!--                                        <div class="layim-chat-bottom">-->
+                <!--                                            <div class="layim-chat-send"><span-->
+                <!--                                                    class="layim-send-btn"-->
+                <!--                                            >发送</span><span-->
+                <!--                                                    class="layim-send-set"-->
+                <!--                                                    lay-type="show"><em-->
+                <!--                                                    class="layui-edge"></em></span>-->
+                <!--                                            </div>-->
+                <!--                                        </div>-->
+                <!--                                    </div>-->
+                <!--                                </div>-->
+                <!--                            </div>-->
+                <!--                        </div>-->
+                <!--                        <span class="layui-layer-setwin">-->
+                <!--                            <a class="read_msg"-->
+                <!--                               href="javascript:;">-->
+                <!--                                <cite>全部标记为已读</cite></a>-->
+                <!--                        </span>-->
+                <!--                    </div>-->
+                <!--                </div>-->
             </div>
         </div>
     </div>
@@ -288,6 +287,7 @@
 </div>
 <script src="../../res/layui/layui.all.js"></script>
 <script>
+    layui.cache.token = JSON.parse(localStorage.getItem('token'));
     layui.cache.page = 'user';
     layui.cache.user = {
         username: '游客'
@@ -317,6 +317,10 @@
         $('.layui-layer-page').css('top', null);
         $('.layui-layer-page').css('width', '100%');
 
+        // 设置头像
+        $('cite.layui-hide-xs').text(layui.cache.token.username);
+        // 设置nickname
+        $('.fly-nav-avatar img').attr('src', layui.imgUrl() + layui.cache.token.avatar);
 
         // 填充关注列表数据
         function careFullTable(res) {
@@ -328,7 +332,7 @@
                 a1Item.append(imgItem);
                 let a2Item = $('<a class="nick"></a>').attr('href', 'home.html?userId=' + val.userId).text(val.username);
                 let a3Item = $('<a class="layui-btn layui-btn-primary"></a>')
-                    .text(val.eachCare > 0 ? '相互关注' : '已关注').attr('value', val.userId);
+                    .text('取消关注').attr('value', val.userId);
 
                 liItem.append(a1Item);
                 liItem.append(a2Item);
@@ -349,7 +353,7 @@
         // 点击关注
         $('.mine-view').on('click', '.item_cont a.layui-btn-normal', function () {
             let careId = $(this).attr('value');
-            $(this).text('已关注').removeClass('layui-btn-normal')
+            $(this).text('取消关注').removeClass('layui-btn-normal')
                 .addClass('layui-btn-primary');
             handleCare(careId)
         });
@@ -357,6 +361,7 @@
         // 处理点击关注
         function handleCare(userId) {
             fly.json('/problemInfo/change/careinfo', {userId: userId}, function (res) {
+
             })
         }
 
@@ -379,7 +384,7 @@
                     // 拼接数据
                     careFullTable(res);
 
-                    if (res.body.data.pages<=1){
+                    if (res.body.data.pages <= 1) {
                         return;
                     }
                     // 设置分页
@@ -389,7 +394,7 @@
                         , limit: res.body.data.size //每页显示的条数
                         , curr: res.body.data.current // 当前页
                         , jump: function (obj, first) {
-                            console.log(obj)
+                            console.log(obj);
                             if (!first) {
                                 carePage(url, obj.curr, obj.limit)
                             }
@@ -400,14 +405,96 @@
             });
         }
 
+        // 粉丝分页处理
+        function fansPage(url, cur, size) {
+            $.ajax({
+                url: layui.baseUrl() + url,
+                type: 'get',
+                data: {
+                    current: cur,
+                    size: size
+                },
+                dataType: 'json',
+                headers: {
+                    Authorization: localStorage.getItem('token')
+                },
+                success(res) {
+                    console.log(res)
+                    // 拼接数据
+                    fansFullTable(res);
+
+                    if (res.body.data.pages <= 1) {
+                        return;
+                    }
+                    // 设置分页
+                    laypage.render({
+                        elem: 'fans_page'
+                        , count: res.body.data.total //数据总数
+                        , limit: res.body.data.size //每页显示的条数
+                        , curr: res.body.data.current // 当前页
+                        , jump: function (obj, first) {
+                            console.log(obj);
+                            if (!first) {
+                                carePage(url, obj.curr, obj.limit)
+                            }
+                        }
+                    });
+                }
+
+            });
+        }
+        // 点击取消关注
+        $('.fans-view').on('click', '.item_cont a.layui-btn-primary', function () {
+            let careId = $(this).attr('value');
+            $(this).text('关注').removeClass('layui-btn-primary')
+                .addClass('layui-btn-normal');
+            handleFans(careId)
+        });
+        // 点击关注
+        $('.fans-view').on('click', '.item_cont a.layui-btn-normal', function () {
+            let careId = $(this).attr('value');
+            $(this).text('取消关注').removeClass('layui-btn-normal')
+                .addClass('layui-btn-primary');
+            handleFans(careId)
+        });
+
+        function handleFans(userId) {
+            fly.json('/problemInfo/change/careinfo', {userId: userId}, function (res) {
+                carePage('/Interaction/careInfoPage', 1, 10);
+            })
+        }
+        function fansFullTable(res){
+            console.log(res)
+            $('.fans-view').empty();
+            $.each(res.body.data.records, function (index, val) {
+                let liItem = $('<li class="item_cont"> </li>');
+                let a1Item = $("<a></a>").attr('href', 'home.html?userId=' + val.userId);
+                let imgItem = $("<img class='header'>").attr('src', layui.imgUrl() + val.avatar);
+                a1Item.append(imgItem);
+                let a2Item = $('<a class="nick"></a>').attr('href', 'home.html?userId=' + val.userId).text(val.username);
+                let a3Item=null;
+                if(val.eachCare > 0 ){
+                    a3Item= $('<a class="layui-btn layui-btn-primary"></a>')
+                        .text('取消关注').attr('value', val.userId);
+                }else{
+                    a3Item= $('<a class="layui-btn layui-btn-normal"></a>')
+                        .text('关注').attr('value', val.userId);
+                }
+
+                liItem.append(a1Item);
+                liItem.append(a2Item);
+                liItem.append(a3Item);
+
+                $('.fans-view').append(liItem);
+            });
+
+        }
 
         carePage('/Interaction/careInfoPage', 1, 10);
+        fansPage('/Interaction/fansInfoPage', 1, 10);
 
     });
 
-
-    // 获取关注信息
-    // fly.json('/Interaction/careInfoPage')
 </script>
 
 </body>

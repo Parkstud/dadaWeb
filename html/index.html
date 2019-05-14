@@ -25,21 +25,32 @@
         <ul class="layui-nav fly-nav-user" id="index_head_info">
 
             <li class="layui-nav-item">
-                <a class="fly-nav-avatar" id="user_info" href="javascript:;">
-                    <cite class="layui-hide-xs">贤心</cite>
-                    <!--                <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>-->
-                    <!--                <i class="layui-badge fly-badge-vip layui-hide-xs">VIP3</i>-->
+                <a class="fly-nav-avatar" href="javascript:;">
+                    <cite class="layui-hide-xs">
+                        <span class="layui-badge-dot"></span>
+                    </cite>
                     <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
+
                 </a>
+                <div id="tip-header-wrapper" style="display:none">
+                    <span class="layui-badge-dot" style="right: -16px"></span>
+                </div>
                 <dl class="layui-nav-child">
-                    <dd><a href="user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
-                    <dd><a href="user/message.html"><i class="iconfont icon-tongzhi"
-                                                       style="top: 4px;"></i>我的消息</a></dd>
-                    <dd><a href="user/home.html"><i class="layui-icon"
-                                                    style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
+                    <dd><a href="../user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
+                    <dd>
+                        <a href="../user/message.html">
+                            <i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的通知
+                            <span class="layui-badge-dot"></span>
+                            <span id="tip-header-notice"  style="display:none">
+                                 <span class="layui-badge-dot"></span>
+                            </span>
+                        </a>
+                    </dd>
+                    <dd><a href="../user/home.html"><i class="layui-icon"
+                                                       style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
                     </dd>
                     <hr style="margin: 5px 0;">
-                    <dd><a href="javascript:void(0);" id="tuichu" style="text-align: center;">退出</a></dd>
+                    <dd><a href="" style="text-align: center;">退出</a></dd>
                 </dl>
             </li>
         </ul>
@@ -102,51 +113,14 @@
                     </div>
                     <button id="search-problem" class="layui-btn my-search-btn">搜索</button>
                 </div>
-                <h3 class="fly-panel-title">回贴周榜</h3>
-                <dd>
-                    <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
+                <h3 class="fly-panel-title">本周热议</h3>
+                <div  id="hot_week">
+                    <div class="fly-none">没有相关数据</div>
+                </div>
 
                 <!-- 无数据时 -->
                 <!--
-                <div class="fly-none">没有相关数据</div>
+
                 -->
             </dl>
 
@@ -156,8 +130,8 @@
 
 
             <div class="fly-panel fly-rank fly-rank-reply" id="LAY_replyRank">
-                <h3 class="fly-panel-title">回贴周榜</h3>
-                <dl>
+                <h3 class="fly-panel-title">回答周榜</h3>
+                <dl id="answer-week">
                     <!--<i class="layui-icon fly-loading">&#xe63d;</i>-->
                     <dd>
                         <a href="user/home.html">
@@ -529,6 +503,48 @@
             window.localStorage.removeItem('token');
             location.href='user/login.html'
         })
+        // 本周热议
+        hotWeek();
+        function hotWeek() {
+           let divDom=$('#hot_week');
+            divDom.empty();
+            fly.json('/problemInfo/hotWeek',null,function (res) {
+                $.each(res.body.data,function (index, val) {
+                    let ddDom=$('<dd></dd>');
+                    let aDOm=$('<a></a>')
+                        .attr('href','jie/detail.html?problemId='+val.problemId)
+                        .text(val.title);
+                    let spanDom=$('<span></span>').html('<i class="iconfont icon-pinglun1"></i> '+val.answerCount);
+                    ddDom.append(aDOm);
+                    ddDom.append(spanDom);
+                    divDom.append(ddDom);
+                })
+            },{type:'get'});
+
+        }
+        // 回答周榜
+        answerWeek();
+        function answerWeek() {
+            let divDom=$('#answer-week');
+            divDom.empty();
+
+            fly.json('/problemInfo/answerWeek',null,function (res) {
+                console.log(res);
+                $.each(res.body.data,function (index, val) {
+                    let ddDom=$('<dd></dd>');
+                    let aDOm=$('<a></a>')
+                        .attr('href','user/home.html?userId='+val.userId);
+                    let imgDom=$('<img>').attr('src',layui.imgUrl()+val.avatar);
+                    let citeDom=$('<cite></cite>').text(val.username);
+                    let iDom=$('<i></i>').text(val.answerCount);
+                    aDOm.append(imgDom);
+                    aDOm.append(citeDom);
+                    aDOm.append(iDom);
+                    ddDom.append(aDOm);
+                    divDom.append(ddDom);
+                })
+            },{type:'get'});
+        }
 
     });
 </script>

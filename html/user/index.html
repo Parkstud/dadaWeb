@@ -21,13 +21,26 @@
             <!-- 登入后的状态 -->
             <li class="layui-nav-item">
                 <a class="fly-nav-avatar" href="javascript:;">
-                    <cite class="layui-hide-xs"></cite>
+                    <cite class="layui-hide-xs">
+                        <span class="layui-badge-dot"></span>
+                    </cite>
                     <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
+
                 </a>
+                <div id="tip-header-wrapper" style="display:none">
+                    <span class="layui-badge-dot" style="right: -16px"></span>
+                </div>
                 <dl class="layui-nav-child">
                     <dd><a href="../user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
-                    <dd><a href="../user/message.html"><i class="iconfont icon-tongzhi"
-                                                          style="top: 4px;"></i>我的消息</a></dd>
+                    <dd>
+                        <a href="../user/message.html">
+                            <i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的通知
+                            <span class="layui-badge-dot"></span>
+                            <span id="tip-header-notice"  style="display:none">
+                                 <span class="layui-badge-dot"></span>
+                            </span>
+                        </a>
+                    </dd>
                     <dd><a href="../user/home.html"><i class="layui-icon"
                                                        style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
                     </dd>
@@ -63,6 +76,8 @@
             <a href="message.html">
                 <i class="layui-icon">&#xe667;</i>
                 我的通知
+                <span id="tip-left-notice">
+                </span>
             </a>
         </li>
         <li class="layui-nav-item">
@@ -175,7 +190,6 @@
         var halfamonth = day * 15;
         var month = day * 30;
         var now = new Date().getTime();   //获取当前时间毫秒
-        console.log(now)
         var diffValue = now - dateTimeStamp;//时间差
 
         if(diffValue < 0){
@@ -219,6 +233,7 @@
     }).extend({
         fly: 'index'
     }).use(['fly', 'laypage'], function () {
+        let fly = layui.fly;
         let $ = layui.jquery;
 
         let laypage = layui.laypage;
@@ -233,38 +248,66 @@
         carePage('/problemInfo/PageProblemInfo', 1, 10);
         function carePage(url, curr, size) {
             let current = curr || 1;
-            $.ajax({
-                url: layui.baseUrl() + url,
-                type: 'get',
-                data: {
-                    current: current,
-                    size: size
-                },
-                dataType: 'json',
-                headers: {
-                    Authorization: localStorage.getItem('token')
-                },
-                success(res) {
-                    // 拼接数据
-                    putProblemPageTable(res);
-                    if (res.body.data.pages<=1){
-                        return;
-                    }
-                    // 设置分页
-                    laypage.render({
-                        elem: 'putProblemPage'
-                        , count: res.body.data.total //数据总数
-                        , limit: res.body.data.size //每页显示的条数
-                        , curr: res.body.data.current // 当前页
-                        , jump: function (obj, first) {
-                            if (!first) {
-                                carePage(url, obj.curr, obj.limit)
-                            }
-                        }
-                    });
+            fly.json(url,{
+                current: current,
+                size: size
+            },function (res) {
+                // 拼接数据
+                putProblemPageTable(res);
+                if (res.body.data.pages<=1){
+                    return;
                 }
-
+                // 设置分页
+                laypage.render({
+                    elem: 'putProblemPage'
+                    , count: res.body.data.total //数据总数
+                    , limit: res.body.data.size //每页显示的条数
+                    , curr: res.body.data.current // 当前页
+                    , jump: function (obj, first) {
+                        if (!first) {
+                            carePage(url, obj.curr, obj.limit)
+                        }
+                    }
+                });
+            },{type:'get'},function () {
+                $('#put_problem_ul').empty();
+                $('#put_problem_ul').append('<li id="before-ajax-put-problem"' +
+                    ' style="height:400px;border-bottom:0;display: flex;justify-content: center;align-items: center">' +
+                    '<i style="font-size: 48px;color: #999;" ' +
+                    'class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i></li>')
             });
+            // $.ajax({
+            //     url: layui.baseUrl() + url,
+            //     type: 'get',
+            //     data: {
+            //         current: current,
+            //         size: size
+            //     },
+            //     dataType: 'json',
+            //     headers: {
+            //         Authorization: localStorage.getItem('token')
+            //     },
+            //     success(res) {
+            //         // 拼接数据
+            //         putProblemPageTable(res);
+            //         if (res.body.data.pages<=1){
+            //             return;
+            //         }
+            //         // 设置分页
+            //         laypage.render({
+            //             elem: 'putProblemPage'
+            //             , count: res.body.data.total //数据总数
+            //             , limit: res.body.data.size //每页显示的条数
+            //             , curr: res.body.data.current // 当前页
+            //             , jump: function (obj, first) {
+            //                 if (!first) {
+            //                     carePage(url, obj.curr, obj.limit)
+            //                 }
+            //             }
+            //         });
+            //     }
+            //
+            // });
         }
         // 设置发布问题的列表信息
         function putProblemPageTable(res) {
@@ -290,38 +333,35 @@
         collectPage('/problemInfo/PageProblemCollect', 1, 10);
         function collectPage(url, curr, size) {
             let current = curr || 1;
-            $.ajax({
-                url: layui.baseUrl() + url,
-                type: 'get',
-                data: {
-                    current: current,
-                    size: size
-                },
-                dataType: 'json',
-                headers: {
-                    Authorization: localStorage.getItem('token')
-                },
-                success(res) {
-                    // 拼接数据
-                    collectPageTable(res);
-                    if (res.body.data.pages<=1){
-                        return;
-                    }
-                    // 设置分页
-                    laypage.render({
-                        elem: 'collect_problem_page'
-                        , count: res.body.data.total //数据总数
-                        , limit: res.body.data.size //每页显示的条数
-                        , curr: res.body.data.current // 当前页
-                        , jump: function (obj, first) {
-                            if (!first) {
-                                carePage(url, obj.curr, obj.limit)
-                            }
-                        }
-                    });
+            fly.json(url, {
+                current: current,
+                size: size
+            },function (res) {
+                // 拼接数据
+                collectPageTable(res);
+                if (res.body.data.pages<=1){
+                    return;
                 }
+                // 设置分页
+                laypage.render({
+                    elem: 'collect_problem_page'
+                    , count: res.body.data.total //数据总数
+                    , limit: res.body.data.size //每页显示的条数
+                    , curr: res.body.data.current // 当前页
+                    , jump: function (obj, first) {
+                        if (!first) {
+                            carePage(url, obj.curr, obj.limit)
+                        }
+                    }
+                });
+            },{type:'get'},function () {
+                $('#collect_problem_ul').empty();
+                $('#collect_problem_ul').append('<li id="before-ajax-collect-problem"' +
+                    ' style="height:400px;border-bottom:0;display: flex;justify-content: center;align-items: center">' +
+                    '<i style="font-size: 48px;color: #999;" ' +
+                    'class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i></li>')
+            })
 
-            });
         }
         // 设置发布问题的列表信息
         function collectPageTable(res) {

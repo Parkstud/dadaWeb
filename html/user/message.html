@@ -1,42 +1,55 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>我的消息</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta charset="utf-8">
+    <title>我的消息</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="keywords" content="达达问答">
     <meta name="description" content="达达达数据结构专业问答">
-  <link rel="stylesheet" href="../../res/layui/css/layui.css">
-  <link rel="stylesheet" href="../../res/css/global.css">
+    <link rel="stylesheet" href="../../res/layui/css/layui.css">
+    <link rel="stylesheet" href="../../res/css/global.css">
 </head>
 <body>
 
 <div class="fly-header layui-bg-black">
-  <div class="layui-container">
-      <a class="fly-logo" href="../index.html">
-          <img width="180" src="../../res/images/fao.png" alt="达达问答">
-      </a>
+    <div class="layui-container">
+        <a class="fly-logo" href="../index.html">
+            <img width="180" src="../../res/images/fao.png" alt="达达问答">
+        </a>
 
-      <ul class="layui-nav fly-nav-user">
-          <!-- 登入后的状态 -->
-          <li class="layui-nav-item">
-              <a class="fly-nav-avatar" href="javascript:;">
-                  <cite class="layui-hide-xs"></cite>
-                  <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
-              </a>
-              <dl class="layui-nav-child">
-                  <dd><a href="../user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
-                  <dd><a href="../user/message.html"><i class="iconfont icon-tongzhi"
-                                                        style="top: 4px;"></i>我的消息</a></dd>
-                  <dd><a href="../user/home.html"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
-                  </dd>
-                  <hr style="margin: 5px 0;">
-                  <dd><a href="" style="text-align: center;">退出</a></dd>
-              </dl>
-          </li>
-      </ul>
-  </div>
+        <ul class="layui-nav fly-nav-user">
+            <!-- 登入后的状态 -->
+            <li class="layui-nav-item">
+                <a class="fly-nav-avatar" href="javascript:;">
+                    <cite class="layui-hide-xs">
+                        <span class="layui-badge-dot"></span>
+                    </cite>
+                    <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
+
+                </a>
+                <div id="tip-header-wrapper" style="display:none">
+                    <span class="layui-badge-dot" style="right: -16px"></span>
+                </div>
+                <dl class="layui-nav-child">
+                    <dd><a href="../user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
+                    <dd>
+                        <a href="../user/message.html">
+                            <i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的通知
+                            <span class="layui-badge-dot"></span>
+                            <span id="tip-header-notice" style="display:none">
+                                 <span class="layui-badge-dot"></span>
+                            </span>
+                        </a>
+                    </dd>
+                    <dd><a href="../user/home.html"><i class="layui-icon"
+                                                       style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
+                    </dd>
+                    <hr style="margin: 5px 0;">
+                    <dd><a href="" style="text-align: center;">退出</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
 </div>
 
 <div class="layui-container fly-marginTop fly-user-main">
@@ -63,49 +76,67 @@
             <a href="message.html">
                 <i class="layui-icon">&#xe667;</i>
                 我的通知
+                <span id="tip-left-notice">
+                </span>
+
             </a>
         </li>
         <li class="layui-nav-item">
             <a href="care.html">
-                <i class="layui-icon">&#xe611;</i>
+                <i class="layui-icon">&#xe770;</i>
                 我的关注
             </a>
         </li>
     </ul>
 
-  <div class="site-tree-mobile layui-hide">
-    <i class="layui-icon">&#xe602;</i>
-  </div>
-  <div class="site-mobile-shade"></div>
+    <div class="site-tree-mobile layui-hide">
+        <i class="layui-icon">&#xe602;</i>
+    </div>
+    <div class="site-mobile-shade"></div>
 
-  <div class="site-tree-mobile layui-hide">
-    <i class="layui-icon">&#xe602;</i>
-  </div>
-  <div class="site-mobile-shade"></div>
+    <div class="site-tree-mobile layui-hide">
+        <i class="layui-icon">&#xe602;</i>
+    </div>
+    <div class="site-mobile-shade"></div>
 
 
-  <div class="fly-panel fly-panel-user" pad20>
-	  <div class="layui-tab layui-tab-brief" lay-filter="user" id="LAY_msg" style="margin-top: 15px;">
-	    <button class="layui-btn layui-btn-danger" id="LAY_delallmsg">清空全部消息</button>
-	    <div  id="LAY_minemsg" style="margin-top: 10px;">
-        <!--<div class="fly-none">您暂时没有最新消息</div>-->
-        <ul class="mine-msg">
-          <li data-id="123">
-            <blockquote class="layui-elem-quote">
-              <a href="/jump?username=Absolutely" target="_blank"><cite>Absolutely</cite></a>回答了您的求解<a target="_blank" href="/jie/8153.html/page/0/#item-1489505778669"><cite>layui后台框架</cite></a>
-            </blockquote>
-            <p><span>1小时前</span><a href="javascript:;" class="layui-btn layui-btn-small layui-btn-danger fly-delete">删除</a></p>
-          </li>
-          <li data-id="123">
-            <blockquote class="layui-elem-quote">
-              系统消息：欢迎使用 layui
-            </blockquote>
-            <p><span>1小时前</span><a href="javascript:;" class="layui-btn layui-btn-small layui-btn-danger fly-delete">删除</a></p>
-          </li>
-        </ul>
-      </div>
-	  </div>
-	</div>
+    <div class="fly-panel fly-panel-user" pad20>
+        <div class="layui-tab layui-tab-brief" id="LAY_msg" style="margin-top: 15px;">
+            <button class="layui-btn layui-btn-danger" id="LAY_delallmsg">清空全部消息</button>
+            <span id="not-read-span" style="margin-left:20px;color: #999;"></span>
+            <div id="LAY_minemsg" style="margin-top: 10px;">
+                <!--<div class="fly-none">您暂时没有最新消息</div>-->
+                <ul class="mine-msg" id="notice-wrapper">
+                    <!--                    <li data-id="123">-->
+
+                    <!--                        <blockquote class="layui-elem-quote">-->
+                    <!--                            <span class="layui-badge-dot"></span>-->
+                    <!--                            <a href="/jump?username=Absolutely"-->
+                    <!--                               target="_blank"><cite>Absolutely</cite></a>回答了您的求解<a target="_blank"-->
+                    <!--                                                                                    href="/jie/8153.html/page/0/#item-1489505778669"><cite>layui后台框架</cite></a>-->
+                    <!--                        </blockquote>-->
+                    <!--                        <p><span>1小时前</span><a href="javascript:;"-->
+                    <!--                                               class="layui-btn layui-btn-small layui-btn-danger fly-delete">删除</a>-->
+                    <!--                        </p>-->
+                    <!--                    </li>-->
+
+
+                    <!--                    <li data-id="123">-->
+                    <!--                        <blockquote class="layui-elem-quote">-->
+                    <!--                            系统消息：欢迎使用 layui-->
+                    <!--                        </blockquote>-->
+                    <!--                        <p><span>1小时前</span><a href="javascript:;"-->
+                    <!--                                               class="layui-btn layui-btn-small layui-btn-danger fly-delete">删除</a>-->
+                    <!--                        </p>-->
+                    <!--                    </li>-->
+                </ul>
+                <div>
+                    <div id="notice_page">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 
@@ -116,20 +147,199 @@
 </div>
 <script src="../../res/layui/layui.all.js"></script>
 <script>
-layui.cache.page = 'user';
-layui.cache.user = {
-  username: '游客'
-  ,uid: -1
-  ,avatar: '../../res/images/avatar/00.jpg'
-  ,experience: 83
-  ,sex: '男'
-};
-layui.config({
-  version: "3.0.0"
-  ,base: '../../res/mods/'
-}).extend({
-  fly: 'index'
-}).use('fly');
+    layui.cache.token = JSON.parse(localStorage.getItem('token'));
+    layui.cache.page = 'user';
+
+    layui.cache.user = {
+        username: '游客'
+        , uid: -1
+        , avatar: '../../res/images/avatar/00.jpg'
+        , experience: 83
+        , sex: '男'
+    };
+
+    // 处理时间
+    function timeago(dateTimeStamp) {   //dateTimeStamp是一个时间毫秒，注意时间戳是秒的形式，在这个毫秒的基础上除以1000，就是十位数的时间戳。13位数的都是时间毫秒。
+        var minute = 1000 * 60;      //把分，时，天，周，半个月，一个月用毫秒表示
+        var hour = minute * 60;
+        var day = hour * 24;
+        var week = day * 7;
+        var halfamonth = day * 15;
+        var month = day * 30;
+        var now = new Date().getTime();   //获取当前时间毫秒
+        var diffValue = now - dateTimeStamp;//时间差
+
+        if (diffValue < 0) {
+            return;
+        }
+        var minC = diffValue / minute;  //计算时间差的分，时，天，周，月
+        var hourC = diffValue / hour;
+        var dayC = diffValue / day;
+        var weekC = diffValue / week;
+        var monthC = diffValue / month;
+        if (monthC >= 1 && monthC <= 3) {
+            result = " " + parseInt(monthC) + "月前"
+        } else if (weekC >= 1 && weekC <= 3) {
+            result = " " + parseInt(weekC) + "周前"
+        } else if (dayC >= 1 && dayC <= 6) {
+            result = " " + parseInt(dayC) + "天前"
+        } else if (hourC >= 1 && hourC <= 23) {
+            result = " " + parseInt(hourC) + "小时前"
+        } else if (minC >= 1 && minC <= 59) {
+            result = " " + parseInt(minC) + "分钟前"
+        } else if (diffValue >= 0 && diffValue <= minute) {
+            result = "刚刚"
+        } else {
+            var datetime = new Date();
+            datetime.setTime(dateTimeStamp);
+            var Nyear = datetime.getFullYear();
+            var Nmonth = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
+            var Ndate = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
+            var Nhour = datetime.getHours() < 10 ? "0" + datetime.getHours() : datetime.getHours();
+            var Nminute = datetime.getMinutes() < 10 ? "0" + datetime.getMinutes() : datetime.getMinutes();
+            var Nsecond = datetime.getSeconds() < 10 ? "0" + datetime.getSeconds() : datetime.getSeconds();
+            result = Nyear + "-" + Nmonth + "-" + Ndate
+        }
+        return result;
+    }
+
+    layui.config({
+        version: "3.0.0"
+        , base: '../../res/mods/'
+    }).extend({
+        fly: 'index'
+    }).use('fly', function () {
+        let $ = layui.jquery;
+        let fly = layui.fly;
+        let form = layui.form;
+        let layer = layui.layer
+        let laydate = layui.laydate;
+        let laypage = layui.laypage;
+        // 设置头像
+        $('cite.layui-hide-xs').text(layui.cache.token.username);
+        // 设置nickname
+        $('.fly-nav-avatar img').attr('src', layui.imgUrl() + layui.cache.token.avatar);
+
+        //  获取通知消息
+        getNoticeInfo(1, 10);
+
+        function getNoticeInfo(current, size) {
+            fly.json('/message/notices/page', {
+                current: current,
+                size: size
+            }, function (res) {
+                $('#before-ajax-notice-wrapper').remove();
+                setNoticeInfo(res);
+
+                if (res.body.data.pages <= 1) {
+                    return;
+                }
+                // 设置分页
+                laypage.render({
+                    elem: 'notice_page'
+                    , count: res.body.data.total //数据总数
+                    , limit: res.body.data.size //每页显示的条数
+                    , curr: res.body.data.current // 当前页
+                    , jump: function (obj, first) {
+                        if (!first) {
+                            getNoticeInfo(obj.curr, obj.limit);
+                        }
+                    }
+                });
+            }, {type: 'get'}, function () {
+                $('#notice-wrapper').empty();
+                $('#notice-wrapper').append('<li id="before-ajax-notice-wrapper"' +
+                    ' style="height:70px;border-bottom:0;display: flex;justify-content: center;align-items: center">' +
+                    '<i style="font-size: 48px;color: #999;" ' +
+                    'class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i></li>')
+
+
+            });
+        }
+
+        function setNoticeInfo(res) {
+
+            if (res.body.data.records.length === 0) {
+
+                $('#LAY_msg').append('<div class="fly-none">您暂时没有消息</div>');
+            }
+
+            let ulDom = $('#notice-wrapper');
+
+            console.log(res);
+            ulDom.empty();
+            $.each(res.body.data.records, function (index, val) {
+                let liDom = $('<li></li>');
+                let blockquoteDom = $(' <blockquote class="layui-elem-quote"></blockquote>');
+                if (val.hasRead === 0) {
+                    let spanDom = $(' <span class="layui-badge-dot" style="margin-right: 10px"></span>');
+                    blockquoteDom.append(spanDom);
+                }
+                let spanDom = $('<span></span>').text(val.title + " ");
+                blockquoteDom.append(spanDom);
+                if (val.commentInfo) {
+                    // let aDom = $('<a id="jump-detail" href="../jie/detail.html?problemId=' + val.commentInfo.commentProblemId + '"></a>').html('<cite>' + val.content + '</cite>');
+                    let aDom = $('<a id="jump-detail" href="javascript:;"></a>')
+                        .attr('problemId', val.commentInfo.commentProblemId)
+                        .attr('msgId', val.id)
+                        .html('<cite>' + val.content + '</cite>');
+                    blockquoteDom.append(aDom);
+                }
+                liDom.append(blockquoteDom);
+
+                let pDom = $('<p></p>');
+                spanDom = $('<span></span>').text(timeago(new Date(val.createTime)));
+                let aDom = $('<a href="javascript:;" class="layui-btn layui-btn-small layui-btn-danger" id="delete-notice">删除</a>')
+                    .attr('msgId', val.id);
+                pDom.append(spanDom);
+                pDom.append(aDom);
+                liDom.append(pDom);
+                ulDom.append(liDom);
+
+            });
+
+            // 删除全部消息
+            $('#LAY_delallmsg').on('click', function () {
+                fly.json('/message/notices', null, function (res) {
+                    if (res.body.data) {
+                        layer.msg('删除成功', {icon: 1});
+                    } else {
+                        layer.msg('删除失败', {icon: 2});
+                    }
+                }, {type: 'delete'})
+            });
+            // 点击删除
+            $('#notice-wrapper').on('click', '#delete-notice', function () {
+                let sysMessageId = $(this).attr('msgId');
+                fly.json('/message/notice', {
+                    sysMessageId: sysMessageId
+                }, function (res) {
+                    if (res.body.data) {
+                        layer.msg('删除成功', {icon: 1});
+                    } else {
+                        layer.msg('删除失败', {icon: 2});
+                    }
+                }, {type: 'delete'})
+            });
+
+            // 点击阅读
+            $('#notice-wrapper').on('click', '#jump-detail', function () {
+                let problemid = $(this).attr('problemid');
+                let sysMessageId = $(this).attr('msgId');
+                console.log(sysMessageId);
+                fly.json('/message/notice/read', {
+                    sysMessageId: sysMessageId
+                }, function (res) {
+                    if (res.body.data) {
+                        location.href = '../jie/detail.html?problemId=' + problemid
+                    }
+                }, {type: 'put'})
+            })
+
+
+        }
+
+    });
 </script>
 
 </body>
