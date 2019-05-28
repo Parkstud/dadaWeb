@@ -212,7 +212,7 @@
         let $ = layui.jquery;
         let fly = layui.fly;
         let form = layui.form;
-        let layer = layui.layer
+        let layer = layui.layer;
         let laydate = layui.laydate;
         let laypage = layui.laypage;
         // 设置头像
@@ -258,12 +258,10 @@
         }
 
         function setNoticeInfo(res) {
-
-            if (res.body.data.records.length === 0) {
-
+            if (!res.body.data.records) {
                 $('#LAY_msg').append('<div class="fly-none">您暂时没有消息</div>');
+                return
             }
-
             let ulDom = $('#notice-wrapper');
 
             console.log(res);
@@ -277,11 +275,13 @@
                 }
                 let spanDom = $('<span></span>').text(val.title + " ");
                 blockquoteDom.append(spanDom);
-                if (val.commentInfo) {
+                if (val.content) {
                     // let aDom = $('<a id="jump-detail" href="../jie/detail.html?problemId=' + val.commentInfo.commentProblemId + '"></a>').html('<cite>' + val.content + '</cite>');
                     let aDom = $('<a id="jump-detail" href="javascript:;"></a>')
-                        .attr('problemId', val.commentInfo.commentProblemId)
-                        .attr('msgId', val.id)
+                        .attr('infoId', val.infoId)
+                        .attr('msgType', val.msgType)
+                        .attr("msgId", val.id)
+                        .attr('content', val.content)
                         .html('<cite>' + val.content + '</cite>');
                     blockquoteDom.append(aDom);
                 }
@@ -297,47 +297,101 @@
                 ulDom.append(liDom);
 
             });
-
-            // 删除全部消息
-            $('#LAY_delallmsg').on('click', function () {
-                fly.json('/message/notices', null, function (res) {
-                    if (res.body.data) {
-                        layer.msg('删除成功', {icon: 1});
-                    } else {
-                        layer.msg('删除失败', {icon: 2});
-                    }
-                }, {type: 'delete'})
-            });
-            // 点击删除
-            $('#notice-wrapper').on('click', '#delete-notice', function () {
-                let sysMessageId = $(this).attr('msgId');
-                fly.json('/message/notice', {
-                    sysMessageId: sysMessageId
-                }, function (res) {
-                    if (res.body.data) {
-                        layer.msg('删除成功', {icon: 1});
-                    } else {
-                        layer.msg('删除失败', {icon: 2});
-                    }
-                }, {type: 'delete'})
-            });
-
-            // 点击阅读
-            $('#notice-wrapper').on('click', '#jump-detail', function () {
-                let problemid = $(this).attr('problemid');
-                let sysMessageId = $(this).attr('msgId');
-                console.log(sysMessageId);
-                fly.json('/message/notice/read', {
-                    sysMessageId: sysMessageId
-                }, function (res) {
-                    if (res.body.data) {
-                        location.href = '../jie/detail.html?problemId=' + problemid
-                    }
-                }, {type: 'put'})
-            })
-
-
         }
+
+        // 删除全部消息
+        $('#LAY_delallmsg').on('click', function () {
+            fly.json('/message/notices', null, function (res) {
+                if (res.body.data) {
+                    layer.msg('删除成功', {icon: 1});
+                } else {
+                    layer.msg('删除失败', {icon: 2});
+                }
+            }, {type: 'delete'})
+        });
+        // 点击删除
+        $('#notice-wrapper').on('click', '#delete-notice', function () {
+            let sysMessageId = $(this).attr('msgId');
+            console.log('s删除');
+            fly.json('/message/notice', {
+                sysMessageId: sysMessageId
+            }, function (res) {
+                if (res.body.data) {
+                    layer.msg('删除成功', {icon: 1});
+                    getNoticeInfo(1, 10)
+                } else {
+                    layer.msg('删除失败', {icon: 2});
+                }
+            }, {type: 'delete'})
+        });
+
+        // 点击阅读
+        $('#notice-wrapper').on('click', '#jump-detail', function () {
+            let infoId = $(this).attr('infoId');
+            let msgType = $(this).attr('msgType');
+            let msgId = $(this).attr('msgId');
+            let content = $(this).attr('content');
+
+            console.log(msgType);
+            // 设置已读
+            fly.json('/message/notice/read', {
+                sysMessageId: msgId
+            }, function (res) {
+            }, {type: 'put'});
+
+            if (msgType > 4) {
+                layer.close()
+                layer.open({
+                    title: '通知'
+                    , content: content
+                });
+                return;
+            }
+            if (msgType == '1') {
+                if (!infoId) {
+                    layer.msg('信息被删除', {icon: 2});
+                    return
+                }
+                location.href = '../jie/detail.html?problemId=' + data
+            }
+            if (msgType == '3') {
+                console.log('回复');
+                if (!infoId) {
+                    layer.msg('信息被删除', {icon: 2});
+                    return
+                }
+                fly.json('/newWeb/problemByReplyId', {
+                    replyId: infoId
+                }, function (res) {
+                    let data = res.body.data;
+                    if (data) {
+                        location.href = '../jie/detail.html?problemId=' + data
+                    } else {
+                        layer.msg('信息被删除', {icon: 2});
+                    }
+                },{type:'get'})
+                return;
+            }
+            // 跳转问题界面
+            if (msgType == 2) {
+                if (!infoId) {
+                    layer.msg('信息被删除', {icon: 2});
+                    return
+                }
+
+                fly.json('/newWeb/problemByCommentId', {
+                    commentId: infoId
+                }, function (res) {
+                    let data = res.body.data;
+                    if (data) {
+                        location.href = '../jie/detail.html?problemId=' + data
+                    } else {
+                        layer.msg('信息被删除', {icon: 2});
+                    }
+                },{type:'get'});
+                return;
+            }
+        });
 
     });
 </script>

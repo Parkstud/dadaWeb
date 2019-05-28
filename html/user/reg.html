@@ -85,7 +85,8 @@
                                            lay-verify="required" placeholder="请输入手机短信验证码"
                                            autocomplete="off" class="layui-input">
                                 </div>
-                                <div class="layui-form-mid" style="padding: 0!important;">
+                                <div class="layui-form-mid" id="vercode-wrapper"
+                                     style="padding: 0!important;">
                                     <button type="button" class="layui-btn layui-btn-normal"
                                             id="FLY-getvercode">获取验证码
                                     </button>
@@ -108,7 +109,7 @@
             href="#" target="_blank">dada.com 出品</a></p>
 </div>
 
-<script src="../../res/layui/layui.js"></script>
+<script src="../../layui/layui.all.js"></script>
 <script>
     layui.cache.page = 'user';
     layui.cache.user = {
@@ -126,6 +127,7 @@
     }).use(['fly'], function () {
         let $ = layui.jquery;
         let form = layui.form;
+        let fly = layui.fly;
         console.log(form);
         $("ul.layui-fixbar").css("display", "none");
         form.verify({
@@ -142,14 +144,48 @@
         });
 
         // 获取验证码
+        let sendActive = false;
         $('#FLY-getvercode').on('click', function () {
-            layer.msg("验证码发送成功请注意查收!", {icon: 1}, function (res) {
-                if (res.body.data) {
-                    layer
-                }
+            if (sendActive) {
+                return;
+            }
+            sendActive = true;
+            let valid_rule = /^(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8}$/;// 手机号码校验规则
+            let myPhone = $('#L_phone').val().trim();
+            if (!valid_rule.test(myPhone)) {
+                layer.msg("手机号码格式有误!", {icon: 2});
+                return
+            }
+            countDown()
+            fly.json('/userAccount/code', {
+                phone: myPhone
+            }, function (res) {
+                layer.msg("验证码发送成功请注意查收!", {icon: 1})
             })
-        })
-
+        });
+        // 计数器
+        let totalTime = 60;
+        function countDown() {
+            let html = $('<div class="layui-form-mid layui-word-aux"></div>');
+            html.text(totalTime + 's后重新发送');
+            console.log(html)
+            let codeWrppaer = $('#vercode-wrapper');
+            let clock = window.setInterval(() => {
+                codeWrppaer.empty();
+                codeWrppaer.append(html);
+                totalTime--;
+                html.text(totalTime + 's后重新发送');
+                if (totalTime < 0) {
+                    window.clearInterval(clock)
+                    codeWrppaer.empty();
+                    codeWrppaer.append(' <button type="button" class="layui-btn layui-btn-normal"\n' +
+                        '                    id="FLY-getvercode">获取验证码\n' +
+                        '                        </button>');
+                    totalTime = 60;
+                    sendActive = false
+                }
+            }, 1000)
+        }
 
     });
 

@@ -156,7 +156,7 @@
                         <a href="../user/message.html">
                             <i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的通知
                             <span class="layui-badge-dot"></span>
-                            <span id="tip-header-notice"  style="display:none">
+                            <span id="tip-header-notice" style="display:none">
                                  <span class="layui-badge-dot"></span>
                             </span>
                         </a>
@@ -227,7 +227,7 @@
                         <span class="layui-btn layui-btn-xs jie-admin  layui-btn-warm"
                               id="problem-report">举报</span>
                         <span class="layui-btn layui-btn-xs jie-admin  layui-btn-danger"
-                              id="deleteProblem" type="del">删除</span>
+                              id="deleteProblem">删除</span>
 
                         <!--<span class="layui-btn layui-btn-xs jie-admin" type="set" field="stick" rank="1">置顶</span>-->
                         <!-- <span class="layui-btn layui-btn-xs jie-admin" type="set" field="stick" rank="0" style="background-color:#ccc;">取消置顶</span> -->
@@ -240,7 +240,8 @@
                 <span id="answerCount"></span>
 
             </a>
-            <i class="iconfont" title="人气">&#xe60b;</i><span id="browseCount"></span>
+            <i class="iconfont" title="人气">&#xe60b;</i><span id="browseCount"
+                                                             style="margin-left: 4px"></span>
           </span>
                 </div>
                 <div class="detail-about " id="problemUser">
@@ -302,63 +303,61 @@
         </div>
         <div class="layui-col-md4">
             <dl class="fly-panel fly-list-one">
-<!--                <div class="fly-panel-title">-->
-<!--                    <div class="layui-inline">-->
-<!--                        <input class="layui-input" name="id" id="demoReload" autocomplete="off">-->
-<!--                    </div>-->
-<!--                    <button type="submit" class="layui-btn my-search-btn">搜索</button>-->
-<!--                </div>-->
-                <dt  class="fly-panel-title">本周热议</dt>
+                <!--                <div class="fly-panel-title">-->
+                <!--                    <div class="layui-inline">-->
+                <!--                        <input class="layui-input" name="id" id="demoReload" autocomplete="off">-->
+                <!--                    </div>-->
+                <!--                    <button type="submit" class="layui-btn my-search-btn">搜索</button>-->
+                <!--                </div>-->
+                <dt class="fly-panel-title">本周热议</dt>
                 <div id="detail-hot-week"></div>
-<!--                <dd>-->
-<!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
-<!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-<!--                </dd>-->
-<!--                <dd>-->
-<!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
-<!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-<!--                </dd>-->
-<!--                <dd>-->
-<!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
-<!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-<!--                </dd>-->
-<!--                <dd>-->
-<!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
-<!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-<!--                </dd>-->
-<!--                <dd>-->
-<!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
-<!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-<!--                </dd>-->
-<!--                <dd>-->
-<!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
-<!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-<!--                </dd>-->
-<!--                <dd>-->
-<!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
-<!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-<!--                </dd>-->
-<!--                <dd>-->
-<!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
-<!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-<!--                </dd>-->
-<!--                <dd>-->
-<!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
-<!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-<!--                </dd>-->
-<!--                <dd>-->
-<!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
-<!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-<!--                </dd>-->
-<!--                <i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>-->
+                <!--                <dd>-->
+                <!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
+                <!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+                <!--                </dd>-->
+                <!--                <dd>-->
+                <!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
+                <!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+                <!--                </dd>-->
+                <!--                <dd>-->
+                <!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
+                <!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+                <!--                </dd>-->
+                <!--                <dd>-->
+                <!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
+                <!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+                <!--                </dd>-->
+                <!--                <dd>-->
+                <!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
+                <!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+                <!--                </dd>-->
+                <!--                <dd>-->
+                <!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
+                <!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+                <!--                </dd>-->
+                <!--                <dd>-->
+                <!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
+                <!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+                <!--                </dd>-->
+                <!--                <dd>-->
+                <!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
+                <!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+                <!--                </dd>-->
+                <!--                <dd>-->
+                <!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
+                <!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+                <!--                </dd>-->
+                <!--                <dd>-->
+                <!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
+                <!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+                <!--                </dd>-->
+                <!--                <i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>-->
 
                 <!-- 无数据时 -->
                 <!--
                 <div class="fly-none">没有相关数据</div>
                 -->
             </dl>
-
-
 
 
         </div>
@@ -422,6 +421,8 @@
     }).extend({
         fly: 'index'
     }).use(['fly', 'laypage', 'layedit'], function () {
+
+
         let fly = layui.fly;
         let layedit = layui.layedit;
         let $ = layui.jquery;
@@ -430,6 +431,9 @@
             height: 180,
             tool: ['left', 'center', 'right', '|', 'face']
         });
+
+        $('#deleteProblem').hide();
+
         let problemId = getQueryString('problemId');
 
         if (layui.cache.token) {
@@ -520,8 +524,9 @@
                 $('#edit-wrapper').hide();
             }
 
-            if (layui.cache.token.type === 0) {
-                $('#deleteProblem').hide();
+            if (layui.cache.token.type != 0 || layui.cache.token.id == data.userId) {
+                $('#deleteProblem').show();
+                $('#problem-report').hide();
             }
 
             $('#answerCount').text(data.answerCount);
@@ -545,8 +550,7 @@
             if (problemType.length === 0) {
                 problemType = getProblemType();
             }
-            console.log(problemType);
-            return problemType[category].categoryName;
+            return problemType[category - 1].categoryName;
         }
 
         // 设置回答区域
@@ -567,9 +571,9 @@
                     setProblemDetailList(res);
                     // 请求是否点赞
                     getCommetLikeInfo();
-                   if (res.body.data.pages<=1){
-                       return;
-                   }
+                    if (res.body.data.pages <= 1) {
+                        return;
+                    }
                     // 设置分页
                     laypage.render({
                         elem: 'comment_page'
@@ -640,9 +644,9 @@
                 span1Dom.append(em1Dom);
                 div1Dom.append(span1Dom);
 
-                if($('#problemOpen').text()==='关闭'){
+                if ($('#problemOpen').text() === '关闭') {
 
-                }else{
+                } else {
                     span1Dom = $('<span type="reply"><i class="iconfont icon-svgmoban53"></i>回复</span>')
                         .attr('username', val.username)
                         .attr('userId', val.userId);
@@ -696,6 +700,26 @@
                 ulDom.append(liDom);
             });
         }
+
+        // 删除问题
+        $('#deleteProblem').on('click', function () {
+            layer.confirm('确认删除该问题？', function(index){
+                layer.close(index);
+                fly.json('/control/problem/problemId',{
+                    problemId: problemId
+                },function (res) {
+                    if (res.body.data) {
+                        layer.msg('删除成功', {icon: 1});
+                        setTimeout(function(){  location.href='../index.html'; }, 1000);
+
+                    } else {
+                        layer.msg('删除失败', {icon: 2});
+                    }
+
+                })
+            });
+
+        });
 
         let type = 0;
         let params = {};
@@ -989,21 +1013,22 @@
 
         // 本周热议
         hotWeek();
+
         function hotWeek() {
-            let divDom=$('#detail-hot-week');
+            let divDom = $('#detail-hot-week');
             divDom.empty();
-            fly.json('/problemInfo/hotWeek',null,function (res) {
-                $.each(res.body.data,function (index, val) {
-                    let ddDom=$('<dd></dd>');
-                    let aDOm=$('<a></a>')
-                        .attr('href','detail.html?problemId='+val.problemId)
+            fly.json('/problemInfo/hotWeek', null, function (res) {
+                $.each(res.body.data, function (index, val) {
+                    let ddDom = $('<dd></dd>');
+                    let aDOm = $('<a></a>')
+                        .attr('href', 'detail.html?problemId=' + val.problemId)
                         .text(val.title);
-                    let spanDom=$('<span></span>').html('<i class="iconfont icon-pinglun1"></i> '+val.answerCount);
+                    let spanDom = $('<span></span>').html('<i class="iconfont icon-pinglun1"></i> ' + val.answerCount);
                     ddDom.append(aDOm);
                     ddDom.append(spanDom);
                     divDom.append(ddDom);
                 })
-            },{type:'get'});
+            }, {type: 'get'});
 
         }
 
@@ -1050,7 +1075,7 @@
                         layer.msg('举报成功', {icon: 1});
                     } else {
                         console.log(res);
-                        layer.msg('举报失败', {icon: 1});
+                        layer.msg('举报失败', {icon: 2});
                     }
                 });
 

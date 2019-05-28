@@ -40,10 +40,11 @@
             justify-content: space-between;
         }
 
-        .problem-reply span:hover{
+        .problem-reply span:hover {
             color: #c00;
         }
-        .suggest-wrapper>.red-color {
+
+        .suggest-wrapper > .red-color {
             color: #c00;
         }
 
@@ -77,7 +78,7 @@
                         <a href="../user/message.html">
                             <i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的通知
                             <span class="layui-badge-dot"></span>
-                            <span id="tip-header-notice"  style="display:none">
+                            <span id="tip-header-notice" style="display:none">
                                  <span class="layui-badge-dot"></span>
                             </span>
                         </a>
@@ -167,8 +168,11 @@
         // 获取答案
         $('#problem-title').text(layui.cache.problem.title);
         fly.json('/problem/intelligentQuestionAnswering', {
-            questionStr: layui.cache.problem.title
+            questionStr: layui.cache.problem.title,
+            userId: layui.cache.token.id,
+            probleType: layui.cache.problem.category
         }, function (res) {
+            $('#answer-wrapper').empty();
             if (res.body.data) {
                 let wrapper = $('#answer-wrapper');
                 let indexArr = ['一', '二', '三'];
@@ -190,7 +194,7 @@
                     div1Dom.append(div2Dom);
 
                     div2Dom = $('<div class="problem-reply"></div>');
-                    span1Dom = $('<span class="suggest-wrapper"></span>').attr('problemId',val.problem.id);
+                    span1Dom = $('<span class="suggest-wrapper"></span>').attr('comments', val.problem.answerContent);
                     let span2Dom = $('<span class="comment-zan"></span>');
                     let i1Dom = $('<i class="layui-icon" style="font-size: 20px; line-height: 15px">&#xe6c6;</i>');
                     let em1DOm = $('<em>赞同</em>');
@@ -212,43 +216,47 @@
                 })
             } else {
                 // 问题开放
-                fly.json('/control/problem/putPersonAnswer',{
+                fly.json('/control/problem/putPersonAnswer', {
                     problemId: layui.cache.problem.id
-                },function (res) {
+                }, function (res) {
                     console.log('人工回答');
                     console.log(res);
                 });
-
                 $('#answer-wrapper').append('<blockquote class="layui-elem-quote layui-quote-nm">暂无答案</blockquote>')
             }
             console.log(res);
-        }, {type: 'get'})
-
+        }, {type: 'get'},function(){
+            $('#answer-wrapper').empty();
+            $('#answer-wrapper').append('<li id="before-ajax-put-problem"' +
+                ' style="height:300px;border-bottom:0;display: flex;justify-content: center;align-items: center">' +
+                '<i style="font-size: 48px;color: #999;" ' +
+                'class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i></li>')
+        });
         // 点赞
-        $('#answer-wrapper').on('click','.suggest-wrapper .comment-zan',function () {
-            let removeTemp=$('#answer-wrapper').find('.suggest-wrapper .red-color');
+        $('#answer-wrapper').on('click', '.suggest-wrapper .comment-zan', function () {
+            let removeTemp = $('#answer-wrapper').find('.suggest-wrapper .red-color');
             removeTemp.removeClass('red-color');
             $(this).addClass('red-color');
-            let problemId=$(this).parent().attr('problemId');
-            fly.json('/control/problem/adoptAnswerProblem',{
-                answerId:problemId,
+            let comments = $(this).parent().attr('comments');
+            fly.json('/control/problem/adoptAnswerProblem', {
+                comments: comments,
                 problemId: layui.cache.problem.id,
-                flag:true
-            },function (res) {
+                flag: 1
+            }, function (res) {
                 console.log(res);
             })
         });
         // 反对
-        $('#answer-wrapper').on('click','.suggest-wrapper .comment-down',function () {
-            let removeTemp=$('#answer-wrapper').find('.suggest-wrapper .red-color');
+        $('#answer-wrapper').on('click', '.suggest-wrapper .comment-down', function () {
+            let removeTemp = $('#answer-wrapper').find('.suggest-wrapper .red-color');
             removeTemp.removeClass('red-color');
             $(this).addClass('red-color');
-            let problemId=$(this).parent().attr('problemId');
-            fly.json('/control/problem/adoptAnswerProblem',{
-                answerId:problemId,
-                problemId: layui.cache.problem.id,
-                flag:false
-            },function (res) {
+            let comments = $(this).parent().attr('comments');
+            fly.json('/control/problem/adoptAnswerProblem', {
+                comments: comments,
+                problemId: parseInt(layui.cache.problem.id),
+                flag: 2
+            }, function (res) {
                 console.log(res);
             })
         });

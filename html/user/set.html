@@ -15,6 +15,7 @@
             top: 35px;
             margin: 0 0 0 -56px;
         }
+
         .layui-form-radio * {
             font-size: 14px;
         }
@@ -34,10 +35,9 @@
             <li class="layui-nav-item">
                 <a class="fly-nav-avatar" href="javascript:;">
                     <cite class="layui-hide-xs">
-                        <span class="layui-badge-dot"></span>
+                        <!--                        <span class="layui-badge-dot"></span>-->
                     </cite>
-                    <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
-
+                    <img src="http://148.70.8.85/group1/M00/00/00/rBsAAlyd2OqAfMy_AAAGveq-234459.jpg">
                 </a>
                 <div id="tip-header-wrapper" style="display:none">
                     <span class="layui-badge-dot" style="right: -16px"></span>
@@ -47,8 +47,8 @@
                     <dd>
                         <a href="../user/message.html">
                             <i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的通知
-                            <span class="layui-badge-dot"></span>
-                            <span id="tip-header-notice"  style="display:none">
+                            <!--                            <span class="layui-badge-dot"></span>-->
+                            <span id="tip-header-notice" style="display:none">
                                  <span class="layui-badge-dot"></span>
                             </span>
                         </a>
@@ -57,7 +57,9 @@
                                                        style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
                     </dd>
                     <hr style="margin: 5px 0;">
-                    <dd><a href="" style="text-align: center;">退出</a></dd>
+                    <dd>
+                        <a href="javascript:void(0);" id="tuichu" style="text-align: center;">退出</a>
+                    </dd>
                 </dl>
             </li>
         </ul>
@@ -250,7 +252,8 @@
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <button class="layui-btn" key="set-mine" lay-filter="changePass" lay-submit>
+                            <button class="layui-btn" key="set-mine" lay-filter="changePass"
+                                    lay-submit>
                                 确认修改
                             </button>
                         </div>
@@ -315,7 +318,6 @@
         $('.avatar-add img').attr('src', layui.imgUrl() + layui.cache.token.avatar);
 
 
-
         // 获取个人信息
         fly.json('/myPage/user/userInformation', null, function (res) {
             // 设置参数
@@ -330,15 +332,16 @@
                 }
             });
             $('#L_name').val(userInfo.name);
-            laydate.render({
-                elem: '#L_birthday',
-                value: new Date(userInfo.birthday)
-            });
+            if (userInfo.birthday) {
+                laydate.render({
+                    elem: '#L_birthday',
+                    value: new Date(userInfo.birthday)
+                });
+            }
             $('#L_school').val(userInfo.school);
             $('#L_school_number').val(userInfo.schoolNumber);
             // $('[name=sex]:checked').val();
         }, {type: 'get'});
-
 
 
         // 上传头像

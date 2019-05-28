@@ -36,21 +36,22 @@
                     <span class="layui-badge-dot" style="right: -16px"></span>
                 </div>
                 <dl class="layui-nav-child">
-                    <dd><a href="../user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
+                    <dd><a href="./user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
                     <dd>
-                        <a href="../user/message.html">
+                        <a href="./user/message.html">
                             <i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的通知
                             <span class="layui-badge-dot"></span>
-                            <span id="tip-header-notice"  style="display:none">
+                            <span id="tip-header-notice" style="display:none">
                                  <span class="layui-badge-dot"></span>
                             </span>
                         </a>
                     </dd>
-                    <dd><a href="../user/home.html"><i class="layui-icon"
-                                                       style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
+                    <dd><a href="./user/home.html"><i class="layui-icon"
+                                                      style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
                     </dd>
                     <hr style="margin: 5px 0;">
-                    <dd><a href="" style="text-align: center;">退出</a></dd>
+                    <dd><a href="javascript:void(0);" id="tuichu" style="text-align: center;">退出</a>
+                    </dd>
                 </dl>
             </li>
         </ul>
@@ -114,7 +115,7 @@
                     <button id="search-problem" class="layui-btn my-search-btn">搜索</button>
                 </div>
                 <h3 class="fly-panel-title">本周热议</h3>
-                <div  id="hot_week">
+                <div id="hot_week">
                     <div class="fly-none">没有相关数据</div>
                 </div>
 
@@ -193,19 +194,6 @@
                             <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
                         </a>
                     </dd>
-                </dl>
-            </div>
-
-
-            <div class="fly-panel fly-link">
-                <h3 class="fly-panel-title">友情链接</h3>
-                <dl class="fly-panel-main">
-                    <dd><a href="https://github.com/" target="_blank">github</a>
-                    <dd>
-                    <dd><a href="https://www.csdn.net/" target="_blank">csdn</a>
-                    <dd>
-                    <dd><a href="https://www.oschina.net/" target="_blank">开源中国</a>
-                    <dd>
                 </dl>
             </div>
 
@@ -374,6 +362,7 @@
 
         // 设置问题列表信息
         function setProblemList(res) {
+
             let ulDom = $('#problem_ul_page');
             ulDom.empty();
             $.each(res.body.data.records, function (index, val) {
@@ -424,9 +413,9 @@
         // 设置题目类型
         function setCategory(category) {
             if (!category) {
-                return '未知';
+                return '数据结构';
             }
-            return problemType[category].categoryName;
+            return problemType[category - 1].categoryName;
         }
 
 
@@ -499,51 +488,54 @@
         }
 
         // 退出
-        $('#tuichu').on('click',function () {
+        $('#tuichu').on('click', function () {
             window.localStorage.removeItem('token');
-            location.href='user/login.html'
+            location.href = 'user/login.html'
         })
         // 本周热议
         hotWeek();
+
         function hotWeek() {
-           let divDom=$('#hot_week');
+            let divDom = $('#hot_week');
             divDom.empty();
-            fly.json('/problemInfo/hotWeek',null,function (res) {
-                $.each(res.body.data,function (index, val) {
-                    let ddDom=$('<dd></dd>');
-                    let aDOm=$('<a></a>')
-                        .attr('href','jie/detail.html?problemId='+val.problemId)
+            fly.json('/problemInfo/hotWeek', null, function (res) {
+                $.each(res.body.data, function (index, val) {
+                    let ddDom = $('<dd></dd>');
+                    let aDOm = $('<a></a>')
+                        .attr('href', 'jie/detail.html?problemId=' + val.problemId)
                         .text(val.title);
-                    let spanDom=$('<span></span>').html('<i class="iconfont icon-pinglun1"></i> '+val.answerCount);
+                    let spanDom = $('<span></span>').html('<i class="iconfont icon-pinglun1"></i> ' + val.answerCount);
                     ddDom.append(aDOm);
                     ddDom.append(spanDom);
                     divDom.append(ddDom);
                 })
-            },{type:'get'});
+            }, {type: 'get'});
 
         }
+
         // 回答周榜
         answerWeek();
+
         function answerWeek() {
-            let divDom=$('#answer-week');
+            let divDom = $('#answer-week');
             divDom.empty();
 
-            fly.json('/problemInfo/answerWeek',null,function (res) {
+            fly.json('/problemInfo/answerWeek', null, function (res) {
                 console.log(res);
-                $.each(res.body.data,function (index, val) {
-                    let ddDom=$('<dd></dd>');
-                    let aDOm=$('<a></a>')
-                        .attr('href','user/home.html?userId='+val.userId);
-                    let imgDom=$('<img>').attr('src',layui.imgUrl()+val.avatar);
-                    let citeDom=$('<cite></cite>').text(val.username);
-                    let iDom=$('<i></i>').text(val.answerCount);
+                $.each(res.body.data, function (index, val) {
+                    let ddDom = $('<dd></dd>');
+                    let aDOm = $('<a></a>')
+                        .attr('href', 'user/home.html?userId=' + val.userId);
+                    let imgDom = $('<img>').attr('src', layui.imgUrl() + val.avatar);
+                    let citeDom = $('<cite></cite>').text(val.username);
+                    let iDom = $('<i></i>').text(val.answerCount);
                     aDOm.append(imgDom);
                     aDOm.append(citeDom);
                     aDOm.append(iDom);
                     ddDom.append(aDOm);
                     divDom.append(ddDom);
                 })
-            },{type:'get'});
+            }, {type: 'get'});
         }
 
     });

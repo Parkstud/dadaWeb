@@ -66,87 +66,6 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
         return num < Math.pow(10, length) ? str + (num | 0) : num;
     };
 
-    let lockReconnect = false;  //避免ws重复连接
-    let ws = null;          // 判断当前浏览器是否支持WebSocket
-    let wsUrl = null;
-    if (window.localStorage.getItem('token')) {
-        wsUrl = 'ws://192.168.43.106:8080/websocket/' + JSON.parse(window.localStorage.getItem('token')).id;
-    }
-
-    // initWebSocket(wsUrl);   //连接ws
-    // 设置websocket
-    function initWebSocket(url) {
-        try {
-            if ('WebSocket' in window) {
-                ws = new WebSocket(url);
-            } else if ('MozWebSocket' in window) {
-                ws = new MozWebSocket(url);
-            } else {
-                layui.use(['layer'], function () {
-                    layer.alert("您的浏览器不支持websocket协议,建议使用新版谷歌、火狐等浏览器，请勿使用IE10以下浏览器，360浏览器请使用极速模式，不要使用兼容模式！");
-                });
-            }
-            initEventHandle();
-        } catch (e) {
-            reconnect(url);
-            console.log(e);
-        }
-    }
-
-    // 使用websocket
-    function initEventHandle() {
-        ws.onclose = function () {
-            reconnect(wsUrl);
-            console.log("llws连接关闭!" + new Date().toUTCString());
-        };
-        ws.onerror = function () {
-            reconnect(wsUrl);
-            console.log("llws连接错误!");
-        };
-        ws.onopen = function () {
-            heartCheck.reset().start();      //心跳检测重置
-            console.log("llws连接成功!" + new Date().toUTCString());
-        };
-        ws.onmessage = function (event) {    //如果获取到消息，心跳检测重置
-            heartCheck.reset().start();      //拿到任何消息都说明当前连接是正常的
-            console.log("llws收到消息啦:" + event.data);
-        }
-    }
-
-    // 重连
-    function reconnect() {
-        if (lockReconnect) return;
-        lockReconnect = true;
-        setTimeout(function () {     //没连接上会一直重连，设置延迟避免请求过多
-            initWebSocket(wsUrl);
-            lockReconnect = false;
-        }, 2000);
-    }
-
-    //心跳检测
-    let heartCheck = {
-        timeout: 540000,        //9分钟发一次心跳
-        timeoutObj: null,
-        serverTimeoutObj: null,
-        reset: function () {
-            clearTimeout(this.timeoutObj);
-            clearTimeout(this.serverTimeoutObj);
-            return this;
-        },
-        start: function () {
-            var self = this;
-            this.timeoutObj = setTimeout(function () {
-                //这里发送一个心跳，后端收到后，返回一个心跳消息，
-                //onmessage拿到返回的心跳就说明连接正常
-                ws.send("ping");
-                self.serverTimeoutObj = setTimeout(function () {//如果超过一定时间还没重置，说明后端主动断开了
-                    ws.close();     //如果onclose会执行reconnect，我们执行ws.close()就行了.如果直接执行reconnect 会触发onclose导致重连两次
-                }, self.timeout)
-            }, this.timeout)
-        }
-    }
-
-
     var fly = {
         //Ajax
         json: function (url, data, success, options, beforeAjax) {
@@ -395,7 +314,7 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
             let user = window.localStorage.getItem('token');
             let noticeCount = window.localStorage.getItem('noticeCount');
             if (noticeCount) {
-                if(parseInt(noticeCount)>0){
+                if (parseInt(noticeCount) > 0) {
                     tip1.show();
                     tip2.show();
                     dot.text(parseInt(noticeCount));
@@ -403,16 +322,14 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
                 }
             }
             if (user) {
-
-
                 fly.json('/message/notices/count', null, function (res) {
                     console.log(res);
+
                     if (res.body.data > 0) {
                         window.localStorage.setItem('noticeCount', res.body.data);
                         // 设置头导航
                         tip1.show();
                         // 设置头下导航
-
                         tip2.show();
                         // 左导航
                         let span = $('#not-read-span');
@@ -420,6 +337,8 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
                         tip3.empty();
                         dot.text(res.body.data);
                         tip3.append(dot);
+                    } else {
+                        window.localStorage.setItem('noticeCount', 0);
                     }
                 }, {type: 'get'});
 
@@ -455,6 +374,12 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
         }
 
     };
+
+    // 退出
+    $('#tuichu').on('click', function () {
+        window.localStorage.removeItem('token');
+        location.href = '/dadaWeb/layui-v2.4.5/html/user/login.html';
+    });
 
     //签到
     var tplSignin = ['{{# if(d.signed){ }}'
@@ -699,8 +624,12 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
     form.on('submit(reg)', function (data) {
         var action = $(data.form).attr('action'), button = $(data.elem);
         fly.json(action, data.field, function (res) {
-            localStorage.setItem('token', JSON.stringify(res.body.data));
-            location.href = 'set.html';
+            if (res.body.data) {
+                localStorage.setItem('token', JSON.stringify(res.body.data));
+                location.href = 'set.html';
+            } else {
+                layer.msg(res.head.msg, {icon: 2});
+            }
         });
         return false;
     });
