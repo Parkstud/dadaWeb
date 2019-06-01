@@ -126,26 +126,14 @@
             <img width="180" src="../../res/images/fao.png" alt="达达问答">
         </a>
 
-        <ul class="layui-nav fly-nav-user" id="index_head_info">
-
-            <!-- 未登入的状态 -->
-            <!--            <li class="layui-nav-item">-->
-            <!--                <a class="iconfont icon-touxiang layui-hide-xs" href="user/login.html"></a>-->
-            <!--            </li>-->
-            <!--            <li class="layui-nav-item">-->
-            <!--                <a href="user/login.html">登入</a>-->
-            <!--            </li>-->
-            <!--            <li class="layui-nav-item">-->
-            <!--                <a href="user/reg.html">注册</a>-->
-            <!--            </li>-->
-            <!-- 登入后的状态 -->
+        <ul class="layui-nav fly-nav-user" id="index_head_info" style="display: none;">
             <li class="layui-nav-item">
                 <a class="fly-nav-avatar" href="javascript:;">
                     <cite class="layui-hide-xs">
-                        <span class="layui-badge-dot"></span>
+                        <!--                        <span class="layui-badge-dot"></span>-->
                     </cite>
-                    <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
-
+                    <i class="layui-badge fly-badge-vip layui-bg-blue layui-hide-xs"></i>
+                    <img src="http://148.70.8.85/group1/M00/00/00/rBsAAlyd2OqAfMy_AAAGveq-234459.jpg">
                 </a>
                 <div id="tip-header-wrapper" style="display:none">
                     <span class="layui-badge-dot" style="right: -16px"></span>
@@ -155,7 +143,7 @@
                     <dd>
                         <a href="../user/message.html">
                             <i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的通知
-                            <span class="layui-badge-dot"></span>
+                            <!--                            <span class="layui-badge-dot"></span>-->
                             <span id="tip-header-notice" style="display:none">
                                  <span class="layui-badge-dot"></span>
                             </span>
@@ -165,43 +153,36 @@
                                                        style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
                     </dd>
                     <hr style="margin: 5px 0;">
-                    <dd><a href="" style="text-align: center;">退出</a></dd>
+                    <dd><a href="javascript:void(0);" id="tuichu" style="text-align: center;">退出</a>
+                    </dd>
                 </dl>
             </li>
         </ul>
     </div>
 </div>
 
+
 <div class="layui-hide-xs">
     <div class="fly-panel fly-column">
         <div class="layui-container">
             <ul class="layui-clear">
-                <!--<li class="layui-hide-xs"><a href="/">首页</a></li>-->
-                <!--<li class="layui-this"><a href="">提问</a></li>-->
-                <!--<li><a href="">分享<span class="layui-badge-dot"></span></a></li>-->
-                <!--<li><a href="">讨论</a></li>-->
-                <!--<li><a href="">建议</a></li>-->
-                <!--<li><a href="">公告</a></li>-->
-                <!--<li><a href="">动态</a></li>-->
-                <!--<li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span-->
-                <!--class="fly-mid"></span></li>-->
 
-                <!-- 用户登入后显示 -->
                 <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
-                        href="../user/index.html">我发表的问题</a></li>
+                        href="javascript:void(0);" id="my-putproblem">我发表的问题</a></li>
                 <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
-                        href="../user/index.html#collection">我收藏的问题</a></li>
+                        href="javascript:void(0);" id="my-colproblem">我收藏的问题</a></li>
 
             </ul>
 
             <div class="fly-column-right layui-hide-xs">
                 <span class="fly-search"><i class="layui-icon"></i></span>
-                <a href="add.html" class="layui-btn">发表新问题</a>
+                <a href="javascript:void(0);" class="layui-btn put-newProblem">发表新问题</a>
             </div>
             <div class="layui-hide-sm layui-show-xs-block"
                  style="margin-top: -10px; padding-bottom: 10px; text-align: center;">
-                <a href="add.html" class="layui-btn">发表新问题</a>
+                <a href="javascript:void(0);" class="layui-btn put-newProblem">发表新问题</a>
             </div>
+
         </div>
     </div>
 </div>
@@ -213,28 +194,22 @@
                 <h1>问题</h1>
                 <div class="fly-detail-info">
 
-                    <!-- <span class="layui-badge">审核中</span> -->
-                    <span class="layui-badge layui-bg-green fly-detail-column" id="categoryName">栈和队列</span>
 
-                    <!--<span class="layui-badge" style="background-color: #999;">未结</span>-->
-                    <!-- <span class="layui-badge" style="background-color: #5FB878;">已结</span> -->
+                        <span style="display: none;"
+                              class="layui-badge layui-bg-green fly-detail-column"
+                              id="categoryName"></span>
 
-                    <span class="layui-badge" id="problemOpen">开放</span>
-                    <!--<span class="layui-badge layui-bg-red">精帖</span>-->
-
-
+                    <span style="display: none;" class="layui-badge" id="problemOpen"></span>
                     <div class="fly-admin-box" data-id="123">
-                        <span class="layui-btn layui-btn-xs jie-admin  layui-btn-warm"
+                        <span style="display: none;"
+                              class="layui-btn layui-btn-xs jie-admin  layui-btn-warm"
                               id="problem-report">举报</span>
-                        <span class="layui-btn layui-btn-xs jie-admin  layui-btn-danger"
+                        <span style="display: none;"
+                              class="layui-btn layui-btn-xs jie-admin  layui-btn-danger"
                               id="deleteProblem">删除</span>
-
-                        <!--<span class="layui-btn layui-btn-xs jie-admin" type="set" field="stick" rank="1">置顶</span>-->
-                        <!-- <span class="layui-btn layui-btn-xs jie-admin" type="set" field="stick" rank="0" style="background-color:#ccc;">取消置顶</span> -->
-
-                        <!--<span class="layui-btn layui-btn-xs jie-admin" type="set" field="status" rank="1">加精</span>-->
-                        <!-- <span class="layui-btn layui-btn-xs jie-admin" type="set" field="status" rank="0" style="background-color:#ccc;">取消加精</span> -->
                     </div>
+
+
                     <span class="fly-list-nums">
             <a href="#comment"><i class="iconfont" title="回答">&#xe60c;</i>
                 <span id="answerCount"></span>
@@ -246,22 +221,16 @@
                 </div>
                 <div class="detail-about " id="problemUser">
                     <a class="fly-avatar" href="../user/home.html">
-                        <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
-                             alt="贤心">
+                        <img src="http://148.70.8.85/group1/M00/00/00/rBsAAlyd2OqAfMy_AAAGveq-234459.jpg"
+                             alt="">
                     </a>
                     <div class="fly-detail-user">
                         <a href="../user/home.html" class="fly-link">
-                            <cite>贤心</cite>
-                            <!--<i class="iconfont icon-renzheng"-->
-                            <!--title="认证信息：{{ rows.user.approve }}"></i>-->
-                            <!--<i class="layui-badge fly-badge-vip">VIP3</i>-->
+                            <cite></cite>
                         </a>
                         <span>2017-11-30</span>
                     </div>
                     <div class="detail-hits" id="LAY_jieAdmin" data-id="123">
-                        <!--<span style="padding-right: 10px; color: #FF7200">悬赏：60飞吻</span>-->
-                        <!--<span class="layui-btn layui-btn-xs jie-admin" type="edit"><a-->
-                        <!--href="add.html">编辑此贴</a></span>-->
                     </div>
                 </div>
                 <h1 id="problem_title"></h1>
@@ -269,7 +238,7 @@
 
             <div class="fly-panel detail-box" id="flyReply">
                 <fieldset class="layui-elem-field layui-field-title" style="text-align: center;">
-                    <legend>回答</legend>
+                    <legend id="answers-top">回答</legend>
                 </fieldset>
 
                 <ul class="jieda" id="jieda">
@@ -281,7 +250,7 @@
                     </div>
                 </div>
 
-                <div id="edit-wrapper">
+                <div id="edit-wrapper" style="display: none">
 
                     <div class="layui-form layui-form-pane">
 
@@ -303,60 +272,8 @@
         </div>
         <div class="layui-col-md4">
             <dl class="fly-panel fly-list-one">
-                <!--                <div class="fly-panel-title">-->
-                <!--                    <div class="layui-inline">-->
-                <!--                        <input class="layui-input" name="id" id="demoReload" autocomplete="off">-->
-                <!--                    </div>-->
-                <!--                    <button type="submit" class="layui-btn my-search-btn">搜索</button>-->
-                <!--                </div>-->
                 <dt class="fly-panel-title">本周热议</dt>
                 <div id="detail-hot-week"></div>
-                <!--                <dd>-->
-                <!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
-                <!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-                <!--                </dd>-->
-                <!--                <dd>-->
-                <!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
-                <!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-                <!--                </dd>-->
-                <!--                <dd>-->
-                <!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
-                <!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-                <!--                </dd>-->
-                <!--                <dd>-->
-                <!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
-                <!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-                <!--                </dd>-->
-                <!--                <dd>-->
-                <!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
-                <!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-                <!--                </dd>-->
-                <!--                <dd>-->
-                <!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
-                <!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-                <!--                </dd>-->
-                <!--                <dd>-->
-                <!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
-                <!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-                <!--                </dd>-->
-                <!--                <dd>-->
-                <!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
-                <!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-                <!--                </dd>-->
-                <!--                <dd>-->
-                <!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
-                <!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-                <!--                </dd>-->
-                <!--                <dd>-->
-                <!--                    <a href="">基于 layui 的极简社区页面模版</a>-->
-                <!--                    <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-                <!--                </dd>-->
-                <!--                <i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>-->
-
-                <!-- 无数据时 -->
-                <!--
-                <div class="fly-none">没有相关数据</div>
-                -->
             </dl>
 
 
@@ -370,8 +287,6 @@
 </div>
 <script src="../../res/layui/layui.all.js"></script>
 <script>
-    layui.cache.token = JSON.parse(localStorage.getItem('token'));
-    console.log(layui.cache.token);
 
     // 获取url参数
     function getQueryString(key) {
@@ -407,14 +322,6 @@
         }
         return fmt;
     };
-    layui.cache.page = 'jie';
-    layui.cache.user = {
-        username: '游客'
-        , uid: -1
-        , avatar: '../../res/images/avatar/00.jpg'
-        , experience: 83
-        , sex: '男'
-    };
     layui.config({
         version: "3.0.0"
         , base: '../../res/mods/'
@@ -431,34 +338,39 @@
             height: 180,
             tool: ['left', 'center', 'right', '|', 'face']
         });
-
-        $('#deleteProblem').hide();
-
-        let problemId = getQueryString('problemId');
-
-        if (layui.cache.token) {
-            // 登入
-            $('cite.layui-hide-xs').text(layui.cache.token.username);
-            // 设置nickname
-            $('.fly-nav-avatar img').attr('src', layui.imgUrl() + layui.cache.token.avatar);
-        } else {
+        // 头部信息配置
+        if (!layui.cache.token) {
+            $('#index_head_info').empty();
             let liDoms = $(' <li class="layui-nav-item">' +
                 '<a class="iconfont icon-touxiang layui-hide-xs" href="user/login.html"></a>' +
                 '</li>' +
                 '<li class="layui-nav-item">' +
-                '<a href="user/login.html">登入</a>' +
+                '<a href="../user/login.html">登入</a>' +
                 '</li>' +
                 '<li class="layui-nav-item">' +
-                '<a href="user/reg.html">注册</a>' +
+                '<a href="../user/reg.html">注册</a>' +
                 '</li>');
             $('#index_head_info').append(liDoms);
+
         }
-        let problemType = [];
+        $('#index_head_info').show();
+
+        // $('#deleteProblem').hide();
+
+        let problemId = getQueryString('problemId');
+
+        // 设置浏览问题信息
+        if (problemId) {
+            fly.setHistory(problemId)
+        }
 
         let currentTemp = 1;
 
         // 查看点赞信息
         function getCommetLikeInfo() {
+            if (!layui.cache.token) {
+                return
+            }
             $('.jieda-reply').each(function (index, val) {
                 let commentId = $(val).attr('commentid');
                 fly.json('/Interaction/awesome', {commentId: commentId}, function (res) {
@@ -475,22 +387,6 @@
 
         // 同步获取category值
 
-        function getProblemType() {
-            let problemType = [];
-            $.ajax({
-                    url: layui.baseUrl() + '/problemManager/problemType',
-                    type: 'get',
-                    async: false,
-                    success(res) {
-                        problemType = res.body.data;
-                    },
-                    error(err) {
-                        console.log(err)
-                    }
-                }
-            );
-            return problemType;
-        }
 
         // 请求问题信息
         getProblemInfo();
@@ -514,43 +410,118 @@
 
         // 设置问题信息
         function setProblemInfo(data) {
+            // <div id="problem-badge">
+            //         <span class="layui-badge layui-bg-green fly-detail-column" id="categoryName"></span>
+            //
+            //         <span class="layui-badge" id="problemOpen">开放</span>
+            //         <div class="fly-admin-box" data-id="123">
+            //         <span class="layui-btn layui-btn-xs jie-admin  layui-btn-warm"
+            //     id="problem-report">举报</span>
+            //         <span class="layui-btn layui-btn-xs jie-admin  layui-btn-danger"
+            //     id="deleteProblem">删除</span>
+            //         </div>
+            //         </div>
             console.log(data);
-            $('#categoryName').text(setCategory(data.category))
-            $('#problem_title').text(data.title);
-            if (data.open === 1) {
-                $('#problemOpen').addClass('layui-bg-blue').text('开放')
-            } else {
-                $('#problemOpen').addClass('layui-bg-black').text('关闭');
-                $('#edit-wrapper').hide();
+            let cateDom = $('#categoryName');
+            let openDom = $('#problemOpen');
+            let delDom = $('#deleteProblem');
+            let reportDom = $('#problem-report');
+            cateDom.text(setCategory(data.category));
+            cateDom.show()
+            $('#problem_title').html(data.title);
+            if (layui.cache.token) {
+                if (data.open === 1) {
+                    openDom.addClass('layui-bg-blue').text('开放');
+                    $('#edit-wrapper').show();
+                } else {
+                    openDom.addClass('layui-bg-black').text('关闭');
+
+                }
+                openDom.show();
+
+                if (layui.cache.token.type !== 0) {
+                    openDom.addClass('layui-btn');
+                    openDom.on('click', function () {
+                        if (openDom.text() === '开放') {
+                            layer.confirm('确认关闭问题？', {
+                                btn: ['关闭问题', '取消'] //按钮
+                            }, function () {
+                                fly.json('/control/problem/problemInfo',
+                                    {
+                                        id: problemId,
+                                        open: 0
+                                    }
+                                    , function (res) {
+                                        console.log(res);
+                                        if (res.body.data) {
+
+                                            layer.msg('关闭成功', {icon: 1});
+                                            setTimeout(function () {
+                                                window.location.reload();
+                                            }, 2000)
+
+                                        } else {
+                                            layer.msg('关闭失败', {icon: 2});
+                                        }
+                                    }, {type: 'post'});
+                            }, function () {
+
+                            });
+                        } else {
+                            layer.confirm('确认开放问题？', {
+                                btn: ['开放问题', '取消'] //按钮
+                            }, function () {
+                                fly.json('/control/problem/problemInfo',
+                                    {
+                                        id: problemId,
+                                        open: 1
+                                    }
+                                    , function (res) {
+                                        console.log(res);
+                                        if (res.body.data) {
+                                            layer.msg('开放成功', {icon: 1});
+                                            setTimeout(function () {
+                                                window.location.reload();
+                                            }, 2000)
+                                        } else {
+                                            layer.msg('开放失败', {icon: 2});
+                                        }
+                                    }, {type: 'post'});
+                            }, function () {
+                            });
+                        }
+                    })
+                }
+
+                if (layui.cache.token.type != 0 || layui.cache.token.id == data.userId) {
+                    delDom.show();
+                } else {
+                    reportDom.show()
+                }
             }
 
-            if (layui.cache.token.type != 0 || layui.cache.token.id == data.userId) {
-                $('#deleteProblem').show();
-                $('#problem-report').hide();
-            }
 
-            $('#answerCount').text(data.answerCount);
-            $('#browseCount').text(data.browseCount);
+            $('#answerCount').html(data.answerCount);
+            $('#browseCount').html(data.browseCount);
 
             $('#problemUser>a').attr('href', '../user/home.html?userId=' + data.userId);
             $('#problemUser>a>img').attr('src', layui.imgUrl() + data.avatar);
             $('#problemUser>.fly-detail-user>a').attr('href', '../user/home.html?userId=' + data.userId).html(' <cite>' + data.username + '</cite>');
             $('#problemUser>.fly-detail-user>span').text(new Date(data.time).Format("yyyy年MM月dd日 hh:mm:ss"));
-            $('#problemContent').text(data.title);
+            $('#problemContent').html(data.title);
 
             $('#problem-report').parent().attr('problemId', problemId);
             $('#problem-report').parent().attr('userId', data.userId);
         }
+
+        // $('#problem-badge').show()
 
         // 设置题目类型
         function setCategory(category) {
             if (!category) {
                 return '数据结构';
             }
-            if (problemType.length === 0) {
-                problemType = getProblemType();
-            }
-            return problemType[category - 1].categoryName;
+            return layui.cache.problemType[category - 1].categoryName;
         }
 
         // 设置回答区域
@@ -596,6 +567,11 @@
 
         // 填充评论列表
         function setProblemDetailList(res) {
+
+            if (res.body.data.records.length === 0) {
+                $('#answers-top').text('暂无回答')
+            }
+
             let ulDom = $('#jieda');
             ulDom.empty();
             $.each(res.body.data.records, function (index, val) {
@@ -610,18 +586,22 @@
                 a2Dom.append($('<cite></cite>').text(val.username));
 
                 if (val.userType === 1) {
-                    a2Dom.append($(' <i class="layui-badge fly-badge-vip"></i>').text('教师'));
+                    a2Dom.append($(' <i style="margin-left: 6px" class="layui-badge fly-badge-vip"></i>').text('教师'));
                 }
                 if (val.userType === 2) {
-                    a2Dom.append($(' <i class="layui-badge fly-badge-vip"></i>').text('智能系统'));
+                    a2Dom.append($(' <i style="margin-left: 6px" class="layui-badge fly-badge-vip"></i>').text('自动问答'));
                 }
                 div2Dom.append(a2Dom);
                 div1Dom.append(div2Dom);
                 let div3Dom = $('<div class="detail-hits"></div>');
                 div3Dom.append($('<span></span>').text(val.commentTime));
                 div1Dom.append(div3Dom);
+                console.log(val)
+                if (val.adopt === 1) {
+                    let iCanna = $(' <i class="iconfont icon-caina" title="最佳答案"></i>');
+                    div1Dom.append(iCanna);
+                }
                 liDom.append(div1Dom);
-
                 div1Dom = $('<div class="detail-body jieda-body photos"></div>');
                 div1Dom.append($('<p></p>').html(val.comments));
                 liDom.append(div1Dom);
@@ -655,10 +635,53 @@
 
 
                 div2Dom = $('<div class="jieda-admin"></div>');
-                span1Dom = $('<span class="comment-report">举报</span>');
-                let span2Dom = $('<span class="delete-comment">删除</span>');
-                div2Dom.append(span1Dom);
-                div2Dom.append(span2Dom);
+                let span2Dom = ''
+                if (layui.cache.token) {
+                    if (layui.cache.token.id === val.userId || layui.cache.token.id!==0) {
+                        span2Dom = $('<span class="delete-comment">删除</span>');
+                        div2Dom.append(span2Dom);
+                    } else {
+                        span1Dom = $('<span class="comment-report">举报</span>');
+                        div2Dom.append(span1Dom);
+                    }
+                    if (layui.cache.token.type !== 0) {
+                        let accept = $('<span class="jieda-accept" id="accept">采纳</span>');
+                        div2Dom.append(accept)
+                        if (val.adopt !== 0) {
+                            accept.text('取消采纳')
+                        }
+                        accept.on('click', function () {
+
+                            if (accept.text() === '采纳') {
+                                fly.json('/Interaction/adoptAnswer/' + val.commentId, {
+                                    adopt: 1
+                                }, function (res) {
+                                    if (res.body.data) {
+                                        layer.msg('采纳成功', {icon: 1});
+                                        getCommentInfoPage(1, 10);
+                                    } else {
+                                        layer.msg('采纳失败', {icon: 2});
+                                    }
+                                })
+                            } else {
+                                fly.json('/Interaction/adoptAnswer/' + val.commentId, {
+                                    adopt: 0
+                                }, function (res) {
+                                    if (res.body.data) {
+                                        layer.msg('取消采纳成功', {icon: 1});
+                                        getCommentInfoPage(1, 10);
+                                    } else {
+                                        layer.msg('取消采纳失败', {icon: 2});
+                                    }
+                                })
+                            }
+
+
+                        })
+                    }
+
+                }
+
                 div1Dom.append(div2Dom);
                 liDom.append(div1Dom);
 
@@ -685,10 +708,16 @@
                         div3Dom = $('<div class="reply-tool"></div>').attr('replyId', innerVal.id)
                             .attr('replyUserId', innerVal.replyUserId)
                             .attr('replyUsername', innerVal.replyUsername);
-                        span1Dom = $('<span class="reply-report">举报</span>');
-                        span2Dom = $('<span class="reply-delete">删除</span>');
-                        div3Dom.append(span1Dom);
-                        div3Dom.append(span2Dom);
+                        if (layui.cache.token) {
+                            if (layui.cache.token.id === innerVal.replyUserId || layui.cache.token.id!==0) {
+                                span2Dom = $('<span class="reply-delete">删除</span>');
+                                div3Dom.append(span2Dom);
+                            } else {
+                                span1Dom = $('<span class="reply-report">举报</span>');
+                                div3Dom.append(span1Dom);
+                            }
+                        }
+
 
                         div2Dom.append(div3Dom);
                         blockquote.append(div2Dom);
@@ -703,14 +732,16 @@
 
         // 删除问题
         $('#deleteProblem').on('click', function () {
-            layer.confirm('确认删除该问题？', function(index){
+            layer.confirm('确认删除该问题？', function (index) {
                 layer.close(index);
-                fly.json('/control/problem/problemId',{
+                fly.json('/control/problem/problemId', {
                     problemId: problemId
-                },function (res) {
+                }, function (res) {
                     if (res.body.data) {
                         layer.msg('删除成功', {icon: 1});
-                        setTimeout(function(){  location.href='../index.html'; }, 1000);
+                        setTimeout(function () {
+                            location.href = '../index.html';
+                        }, 1000);
 
                     } else {
                         layer.msg('删除失败', {icon: 2});
@@ -739,7 +770,7 @@
 
         // 点反对
         $('#jieda').on('click', '.jieda-reply .jieda-down', function () {
-            if (!layui.cache.token.id) {
+            if (!layui.cache.token) {
                 layer.msg('请登录');
                 return;
             }
@@ -771,7 +802,6 @@
                 $(this).find('em').text(count);
                 result = 2;
             }
-
             fly.json('/Interaction/awesome', {
                 commentId: commentId,
                 userId: layui.cache.token.id,
@@ -784,7 +814,7 @@
 
         //点赞
         $('#jieda').on('click', '.jieda-reply .jieda-zan', function () {
-            if (!layui.cache.token.id) {
+            if (!layui.cache.token) {
                 layer.msg('请登录');
                 return;
             }
@@ -817,14 +847,15 @@
                 result = 1;
             }
 
-
-            fly.json('/Interaction/awesome', {
-                commentId: commentId,
-                userId: layui.cache.token.id,
-                result: result
-            }, function (res) {
-                console.log(res);
-            })
+            if (layui.cache.token) {
+                fly.json('/Interaction/awesome', {
+                    commentId: commentId,
+                    userId: layui.cache.token.id,
+                    result: result
+                }, function (res) {
+                    console.log(res);
+                })
+            }
 
         });
         // 回答
@@ -868,7 +899,6 @@
                 btn: ['确认', '取消'] //按钮
             }, function () {
                 fly.json('/commentInfo/comment/id', {commentId: commentId}, function (res) {
-                    console.log(res);
                     if (res.body.data) {
                         layer.msg('删除成功', {icon: 1});
                         getCommentInfoPage(1, 10);
@@ -1022,7 +1052,7 @@
                     let ddDom = $('<dd></dd>');
                     let aDOm = $('<a></a>')
                         .attr('href', 'detail.html?problemId=' + val.problemId)
-                        .text(val.title);
+                        .html(val.title);
                     let spanDom = $('<span></span>').html('<i class="iconfont icon-pinglun1"></i> ' + val.answerCount);
                     ddDom.append(aDOm);
                     ddDom.append(spanDom);

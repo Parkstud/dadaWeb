@@ -87,7 +87,9 @@
                                                        style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
                     </dd>
                     <hr style="margin: 5px 0;">
-                    <dd><a href="" style="text-align: center;">退出</a></dd>
+                    <dd>
+                        <a href="javascript:void(0);" id="tuichu" style="text-align: center;">退出</a>
+                    </dd>
                 </dl>
             </li>
         </ul>
@@ -166,7 +168,7 @@
         }
 
         // 获取答案
-        $('#problem-title').text(layui.cache.problem.title);
+        $('#problem-title').html(layui.cache.problem.title);
         fly.json('/problem/intelligentQuestionAnswering', {
             questionStr: layui.cache.problem.title,
             userId: layui.cache.token.id,
@@ -183,7 +185,7 @@
                     fieldsetDom.append(legendDom);
                     let div2Dom = $('<div></div>');
                     let blockquote = $('<blockquote class="layui-elem-quote layui-quote-nm"></blockquote>')
-                        .text(val.problem.answerContent);
+                        .html(val.problem.answerContent);
                     div2Dom.append(blockquote);
                     div1Dom.append(div2Dom);
 
@@ -225,7 +227,7 @@
                 $('#answer-wrapper').append('<blockquote class="layui-elem-quote layui-quote-nm">暂无答案</blockquote>')
             }
             console.log(res);
-        }, {type: 'get'},function(){
+        }, {type: 'get'}, function () {
             $('#answer-wrapper').empty();
             $('#answer-wrapper').append('<li id="before-ajax-put-problem"' +
                 ' style="height:300px;border-bottom:0;display: flex;justify-content: center;align-items: center">' +
@@ -233,29 +235,50 @@
                 'class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i></li>')
         });
         // 点赞
+
+        let flag = null;
+
         $('#answer-wrapper').on('click', '.suggest-wrapper .comment-zan', function () {
-            let removeTemp = $('#answer-wrapper').find('.suggest-wrapper .red-color');
-            removeTemp.removeClass('red-color');
-            $(this).addClass('red-color');
+
+            if (flag === null || flag === 2) {
+                let removeTemp = $('#answer-wrapper').find('.suggest-wrapper .red-color');
+                removeTemp.removeClass('red-color');
+                $(this).addClass('red-color');
+                flag = 1;
+            } else {
+                let removeTemp = $('#answer-wrapper').find('.suggest-wrapper .red-color');
+                removeTemp.removeClass('red-color');
+                flag = null
+            }
+
+
             let comments = $(this).parent().attr('comments');
             fly.json('/control/problem/adoptAnswerProblem', {
                 comments: comments,
                 problemId: layui.cache.problem.id,
-                flag: 1
+                flag: flag
             }, function (res) {
                 console.log(res);
             })
         });
         // 反对
         $('#answer-wrapper').on('click', '.suggest-wrapper .comment-down', function () {
-            let removeTemp = $('#answer-wrapper').find('.suggest-wrapper .red-color');
-            removeTemp.removeClass('red-color');
-            $(this).addClass('red-color');
+            if (flag === null || flag === 1) {
+                let removeTemp = $('#answer-wrapper').find('.suggest-wrapper .red-color');
+                removeTemp.removeClass('red-color');
+                $(this).addClass('red-color');
+                flag =2;
+            } else {
+                let removeTemp = $('#answer-wrapper').find('.suggest-wrapper .red-color');
+                removeTemp.removeClass('red-color');
+                flag = null
+            }
+
             let comments = $(this).parent().attr('comments');
             fly.json('/control/problem/adoptAnswerProblem', {
                 comments: comments,
                 problemId: parseInt(layui.cache.problem.id),
-                flag: 2
+                flag: flag
             }, function (res) {
                 console.log(res);
             })

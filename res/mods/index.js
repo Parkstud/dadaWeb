@@ -1,6 +1,6 @@
 ﻿/**
 
- @Name: Fly社区主入口
+ @Name: 达达问答入口
 
  */
 
@@ -9,6 +9,7 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
 
     let baseUrl = 'http://localhost:8080';
     let imgUrl = 'http://148.70.8.85/';
+    layui.cache.token = JSON.parse(localStorage.getItem('token'));
 
     layui.imgUrl = function () {
         return imgUrl;
@@ -33,12 +34,13 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
 
     //阻止IE7以下访问
     if (device.ie && device.ie < 8) {
-        layer.alert('如果您非得使用 IE 浏览器访问Fly社区，那么请使用 IE8+');
+        layer.alert('如果您非得使用 IE 浏览器访问达达问答，那么请使用 IE8+');
     }
 
     laydate.render({
         elem: '#L_birthday'
     });
+
 
     layui.focusInsert = function (obj, str) {
         var result, val = obj.value;
@@ -65,7 +67,7 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
         }
         return num < Math.pow(10, length) ? str + (num | 0) : num;
     };
-
+    // ajax
     var fly = {
         //Ajax
         json: function (url, data, success, options, beforeAjax) {
@@ -87,7 +89,12 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
                 url: baseUrl + url,
                 beforeSend: function (request) {
                     if (url !== '/userAccount/login') {
-                        request.setRequestHeader("Authorization", localStorage.getItem('token'));
+
+                        let nowUser = JSON.parse(localStorage.getItem('token'));
+                        if (nowUser) {
+                            nowUser.username = '';
+                            request.setRequestHeader("Authorization", JSON.stringify(nowUser));
+                        }
                     }
                     beforeAjax && beforeAjax(request);
                 },
@@ -99,6 +106,7 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
                         options.error && options.error();
                     }
                 }, error: function (e) {
+                    console.log(e)
                     layer.msg('请求异常，请重试', {shift: 6});
                     options.error && options.error(e);
                 }
@@ -313,7 +321,7 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
 
             let user = window.localStorage.getItem('token');
             let noticeCount = window.localStorage.getItem('noticeCount');
-            if (noticeCount) {
+            if (user && noticeCount) {
                 if (parseInt(noticeCount) > 0) {
                     tip1.show();
                     tip2.show();
@@ -343,223 +351,69 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
                 }, {type: 'get'});
 
             }
-
-            var elemUser = $('.fly-nav-user');
-            if (layui.cache.user.uid !== -1 && elemUser[0]) {
-                fly.json('/message/nums/', {
-                    _: new Date().getTime()
-                }, function (res) {
-                    if (res.status === 0 && res.count > 0) {
-                        var msg = $('<a class="fly-nav-msg" href="javascript:;">' + res.count + '</a>');
-                        elemUser.append(msg);
-                        msg.on('click', function () {
-                            fly.json('/message/read', {}, function (res) {
-                                if (res.status === 0) {
-                                    location.href = '/user/message/';
-                                }
-                            });
-                        });
-                        layer.tips('你有 ' + res.count + ' 条未读消息', msg, {
-                            tips: 3
-                            , tipsMore: true
-                            , fixed: true
-                        });
-                        msg.on('mouseenter', function () {
-                            layer.closeAll('tips');
-                        })
-                    }
-                });
+        }
+        // 设置右上角信息
+        , setUserInfo: function () {
+            if (!layui.cache.token) {
+                return
             }
-            return arguments.callee;
+            console.log(layui.cache.token)
+            // 设置头像
+            $('cite.layui-hide-xs').text(layui.cache.token.username);
+            // 设置nickname
+            $('.fly-nav-avatar img').attr('src', layui.imgUrl() + layui.cache.token.avatar);
+            // 设置上传头像
+            $('.avatar-add img').attr('src', layui.imgUrl() + layui.cache.token.avatar);
+            // 设置身份
+            if (layui.cache.token.type === 0) {
+                $('.fly-badge-vip').text('学生')
+            }
+            if (layui.cache.token.type === 1) {
+                $('.fly-badge-vip').text('教师')
+            }
+            if (layui.cache.token.type === 2) {
+                $('.fly-badge-vip').text('系统')
+            }
+        }
+        // 设置浏览记录
+        , setHistory: function (problemId) {
+            if (problemId) {
+                if (layui.cache.token) {
+                    fly.json('/problemInfo/problem/history', {
+                        problemId: problemId
+                    }, function (res) {
+
+                    })
+                }
+
+            }
         }
 
     };
 
+    //设置个人信息
+    fly.setUserInfo();
+
+    $('#my-putproblem').on('click', function () {
+        if (!layui.cache.token) {
+            layer.msg('请登录！', {shift: 6});
+            return
+        }
+        location.href = '/dadaWebMaster/dadaWeb/html/user/index.html';
+    });
+    $('#my-colproblem').on('click', function () {
+        if (!layui.cache.token) {
+            layer.msg('请登录！', {shift: 6});
+            return
+        }
+        location.href = '/dadaWebMaster/dadaWeb/html/user/index.html#asd';
+
+    });
     // 退出
     $('#tuichu').on('click', function () {
         window.localStorage.removeItem('token');
-        location.href = '/dadaWeb/layui-v2.4.5/html/user/login.html';
+        location.href = '/dadaWebMaster/dadaWeb/html/user/login.html';
     });
-
-    //签到
-    var tplSignin = ['{{# if(d.signed){ }}'
-        , '<button class="layui-btn layui-btn-disabled">今日已签到</button>'
-        , '<span>获得了<cite>{{ d.experience }}</cite>飞吻</span>'
-        , '{{# } else { }}'
-        , '<button class="layui-btn layui-btn-danger" id="LAY_signin">今日签到</button>'
-        , '<span>可获得<cite>{{ d.experience }}</cite>飞吻</span>'
-        , '{{# } }}'].join('')
-        , tplSigninDay = '已连续签到<cite>{{ d.days }}</cite>天'
-
-        , signRender = function (data) {
-        laytpl(tplSignin).render(data, function (html) {
-            elemSigninMain.html(html);
-        });
-        laytpl(tplSigninDay).render(data, function (html) {
-            elemSigninDays.html(html);
-        });
-    }
-
-        , elemSigninHelp = $('#LAY_signinHelp')
-        , elemSigninTop = $('#LAY_signinTop')
-        , elemSigninMain = $('.fly-signin-main')
-        , elemSigninDays = $('.fly-signin-days');
-
-    if (elemSigninMain[0]) {
-        /*
-        fly.json('/sign/status', function(res){
-          if(!res.data) return;
-          signRender.token = res.data.token;
-          signRender(res.data);
-        });
-        */
-    }
-    $('body').on('click', '#LAY_signin', function () {
-        var othis = $(this);
-        if (othis.hasClass(DISABLED)) return;
-
-        fly.json('/sign/in', {
-            token: signRender.token || 1
-        }, function (res) {
-            signRender(res.data);
-        }, {
-            error: function () {
-                othis.removeClass(DISABLED);
-            }
-        });
-
-        othis.addClass(DISABLED);
-    });
-
-    //签到说明
-    elemSigninHelp.on('click', function () {
-        layer.open({
-            type: 1
-            , title: '签到说明'
-            , area: '300px'
-            , shade: 0.8
-            , shadeClose: true
-            , content: ['<div class="layui-text" style="padding: 20px;">'
-                , '<blockquote class="layui-elem-quote">“签到”可获得社区飞吻，规则如下</blockquote>'
-                , '<table class="layui-table">'
-                , '<thead>'
-                , '<tr><th>连续签到天数</th><th>每天可获飞吻</th></tr>'
-                , '</thead>'
-                , '<tbody>'
-                , '<tr><td>＜5</td><td>5</td></tr>'
-                , '<tr><td>≥5</td><td>10</td></tr>'
-                , '<tr><td>≥15</td><td>15</td></tr>'
-                , '<tr><td>≥30</td><td>20</td></tr>'
-                , '</tbody>'
-                , '</table>'
-                , '<ul>'
-                , '<li>中间若有间隔，则连续天数重新计算</li>'
-                , '<li style="color: #FF5722;">不可利用程序自动签到，否则飞吻清零</li>'
-                , '</ul>'
-                , '</div>'].join('')
-        });
-    });
-
-    //签到活跃榜
-    var tplSigninTop = ['{{# layui.each(d.data, function(index, item){ }}'
-        , '<li>'
-        , '<a href="/u/{{item.uid}}" target="_blank">'
-        , '<img src="{{item.user.avatar}}">'
-        , '<cite class="fly-link">{{item.user.username}}</cite>'
-        , '</a>'
-        , '{{# var date = new Date(item.time); if(d.index < 2){ }}'
-        , '<span class="fly-grey">签到于 {{ layui.laytpl.digit(date.getHours()) + ":" + layui.laytpl.digit(date.getMinutes()) + ":" + layui.laytpl.digit(date.getSeconds()) }}</span>'
-        , '{{# } else { }}'
-        , '<span class="fly-grey">已连续签到 <i>{{ item.days }}</i> 天</span>'
-        , '{{# } }}'
-        , '</li>'
-        , '{{# }); }}'
-        , '{{# if(d.data.length === 0) { }}'
-        , '{{# if(d.index < 2) { }}'
-        , '<li class="fly-none fly-grey">今天还没有人签到</li>'
-        , '{{# } else { }}'
-        , '<li class="fly-none fly-grey">还没有签到记录</li>'
-        , '{{# } }}'
-        , '{{# } }}'].join('');
-
-    elemSigninTop.on('click', function () {
-        var loadIndex = layer.load(1, {shade: 0.8});
-        fly.json('../json/signin.js', function (res) { //实际使用，请将 url 改为真实接口
-            var tpl = $(['<div class="layui-tab layui-tab-brief" style="margin: 5px 0 0;">'
-                , '<ul class="layui-tab-title">'
-                , '<li class="layui-this">最新签到</li>'
-                , '<li>今日最快</li>'
-                , '<li>总签到榜</li>'
-                , '</ul>'
-                , '<div class="layui-tab-content fly-signin-list" id="LAY_signin_list">'
-                , '<ul class="layui-tab-item layui-show"></ul>'
-                , '<ul class="layui-tab-item">2</ul>'
-                , '<ul class="layui-tab-item">3</ul>'
-                , '</div>'
-                , '</div>'].join(''))
-                , signinItems = tpl.find('.layui-tab-item');
-
-            layer.close(loadIndex);
-
-            layui.each(signinItems, function (index, item) {
-                var html = laytpl(tplSigninTop).render({
-                    data: res.data[index]
-                    , index: index
-                });
-                $(item).html(html);
-            });
-
-            layer.open({
-                type: 1
-                , title: '签到活跃榜 - TOP 20'
-                , area: '300px'
-                , shade: 0.8
-                , shadeClose: true
-                , id: 'layer-pop-signintop'
-                , content: tpl.prop('outerHTML')
-            });
-
-        }, {type: 'get'});
-    });
-
-
-    //回帖榜
-    var tplReply = ['{{# layui.each(d.data, function(index, item){ }}'
-        , '<dd>'
-        , '<a href="/u/{{item.uid}}">'
-        , '<img src="{{item.user.avatar}}">'
-        , '<cite>{{item.user.username}}</cite>'
-        , '<i>{{item["count(*)"]}}次回答</i>'
-        , '</a>'
-        , '</dd>'
-        , '{{# }); }}'].join('')
-        , elemReply = $('#LAY_replyRank');
-
-    if (elemReply[0]) {
-        /*
-        fly.json('/top/reply/', {
-          limit: 20
-        }, function(res){
-          var html = laytpl(tplReply).render(res);
-          elemReply.find('dl').html(html);
-        });
-        */
-    }
-    ;
-
-    //相册
-    if ($(window).width() > 750) {
-        layer.photos({
-            photos: '.photos'
-            , zIndex: 9999999999
-            , anim: -1
-        });
-    } else {
-        $('body').on('click', '.photos img', function () {
-            window.open(this.src);
-        });
-    }
-
 
     //搜索
     $('.fly-search').on('click', function () {
@@ -592,21 +446,6 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
     //新消息通知
     fly.newnotice();
 
-    //发送激活邮件
-    fly.activate = function (email) {
-        fly.json('/api/activate/', {}, function (res) {
-            if (res.status === 0) {
-                layer.alert('已成功将激活链接发送到了您的邮箱，接受可能会稍有延迟，请注意查收。', {
-                    icon: 1
-                });
-            }
-            ;
-        });
-    };
-    $('#LAY-activate').on('click', function () {
-        fly.activate($(this).attr('email'));
-    });
-
     //点击@
     $('body').on('click', '.fly-aite', function () {
         var othis = $(this), text = othis.text();
@@ -622,11 +461,16 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
 
     // 注册
     form.on('submit(reg)', function (data) {
-        var action = $(data.form).attr('action'), button = $(data.elem);
+        let action = $(data.form).attr('action');
+        console.log(action)
         fly.json(action, data.field, function (res) {
             if (res.body.data) {
                 localStorage.setItem('token', JSON.stringify(res.body.data));
-                location.href = 'set.html';
+                layer.msg('注册成功！', {icon: 1});
+                setTimeout(function () {
+                    location.href = 'login.html'
+                }, 2000)
+
             } else {
                 layer.msg(res.head.msg, {icon: 2});
             }
@@ -649,10 +493,25 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
             } else {
                 layer.msg(res.head.msg, {icon: 2});
             }
-
-
         });
         return false;
+    });
+    //忘记密码
+    form.on('submit(forget)', function (data) {
+        let action = $(data.form).attr('action');
+        fly.json(action, data.field, function (res) {
+            if (res.head.stateCode === 200) {
+                layer.msg('修改成功!', {icon: 1});
+                localStorage.setItem('token', JSON.stringify(res.body.data));
+                setTimeout(function () {
+                    location.href = 'login.html';
+                }, 2000)
+
+            } else {
+                layer.msg(res.head.msg, {icon: 2});
+            }
+        })
+        return false
     });
     // 修改密码
     form.on('submit(changePass)', function (data) {
@@ -699,7 +558,7 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
 
         return false;
     });
-
+    // 问题信息
     form.on('submit(problem)', function (data) {
         let action = $(data.form).attr('action'), button = $(data.elem);
         fly.json('/control/problem/info', data.field, function (res) {
@@ -746,12 +605,6 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
         layui.extend(extend);
         layui.use(layui.cache.page);
     }
-
-    //加载IM
-    if (!device.android && !device.ios) {
-        //layui.use('im');
-    }
-
     //加载编辑器
     // fly.layEditor({
     //     elem: '.fly-editor'
@@ -770,25 +623,44 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
         $('body').removeClass('site-mobile');
     });
 
-    //获取统计数据
-    $('.fly-handles').each(function () {
-        var othis = $(this);
-        $.get('/api/handle?alias=' + othis.data('alias'), function (res) {
-            othis.html('（下载量：' + res.number + '）');
-        })
-    });
+    $('.put-newProblem').on('click', function () {
+        if (!layui.cache.token) {
+            layer.msg('请登录！', {shift: 6});
+            return
+        }
+        window.location.href = '/dadaWebMaster/dadaWeb/html/jie/add.html'
+    })
+
 
     //固定Bar
     util.fixbar({
         bar1: '&#xe642;'
         , bgcolor: '#009688'
         , click: function (type) {
+            if (!layui.cache.token) {
+                layer.msg('请登录', {shift: 6});
+                return
+            }
             if (type === 'bar1') {
                 // layer.msg('打开 index.js，开启发表新帖的路径');
-                location.href = '/layui-v2.4.5/html/jie/add.html';
+                location.href = '/dadaWebMaster/dadaWeb/html/jie/add.html';
             }
         }
     });
+
+
+    layui.cache.problemType = JSON.parse(window.localStorage.getItem('category'));
+    if (!layui.cache.problemType) {
+        getProblemType()
+    }
+    console.log(layui.cache.problemType);
+
+    function getProblemType() {
+        fly.json('/problemManager/problemType', null, function (res) {
+            layui.cache.problemType = res.body.data;
+            window.localStorage.setItem('category', JSON.stringify(layui.cache.problemType))
+        }, {type: 'get'})
+    }
 
     exports('fly', fly);
 

@@ -6,7 +6,7 @@
   <title>登入</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="keywords" content="达达问答">
-  <meta name="description" content="达达达数据结构专业问答">
+  <meta name="description" content="达达数据结构专业问答">
     <link rel="stylesheet" href="../../res/layui/css/layui.css">
   <link rel="stylesheet" href="../../res/css/global.css">
 </head>
@@ -45,9 +45,9 @@
           <div class="layui-form layui-form-pane">
             <form method="post" action="/userAccount/login">
                 <div class="layui-form-item">
-                    <label for="L_phone" class="layui-form-label">手机</label>
+                    <label for="L_phone" class="layui-form-label">账号</label>
                     <div class="layui-input-inline">
-                        <input type="text" id="L_phone" name="username" required
+                        <input type="text" id="L_phone" name="username"   lay-verify="required" required
                                  autocomplete="off"
                                class="layui-input">
                     </div>

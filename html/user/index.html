@@ -22,9 +22,10 @@
             <li class="layui-nav-item">
                 <a class="fly-nav-avatar" href="javascript:;">
                     <cite class="layui-hide-xs">
-                        <span class="layui-badge-dot"></span>
+                        <!--                        <span class="layui-badge-dot"></span>-->
                     </cite>
-                    <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
+                    <i class="layui-badge fly-badge-vip layui-bg-blue layui-hide-xs"></i>
+                    <img src="http://148.70.8.85/group1/M00/00/00/rBsAAlyd2OqAfMy_AAAGveq-234459.jpg">
 
                 </a>
                 <div id="tip-header-wrapper" style="display:none">
@@ -35,8 +36,8 @@
                     <dd>
                         <a href="../user/message.html">
                             <i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的通知
-                            <span class="layui-badge-dot"></span>
-                            <span id="tip-header-notice"  style="display:none">
+                            <!--                            <span class="layui-badge-dot"></span>-->
+                            <span id="tip-header-notice" style="display:none">
                                  <span class="layui-badge-dot"></span>
                             </span>
                         </a>
@@ -45,7 +46,9 @@
                                                        style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
                     </dd>
                     <hr style="margin: 5px 0;">
-                    <dd><a href="" style="text-align: center;">退出</a></dd>
+                    <dd>
+                        <a href="javascript:void(0);" id="tuichu" style="text-align: center;">退出</a>
+                    </dd>
                 </dl>
             </li>
         </ul>
@@ -100,38 +103,25 @@
 
 
     <div class="fly-panel fly-panel-user" pad20>
-        <!--
-        <div class="fly-msg" style="margin-top: 15px;">
-          您的邮箱尚未验证，这比较影响您的帐号安全，<a href="activate.html">立即去激活？</a>
-        </div>
-        -->
         <div class="layui-tab layui-tab-brief" lay-filter="user">
             <ul class="layui-tab-title" id="LAY_mine">
-                <li data-type="mine-jie" lay-id="index" class="layui-this">我发布的问题（<span id="tip_put_problem">0</span>）
+                <li data-type="mine-jie" lay-id="index" class="layui-this">我发布的问题（<span
+                        id="tip_put_problem">0</span>）
                 </li>
-                <li data-type="collection" data-url="/collection/find/" lay-id="collection">
+                <li data-type="collection" id="mycoltest" data-url="/collection/find/"
+                    lay-id="collection">
                     我收藏的问题（<span id="tip_collect_problem">0</span>）
                 </li>
             </ul>
             <div class="layui-tab-content" style="padding: 20px 0;">
                 <div class="layui-tab-item layui-show">
                     <ul class="mine-view jie-row" id="put_problem_ul">
-                        <!--<li>-->
-                            <!--<a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui-->
-                                <!--的极简社区页面模版</a>-->
-                            <!--<i>2017/3/14 上午8:30:00</i>-->
-                            <!--<a class="mine-edit" href="/jie/edit/8116">编辑</a>-->
-                            <!--<em>661阅/10答</em>-->
-                        <!--</li>-->
+
                     </ul>
                     <div id="putProblemPage"></div>
                 </div>
                 <div class="layui-tab-item">
                     <ul class="mine-view jie-row" id="collect_problem_ul">
-                        <!--<li>-->
-                            <!--<a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui-->
-                                <!--的极简社区页面模版</a>-->
-                            <!--<i>收藏于23小时前</i></li>-->
                     </ul>
                     <div id="collect_problem_page"></div>
                 </div>
@@ -146,14 +136,6 @@
 </div>
 <script src="../../res/layui/layui.all.js"></script>
 <script>
-    layui.cache.page = 'user';
-    layui.cache.user = {
-        username: '游客'
-        , uid: -1
-        , avatar: '../../res/images/avatar/00.jpg'
-        , experience: 83
-        , sex: '男'
-    };
     // 时间处理函数
     Date.prototype.Format = function (fmt) {
         var o = {
@@ -181,8 +163,9 @@
         }
         return fmt;
     };
+
     // 处理时间
-    function timeago(dateTimeStamp){   //dateTimeStamp是一个时间毫秒，注意时间戳是秒的形式，在这个毫秒的基础上除以1000，就是十位数的时间戳。13位数的都是时间毫秒。
+    function timeago(dateTimeStamp) {   //dateTimeStamp是一个时间毫秒，注意时间戳是秒的形式，在这个毫秒的基础上除以1000，就是十位数的时间戳。13位数的都是时间毫秒。
         var minute = 1000 * 60;      //把分，时，天，周，半个月，一个月用毫秒表示
         var hour = minute * 60;
         var day = hour * 24;
@@ -192,27 +175,27 @@
         var now = new Date().getTime();   //获取当前时间毫秒
         var diffValue = now - dateTimeStamp;//时间差
 
-        if(diffValue < 0){
+        if (diffValue < 0) {
             return;
         }
-        var minC = diffValue/minute;  //计算时间差的分，时，天，周，月
-        var hourC = diffValue/hour;
-        var dayC = diffValue/day;
-        var weekC = diffValue/week;
-        var monthC = diffValue/month;
-        if(monthC >= 1 && monthC <= 3){
+        var minC = diffValue / minute;  //计算时间差的分，时，天，周，月
+        var hourC = diffValue / hour;
+        var dayC = diffValue / day;
+        var weekC = diffValue / week;
+        var monthC = diffValue / month;
+        if (monthC >= 1 && monthC <= 3) {
             result = " " + parseInt(monthC) + "月前"
-        }else if(weekC >= 1 && weekC <= 3){
+        } else if (weekC >= 1 && weekC <= 3) {
             result = " " + parseInt(weekC) + "周前"
-        }else if(dayC >= 1 && dayC <= 6){
+        } else if (dayC >= 1 && dayC <= 6) {
             result = " " + parseInt(dayC) + "天前"
-        }else if(hourC >= 1 && hourC <= 23){
+        } else if (hourC >= 1 && hourC <= 23) {
             result = " " + parseInt(hourC) + "小时前"
-        }else if(minC >= 1 && minC <= 59){
-            result =" " + parseInt(minC) + "分钟前"
-        }else if(diffValue >= 0 && diffValue <= minute){
+        } else if (minC >= 1 && minC <= 59) {
+            result = " " + parseInt(minC) + "分钟前"
+        } else if (diffValue >= 0 && diffValue <= minute) {
             result = "刚刚"
-        }else {
+        } else {
             var datetime = new Date();
             datetime.setTime(dateTimeStamp);
             var Nyear = datetime.getFullYear();
@@ -237,24 +220,27 @@
         let $ = layui.jquery;
 
         let laypage = layui.laypage;
-        // 1 获取账号信息显示
-        // 设置头像
-        $('cite.layui-hide-xs').text(layui.cache.token.username);
-        // 设置nickname
-        $('.fly-nav-avatar img').attr('src', layui.imgUrl() + layui.cache.token.avatar);
-        // 设置上传头像
-        $('.avatar-add img').attr('src', layui.imgUrl() + layui.cache.token.avatar);
+
+
+        if (window.location.hash) {
+            $('#mycoltest').click()
+        }
+
+
         //2 分页获取发布问题信息
         carePage('/problemInfo/PageProblemInfo', 1, 10);
+
+        // document.getElementById('collection').scrollIntoView(true);
+
         function carePage(url, curr, size) {
             let current = curr || 1;
-            fly.json(url,{
+            fly.json(url, {
                 current: current,
                 size: size
-            },function (res) {
+            }, function (res) {
                 // 拼接数据
                 putProblemPageTable(res);
-                if (res.body.data.pages<=1){
+                if (res.body.data.pages <= 1) {
                     return;
                 }
                 // 设置分页
@@ -269,58 +255,32 @@
                         }
                     }
                 });
-            },{type:'get'},function () {
+            }, {type: 'get'}, function () {
                 $('#put_problem_ul').empty();
                 $('#put_problem_ul').append('<li id="before-ajax-put-problem"' +
                     ' style="height:400px;border-bottom:0;display: flex;justify-content: center;align-items: center">' +
                     '<i style="font-size: 48px;color: #999;" ' +
                     'class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i></li>')
             });
-            // $.ajax({
-            //     url: layui.baseUrl() + url,
-            //     type: 'get',
-            //     data: {
-            //         current: current,
-            //         size: size
-            //     },
-            //     dataType: 'json',
-            //     headers: {
-            //         Authorization: localStorage.getItem('token')
-            //     },
-            //     success(res) {
-            //         // 拼接数据
-            //         putProblemPageTable(res);
-            //         if (res.body.data.pages<=1){
-            //             return;
-            //         }
-            //         // 设置分页
-            //         laypage.render({
-            //             elem: 'putProblemPage'
-            //             , count: res.body.data.total //数据总数
-            //             , limit: res.body.data.size //每页显示的条数
-            //             , curr: res.body.data.current // 当前页
-            //             , jump: function (obj, first) {
-            //                 if (!first) {
-            //                     carePage(url, obj.curr, obj.limit)
-            //                 }
-            //             }
-            //         });
-            //     }
-            //
-            // });
         }
+
         // 设置发布问题的列表信息
         function putProblemPageTable(res) {
-            $('#tip_put_problem').text(res.body.data.total);
             let ulDom = $('#put_problem_ul');
+            ulDom.empty();
+            if (res.body.data.records.length === 0) {
+                ulDom.append('<div class="fly-none">您暂时没有发布问题信息</li>');
+                return;
+            }
+            $('#tip_put_problem').html(res.body.data.total);
             ulDom.empty();
             $.each(res.body.data.records, function (index, val) {
                 let liDom = $('<li></li>');
                 let a1Dom = $('<a class="jie-title" target="_blank"></a>')
                     .attr('href', '../jie/detail.html?problemId=' + val.problemId)
-                    .text(val.problemTitle);
+                    .html(val.problemTitle);
                 let iDom = $('<i></i>').text(new Date(val.time).Format("yyyy年MM月dd日 hh:mm:ss"));
-                let emDom = $("<em></em>").text(val.collection + ' 收藏 / ' + val.answersCount + ' 回答');
+                let emDom = $("<em></em>").html(val.collection + ' 收藏 / ' + val.answersCount + ' 回答');
                 liDom.append(a1Dom);
                 liDom.append(iDom);
                 liDom.append(emDom);
@@ -331,15 +291,16 @@
         //3 分页获取收藏信息
 
         collectPage('/problemInfo/PageProblemCollect', 1, 10);
+
         function collectPage(url, curr, size) {
             let current = curr || 1;
             fly.json(url, {
                 current: current,
                 size: size
-            },function (res) {
+            }, function (res) {
                 // 拼接数据
                 collectPageTable(res);
-                if (res.body.data.pages<=1){
+                if (res.body.data.pages <= 1) {
                     return;
                 }
                 // 设置分页
@@ -354,7 +315,7 @@
                         }
                     }
                 });
-            },{type:'get'},function () {
+            }, {type: 'get'}, function () {
                 $('#collect_problem_ul').empty();
                 $('#collect_problem_ul').append('<li id="before-ajax-collect-problem"' +
                     ' style="height:400px;border-bottom:0;display: flex;justify-content: center;align-items: center">' +
@@ -363,18 +324,24 @@
             })
 
         }
-        // 设置发布问题的列表信息
+
+        // 设列表信息
         function collectPageTable(res) {
 
-            $('#tip_collect_problem').text(res.body.data.total);
             let ulDom = $('#collect_problem_ul');
             ulDom.empty();
+            if (res.body.data.records.length === 0) {
+                ulDom.append('<div class="fly-none">您暂时没有收藏问题信息</li>');
+                return;
+            }
+            $('#tip_collect_problem').html(res.body.data.total);
+
             $.each(res.body.data.records, function (index, val) {
                 let liDom = $('<li></li>');
                 let a1Dom = $('<a class="jie-title" target="_blank"></a>')
                     .attr('href', '../jie/detail.html?problemId=' + val.problemId)
-                    .text(val.problemTitle);
-                let iDom = $('<i></i>').text('收藏与'+timeago(val.time));
+                    .html(val.problemTitle);
+                let iDom = $('<i></i>').text('收藏与' + timeago(val.time));
                 liDom.append(a1Dom);
                 liDom.append(iDom);
                 ulDom.append(liDom);

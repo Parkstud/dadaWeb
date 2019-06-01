@@ -22,10 +22,10 @@
             <li class="layui-nav-item">
                 <a class="fly-nav-avatar" href="javascript:;">
                     <cite class="layui-hide-xs">
-                        <span class="layui-badge-dot"></span>
+                        <!--                        <span class="layui-badge-dot"></span>-->
                     </cite>
-                    <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
-
+                    <i class="layui-badge fly-badge-vip layui-bg-blue layui-hide-xs"></i>
+                    <img src="http://148.70.8.85/group1/M00/00/00/rBsAAlyd2OqAfMy_AAAGveq-234459.jpg">
                 </a>
                 <div id="tip-header-wrapper" style="display:none">
                     <span class="layui-badge-dot" style="right: -16px"></span>
@@ -35,7 +35,7 @@
                     <dd>
                         <a href="../user/message.html">
                             <i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的通知
-                            <span class="layui-badge-dot"></span>
+                            <!--                            <span class="layui-badge-dot"></span>-->
                             <span id="tip-header-notice" style="display:none">
                                  <span class="layui-badge-dot"></span>
                             </span>
@@ -45,7 +45,9 @@
                                                        style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
                     </dd>
                     <hr style="margin: 5px 0;">
-                    <dd><a href="" style="text-align: center;">退出</a></dd>
+                    <dd>
+                        <a href="javascript:void(0);" id="tuichu" style="text-align: center;">退出</a>
+                    </dd>
                 </dl>
             </li>
         </ul>
@@ -107,28 +109,6 @@
             <div id="LAY_minemsg" style="margin-top: 10px;">
                 <!--<div class="fly-none">您暂时没有最新消息</div>-->
                 <ul class="mine-msg" id="notice-wrapper">
-                    <!--                    <li data-id="123">-->
-
-                    <!--                        <blockquote class="layui-elem-quote">-->
-                    <!--                            <span class="layui-badge-dot"></span>-->
-                    <!--                            <a href="/jump?username=Absolutely"-->
-                    <!--                               target="_blank"><cite>Absolutely</cite></a>回答了您的求解<a target="_blank"-->
-                    <!--                                                                                    href="/jie/8153.html/page/0/#item-1489505778669"><cite>layui后台框架</cite></a>-->
-                    <!--                        </blockquote>-->
-                    <!--                        <p><span>1小时前</span><a href="javascript:;"-->
-                    <!--                                               class="layui-btn layui-btn-small layui-btn-danger fly-delete">删除</a>-->
-                    <!--                        </p>-->
-                    <!--                    </li>-->
-
-
-                    <!--                    <li data-id="123">-->
-                    <!--                        <blockquote class="layui-elem-quote">-->
-                    <!--                            系统消息：欢迎使用 layui-->
-                    <!--                        </blockquote>-->
-                    <!--                        <p><span>1小时前</span><a href="javascript:;"-->
-                    <!--                                               class="layui-btn layui-btn-small layui-btn-danger fly-delete">删除</a>-->
-                    <!--                        </p>-->
-                    <!--                    </li>-->
                 </ul>
                 <div>
                     <div id="notice_page">
@@ -219,9 +199,16 @@
         $('cite.layui-hide-xs').text(layui.cache.token.username);
         // 设置nickname
         $('.fly-nav-avatar img').attr('src', layui.imgUrl() + layui.cache.token.avatar);
-
+        // 设置身份
+        if (layui.cache.token.type === 1) {
+            $('.fly-badge-vip').text('教师')
+        }
+        if (layui.cache.token.type === 2) {
+            $('.fly-badge-vip').text('系统')
+        }
         //  获取通知消息
         getNoticeInfo(1, 10);
+
 
         function getNoticeInfo(current, size) {
             fly.json('/message/notices/page', {
@@ -230,6 +217,7 @@
             }, function (res) {
                 $('#before-ajax-notice-wrapper').remove();
                 setNoticeInfo(res);
+
 
                 if (res.body.data.pages <= 1) {
                     return;
@@ -252,14 +240,13 @@
                     ' style="height:70px;border-bottom:0;display: flex;justify-content: center;align-items: center">' +
                     '<i style="font-size: 48px;color: #999;" ' +
                     'class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i></li>')
-
-
             });
         }
 
         function setNoticeInfo(res) {
-            if (!res.body.data.records) {
+            if (res.body.data.records.length === 0) {
                 $('#LAY_msg').append('<div class="fly-none">您暂时没有消息</div>');
+                $('#LAY_delallmsg').hide()
                 return
             }
             let ulDom = $('#notice-wrapper');
@@ -273,7 +260,7 @@
                     let spanDom = $(' <span class="layui-badge-dot" style="margin-right: 10px"></span>');
                     blockquoteDom.append(spanDom);
                 }
-                let spanDom = $('<span></span>').text(val.title + " ");
+                let spanDom = $('<span></span>').html(val.title + " ");
                 blockquoteDom.append(spanDom);
                 if (val.content) {
                     // let aDom = $('<a id="jump-detail" href="../jie/detail.html?problemId=' + val.commentInfo.commentProblemId + '"></a>').html('<cite>' + val.content + '</cite>');
@@ -301,28 +288,34 @@
 
         // 删除全部消息
         $('#LAY_delallmsg').on('click', function () {
-            fly.json('/message/notices', null, function (res) {
-                if (res.body.data) {
-                    layer.msg('删除成功', {icon: 1});
-                } else {
-                    layer.msg('删除失败', {icon: 2});
-                }
-            }, {type: 'delete'})
+            layer.confirm('确定清空吗？', function (index) {
+                fly.json('/message/notices', null, function (res) {
+                    if (res.body.data) {
+                        layer.msg('清空成功', {icon: 1});
+                        getNoticeInfo(1, 10);
+                        fly.newnotice()
+                    } else {
+                        layer.msg('清空失败', {icon: 2});
+                    }
+                }, {type: 'delete'})
+            });
         });
         // 点击删除
         $('#notice-wrapper').on('click', '#delete-notice', function () {
             let sysMessageId = $(this).attr('msgId');
-            console.log('s删除');
-            fly.json('/message/notice', {
-                sysMessageId: sysMessageId
-            }, function (res) {
-                if (res.body.data) {
-                    layer.msg('删除成功', {icon: 1});
-                    getNoticeInfo(1, 10)
-                } else {
-                    layer.msg('删除失败', {icon: 2});
-                }
-            }, {type: 'delete'})
+            layer.confirm('确定删除吗？', function (index) {
+                fly.json('/message/notice', {
+                    sysMessageId: sysMessageId
+                }, function (res) {
+                    if (res.body.data) {
+                        layer.msg('删除成功', {icon: 1});
+                        getNoticeInfo(1, 10)
+                        fly.newnotice()
+                    } else {
+                        layer.msg('删除失败', {icon: 2});
+                    }
+                }, {type: 'delete'})
+            });
         });
 
         // 点击阅读
@@ -332,11 +325,13 @@
             let msgId = $(this).attr('msgId');
             let content = $(this).attr('content');
 
-            console.log(msgType);
+            $(this).parent().find('.layui-badge-dot').remove();
+
             // 设置已读
             fly.json('/message/notice/read', {
                 sysMessageId: msgId
             }, function (res) {
+                fly.newnotice();
             }, {type: 'put'});
 
             if (msgType > 4) {
@@ -360,8 +355,8 @@
                     layer.msg('信息被删除', {icon: 2});
                     return
                 }
-                fly.json('/newWeb/problemByReplyId', {
-                    replyId: infoId
+                fly.json('/newWeb/problemByCommentId', {
+                    commentId: infoId
                 }, function (res) {
                     let data = res.body.data;
                     if (data) {
@@ -369,7 +364,7 @@
                     } else {
                         layer.msg('信息被删除', {icon: 2});
                     }
-                },{type:'get'})
+                }, {type: 'get'})
                 return;
             }
             // 跳转问题界面
@@ -388,7 +383,7 @@
                     } else {
                         layer.msg('信息被删除', {icon: 2});
                     }
-                },{type:'get'});
+                }, {type: 'get'});
                 return;
             }
         });

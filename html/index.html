@@ -22,15 +22,15 @@
             <img width="180" src="../res/images/fao.png" alt="达达问答">
         </a>
 
-        <ul class="layui-nav fly-nav-user" id="index_head_info">
+        <ul class="layui-nav fly-nav-user" id="index_head_info" style="display: none">
 
             <li class="layui-nav-item">
                 <a class="fly-nav-avatar" href="javascript:;">
                     <cite class="layui-hide-xs">
-                        <span class="layui-badge-dot"></span>
+                        <!--                        <span class="layui-badge-dot"></span>-->
                     </cite>
-                    <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
-
+                    <i class="layui-badge fly-badge-vip layui-bg-blue layui-hide-xs"></i>
+                    <img src="http://148.70.8.85/group1/M00/00/00/rBsAAlyd2OqAfMy_AAAGveq-234459.jpg">
                 </a>
                 <div id="tip-header-wrapper" style="display:none">
                     <span class="layui-badge-dot" style="right: -16px"></span>
@@ -40,7 +40,7 @@
                     <dd>
                         <a href="./user/message.html">
                             <i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的通知
-                            <span class="layui-badge-dot"></span>
+                            <!--                            <span class="layui-badge-dot"></span>-->
                             <span id="tip-header-notice" style="display:none">
                                  <span class="layui-badge-dot"></span>
                             </span>
@@ -50,7 +50,8 @@
                                                       style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
                     </dd>
                     <hr style="margin: 5px 0;">
-                    <dd><a href="javascript:void(0);" id="tuichu" style="text-align: center;">退出</a>
+                    <dd>
+                        <a href="javascript:void(0);" id="tuichu" style="text-align: center;">退出</a>
                     </dd>
                 </dl>
             </li>
@@ -63,18 +64,18 @@
         <ul class="layui-clear">
             <!-- 用户登入后显示 -->
             <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
-                    href="user/index.html">我发表的问题</a></li>
+                    href="javascript:void(0);" id="my-putproblem">我发表的问题</a></li>
             <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
-                    href="user/index.html#collection">我收藏的问题</a></li>
+                    href="javascript:void(0);" id="my-colproblem">我收藏的问题</a></li>
         </ul>
 
         <div class="fly-column-right layui-hide-xs">
             <span class="fly-search"><i class="layui-icon"></i></span>
-            <a href="jie/add.html" class="layui-btn">发表新问题</a>
+            <a href="javascript:void(0);" class="layui-btn put-newProblem">发表新问题</a>
         </div>
         <div class="layui-hide-sm layui-show-xs-block"
              style="margin-top: -10px; padding-bottom: 10px; text-align: center;">
-            <a href="jie/add.html" class="layui-btn">发表新问题</a>
+            <a href="javascript:void(0);" class="layui-btn put-newProblem">发表新问题</a>
         </div>
     </div>
 </div>
@@ -118,11 +119,6 @@
                 <div id="hot_week">
                     <div class="fly-none">没有相关数据</div>
                 </div>
-
-                <!-- 无数据时 -->
-                <!--
-
-                -->
             </dl>
 
             <div class="fly-panel">
@@ -133,67 +129,6 @@
             <div class="fly-panel fly-rank fly-rank-reply" id="LAY_replyRank">
                 <h3 class="fly-panel-title">回答周榜</h3>
                 <dl id="answer-week">
-                    <!--<i class="layui-icon fly-loading">&#xe63d;</i>-->
-                    <dd>
-                        <a href="user/home.html">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-                        </a>
-                    </dd>
-                    <dd>
-                        <a href="user/home.html">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-                        </a>
-                    </dd>
-                    <dd>
-                        <a href="user/home.html">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-                        </a>
-                    </dd>
-                    <dd>
-                        <a href="user/home.html">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-                        </a>
-                    </dd>
-                    <dd>
-                        <a href="user/home.html">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-                        </a>
-                    </dd>
-                    <dd>
-                        <a href="user/home.html">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-                        </a>
-                    </dd>
-                    <dd>
-                        <a href="user/home.html">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-                        </a>
-                    </dd>
-                    <dd>
-                        <a href="user/home.html">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-                        </a>
-                    </dd>
-                    <dd>
-                        <a href="user/home.html">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-                        </a>
-                    </dd>
-                    <dd>
-                        <a href="user/home.html">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-                        </a>
-                    </dd>
-                    <dd>
-                        <a href="user/home.html">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-                        </a>
-                    </dd>
-                    <dd>
-                        <a href="user/home.html">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-                        </a>
-                    </dd>
                 </dl>
             </div>
 
@@ -274,12 +209,7 @@
         let fly = layui.fly;
         let laypage = layui.laypage;
         let $ = layui.jquery;
-        if (layui.cache.token) {
-            // 登入
-            $('cite.layui-hide-xs').text(layui.cache.token.username);
-            // 设置nickname
-            $('.fly-nav-avatar img').attr('src', layui.imgUrl() + layui.cache.token.avatar);
-        } else {
+        if (!layui.cache.token) {
             $('#index_head_info').empty();
             let liDoms = $(' <li class="layui-nav-item">' +
                 '<a class="iconfont icon-touxiang layui-hide-xs" href="user/login.html"></a>' +
@@ -292,26 +222,9 @@
                 '</li>');
             $('#index_head_info').append(liDoms);
         }
+        $('#index_head_info').show();
 
-        let problemType = [];
 
-        // 同步获取cate值
-        function getProblemType() {
-            let problemType = [];
-            $.ajax({
-                    url: layui.baseUrl() + '/problemManager/problemType',
-                    type: 'get',
-                    async: false,
-                    success(res) {
-                        problemType = res.body.data;
-                    },
-                    error(err) {
-                        console.log(err)
-                    }
-                }
-            );
-            return problemType;
-        }
 
 
         getWebProblePage(1, 10);
@@ -332,9 +245,7 @@
                     type: 'get',
                     dataType: 'json',
                     success(res) {
-                        if (problemType.length === 0) {
-                            problemType = getProblemType();
-                        }
+
                         setProblemList(res);
                         if (res.body.data.pages <= 1) {
                             return;
@@ -374,7 +285,7 @@
 
                 let h2Dom = $('<h2></h2>');
                 let a2Dom = $('<a class="layui-badge"></a>').text(setCategory(val.category));
-                let a3Dom = $('<a></a>').attr('href', 'jie/detail.html?problemId=' + val.problemId).text(val.title);
+                let a3Dom = $('<a></a>').attr('href', 'jie/detail.html?problemId=' + val.problemId).html(val.title);
                 h2Dom.append(a2Dom);
                 h2Dom.append(a3Dom);
                 liDom.append(h2Dom);
@@ -415,7 +326,7 @@
             if (!category) {
                 return '数据结构';
             }
-            return problemType[category - 1].categoryName;
+            return  layui.cache.problemType[category - 1].categoryName;
         }
 
 
@@ -503,7 +414,7 @@
                     let ddDom = $('<dd></dd>');
                     let aDOm = $('<a></a>')
                         .attr('href', 'jie/detail.html?problemId=' + val.problemId)
-                        .text(val.title);
+                        .html(val.title);
                     let spanDom = $('<span></span>').html('<i class="iconfont icon-pinglun1"></i> ' + val.answerCount);
                     ddDom.append(aDOm);
                     ddDom.append(spanDom);
@@ -528,7 +439,7 @@
                         .attr('href', 'user/home.html?userId=' + val.userId);
                     let imgDom = $('<img>').attr('src', layui.imgUrl() + val.avatar);
                     let citeDom = $('<cite></cite>').text(val.username);
-                    let iDom = $('<i></i>').text(val.answerCount);
+                    let iDom = $('<i></i>').html(val.answerCount);
                     aDOm.append(imgDom);
                     aDOm.append(citeDom);
                     aDOm.append(iDom);

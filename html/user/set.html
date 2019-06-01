@@ -5,7 +5,7 @@
     <title>帐号设置</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="keywords" content="达达问答">
-    <meta name="description" content="达达达数据结构专业问答">
+    <meta name="description" content="达达数据结构专业问答">
     <link rel="stylesheet" href="../../res/layui/css/layui.css">
     <link rel="stylesheet" href="../../res/css/global.css">
     <style>
@@ -19,7 +19,6 @@
         .layui-form-radio * {
             font-size: 14px;
         }
-
     </style>
 </head>
 <body>
@@ -37,6 +36,7 @@
                     <cite class="layui-hide-xs">
                         <!--                        <span class="layui-badge-dot"></span>-->
                     </cite>
+                    <i class="layui-badge fly-badge-vip layui-bg-blue layui-hide-xs"></i>
                     <img src="http://148.70.8.85/group1/M00/00/00/rBsAAlyd2OqAfMy_AAAGveq-234459.jpg">
                 </a>
                 <div id="tip-header-wrapper" style="display:none">
@@ -193,14 +193,6 @@
                                        value="" class="layui-input">
                             </div>
                         </div>
-                        <!--<div class="layui-form-item layui-form-text">-->
-                        <!--<label for="L_sign" class="layui-form-label">签名</label>-->
-                        <!--<div class="layui-input-block">-->
-                        <!--<textarea placeholder="随便写些什么刷下存在感" id="L_sign" name="sign"-->
-                        <!--autocomplete="off" class="layui-textarea"-->
-                        <!--style="height: 80px;"></textarea>-->
-                        <!--</div>-->
-                        <!--</div>-->
                         <div class="layui-form-item">
                             <button class="layui-btn" key="set-mine" lay-filter="updateUserInfo"
                                     lay-submit>
@@ -241,7 +233,7 @@
                                        lay-verify="password|required" autocomplete="off"
                                        class="layui-input">
                             </div>
-                            <div class="layui-form-mid layui-word-aux">6到16个字符</div>
+                            <div class="layui-form-mid layui-word-aux">6到12个字符</div>
                         </div>
                         <div class="layui-form-item">
                             <label for="L_repass" class="layui-form-label">确认密码</label>
@@ -272,19 +264,6 @@
 
 <script src="../../layui/layui.all.js"></script>
 <script>
-
-    // console.log(layui.baseUrl())
-    // console.log(layui.imgUrl())
-    layui.cache.page = 'user';
-    layui.cache.user = {
-        username: '游客'
-        , uid: -1
-        , avatar: '../../res/images/avatar/00.jpg'
-        , experience: 83
-        , sex: '男'
-    };
-
-    layui.cache.token = JSON.parse(localStorage.getItem('token'));
     layui.config({
         version: "2.4.5"
         , base: '../../res/mods/'
@@ -297,10 +276,11 @@
         let laydate = layui.laydate;
         let upload = layui.upload;
 
+        // 表单验证
         form.verify({
             password: [
                 /^[\S]{6,12}$/
-                , '密码必须6到12位，且不能出现空格'
+                , '密码必须6到12位'
             ],
             repassword: function (value) {
                 let repassValue = $('#L_pass').val();
@@ -310,18 +290,8 @@
             }
         });
 
-        // 设置头像
-        $('cite.layui-hide-xs').text(layui.cache.token.username);
-        // 设置nickname
-        $('.fly-nav-avatar img').attr('src', layui.imgUrl() + layui.cache.token.avatar);
-        // 设置上传头像
-        $('.avatar-add img').attr('src', layui.imgUrl() + layui.cache.token.avatar);
-
-
-        // 获取个人信息
-        fly.json('/myPage/user/userInformation', null, function (res) {
-            // 设置参数
-            let userInfo = res.body.data;
+        // 设置个人信息
+        function setUserInfomation(userInfo) {
             $('#L_userInfoId').val(userInfo.id);
             $('#L_phone').val(userInfo.telephone);
             $('#L_username').val(layui.cache.token.username);
@@ -340,7 +310,11 @@
             }
             $('#L_school').val(userInfo.school);
             $('#L_school_number').val(userInfo.schoolNumber);
-            // $('[name=sex]:checked').val();
+        }
+
+        fly.json('/myPage/user/userInformation', null, function (res) {
+            layui.cache.userInformation = res.body.data;
+            setUserInfomation(layui.cache.userInformation)
         }, {type: 'get'});
 
 
@@ -366,8 +340,6 @@
                 layer.msg("上传失败!", {icon: 2});
             }
         });
-
-
 
     });
 </script>
