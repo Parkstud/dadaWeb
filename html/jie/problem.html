@@ -218,13 +218,28 @@
                 })
             } else {
                 // 问题开放
-                fly.json('/control/problem/putPersonAnswer', {
-                    problemId: layui.cache.problem.id
-                }, function (res) {
-                    console.log('人工回答');
-                    console.log(res);
-                });
-                $('#answer-wrapper').append('<blockquote class="layui-elem-quote layui-quote-nm">暂无答案</blockquote>')
+                $('#answer-wrapper').append('<blockquote class="layui-elem-quote layui-quote-nm"><span>暂无答案</span>' +
+                    ' <span style="margin-left: 30px" id="sendPeople" class="layui-btn layui-btn-normal">发送人工回答</span>' +
+                    '</blockquote>')
+                let jinyong = false;
+                $('#sendPeople').on('click', function () {
+                    if (jinyong) {
+                        return
+                    }
+                    fly.json('/control/problem/problemInfo', {
+                        id: layui.cache.problem.id,
+                        open: 1
+                    }, function (res) {
+                        if (res.body.data) {
+                            layer.msg("发送成功!", {icon: 1});
+                            $('#sendPeople').addClass('layui-btn-disabled')
+                            jinyong = true
+                        } else {
+                            layer.msg("发送失败!", {icon: 2});
+                        }
+                    })
+                })
+
             }
             console.log(res);
         }, {type: 'get'}, function () {
@@ -267,7 +282,7 @@
                 let removeTemp = $('#answer-wrapper').find('.suggest-wrapper .red-color');
                 removeTemp.removeClass('red-color');
                 $(this).addClass('red-color');
-                flag =2;
+                flag = 2;
             } else {
                 let removeTemp = $('#answer-wrapper').find('.suggest-wrapper .red-color');
                 removeTemp.removeClass('red-color');

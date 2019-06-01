@@ -486,6 +486,8 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
             if (res.head.stateCode === 200) {
                 if (res.body.data) {
                     localStorage.setItem('token', JSON.stringify(res.body.data));
+                    localStorage.setItem('username', data.field.username);
+                    localStorage.setItem('password', data.field.password);
                     location.href = 'set.html';
                 } else {
                     layer.msg('登录失败', {icon: 2});
