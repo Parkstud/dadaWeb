@@ -637,7 +637,7 @@
                 div2Dom = $('<div class="jieda-admin"></div>');
                 let span2Dom = ''
                 if (layui.cache.token) {
-                    if (layui.cache.token.id === val.userId || layui.cache.token.id!==0) {
+                    if (layui.cache.token.id === val.userId || layui.cache.token.type!==0) {
                         span2Dom = $('<span class="delete-comment">删除</span>');
                         div2Dom.append(span2Dom);
                     } else {
@@ -709,7 +709,7 @@
                             .attr('replyUserId', innerVal.replyUserId)
                             .attr('replyUsername', innerVal.replyUsername);
                         if (layui.cache.token) {
-                            if (layui.cache.token.id === innerVal.replyUserId || layui.cache.token.id!==0) {
+                            if (layui.cache.token.id === innerVal.replyUserId || layui.cache.token.type!==0) {
                                 span2Dom = $('<span class="reply-delete">删除</span>');
                                 div3Dom.append(span2Dom);
                             } else {
