@@ -541,8 +541,6 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
             data: JSON.stringify(data.field),
             url: baseUrl + '/myPage/user/userInformation',
             beforeSend: function (request) {
-
-                request.setRequestHeader("Authorization", localStorage.getItem('token'));
                 request.setRequestHeader('Content-Type', "application/json;charset=UTF-8");
             },
             success: function (res) {
