@@ -254,15 +254,24 @@
         $('#answer-wrapper').on('click', '.suggest-wrapper .comment-zan', function () {
 
             if (flag === null || flag === 2) {
+                console.log('a');
                 let removeTemp = $('#answer-wrapper').find('.suggest-wrapper .red-color');
                 removeTemp.removeClass('red-color');
                 $(this).addClass('red-color');
                 flag = 1;
             } else {
                 let removeTemp = $('#answer-wrapper').find('.suggest-wrapper .red-color');
-                removeTemp.removeClass('red-color');
-                flag = null
+                if ($(this).is('.red-color')) {
+                    removeTemp.removeClass('red-color');
+                    flag = null
+                } else {
+                    removeTemp.removeClass('red-color');
+                    $(this).addClass('red-color');
+                    flag = 1
+                }
+
             }
+            console.log(flag);
 
 
             let comments = $(this).parent().attr('comments');
@@ -283,9 +292,16 @@
                 flag = 2;
             } else {
                 let removeTemp = $('#answer-wrapper').find('.suggest-wrapper .red-color');
-                removeTemp.removeClass('red-color');
-                flag = null
+                if ($(this).is('.red-color')) {
+                    removeTemp.removeClass('red-color');
+                    flag = null
+                } else {
+                    removeTemp.removeClass('red-color');
+                    $(this).addClass('red-color');
+                    flag = 2
+                }
             }
+            console.log(flag);
 
             let comments = $(this).parent().attr('comments');
             fly.json('/control/problem/adoptAnswerProblem', {
