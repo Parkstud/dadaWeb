@@ -42,7 +42,7 @@
                         </a>
                     </dd>
                     <dd><a href="../user/home.html"><i class="layui-icon"
-                                                      style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
+                                                       style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
                     </dd>
                     <hr style="margin: 5px 0;">
                     <dd>
@@ -288,7 +288,6 @@
             }
 
 
-
             if (data.sex == '女') {
                 $('#personInfo h1').append('<i style="margin: 8px" class="iconfont icon-nv"></i>')
             } else {
@@ -372,10 +371,14 @@
                     }
                 }
             }, {type: 'get'}, function (request) {
+
+
                 request.setRequestHeader("Authorization", JSON.stringify(ajaxObj));
                 $('#put_problem_list').append('<li id="before-ajax-putlist" ' +
                     'style="height:70px;border-bottom:0;display: flex;justify-content: center;align-items: center"><' +
                     '<i style="font-size: 48px" class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i></li>')
+            }, function (err) {
+                console.log(err)
             });
 
         }

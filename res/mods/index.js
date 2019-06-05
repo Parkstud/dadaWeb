@@ -89,13 +89,13 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
                 url: baseUrl + url,
                 beforeSend: function (request) {
                     if (url !== '/userAccount/login') {
-
                         let nowUser = JSON.parse(localStorage.getItem('token'));
                         if (nowUser) {
                             nowUser.username = '';
                             request.setRequestHeader("Authorization", JSON.stringify(nowUser));
                         }
                     }
+
                     beforeAjax && beforeAjax(request);
                 },
                 success: function (res) {
@@ -535,6 +535,8 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
         if (data.field.userInfoId) {
             data.field.id = data.field.userInfoId;
         }
+        console.log(data.field);
+
         $.ajax({
             type: 'post',
             dataType: 'json',
@@ -552,6 +554,7 @@ layui.define(['layer', 'layedit', 'laytpl', 'layDate', 'form', 'element', 'uploa
                 }
 
             }, error: function (e) {
+                console.log(e)
                 layer.msg('请求异常，请重试', {shift: 6});
             }
         });

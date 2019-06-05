@@ -37,7 +37,8 @@
                         <!--                        <span class="layui-badge-dot"></span>-->
                     </cite>
                     <i class="layui-badge fly-badge-vip layui-bg-blue layui-hide-xs"></i>
-                    <img src="http://148.70.8.85/group1/M00/00/00/rBsAAlyd2OqAfMy_AAAGveq-234459.jpg">
+                    <img id="titleImg"
+                         src="http://148.70.8.85/group1/M00/00/00/rBsAAlyd2OqAfMy_AAAGveq-234459.jpg">
                 </a>
                 <div id="tip-header-wrapper" style="display:none">
                     <span class="layui-badge-dot" style="right: -16px"></span>
@@ -291,7 +292,7 @@
 
         // 设置个人信息
         function setUserInfomation(userInfo) {
-            $('#L_username').val(layui.cache.token.username);
+            $('#L_username').val(localStorage.getItem('username'));
             if (!userInfo) {
                 return
             }
@@ -303,6 +304,7 @@
                     form.render();
                 }
             });
+            console.log(userInfo)
             $('#L_name').val(userInfo.name);
             if (userInfo.birthday) {
                 laydate.render({
@@ -320,12 +322,14 @@
         }, {type: 'get'});
 
 
+        let tempUser = layui.cache.token;
+        tempUser.username = '';
         // 上传头像
         let uploadInst = upload.render({
             elem: '#uploadImg'
             , url: layui.baseUrl() + '/myPage/upload/avatar'
             , field: 'files'
-            , headers: {authorization: localStorage.getItem('token')}
+            , headers: {authorization: JSON.stringify(tempUser)}
             , before: function (obj) {
                 //预读本地文件示例，不支持ie8
                 obj.preview(function (index, file, result) {
@@ -335,9 +339,10 @@
             , done: function (res) {
                 layer.msg("上传成功!", {icon: 1});
                 localStorage.setItem('token', JSON.stringify(res.body.data));
-                location.reload();
+                $('#titleImg').attr('src', layui.imgUrl() + res.body.data.avatar)
             }
-            , error: function () {
+            , error: function (err) {
+                console.log(err)
                 //演示失败状态，并实现重传
                 layer.msg("上传失败!", {icon: 2});
             }
